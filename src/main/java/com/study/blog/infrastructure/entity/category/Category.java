@@ -1,7 +1,6 @@
-package com.study.blog.model.entity.category;
+package com.study.blog.infrastructure.entity.category;
 
-import com.study.blog.model.entity.BaseTime;
-import lombok.Builder;
+import com.study.blog.infrastructure.entity.BaseTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Category extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 100)
+    @Column(length = 100, unique = true)
     private String name;
     @Column
     private String description;

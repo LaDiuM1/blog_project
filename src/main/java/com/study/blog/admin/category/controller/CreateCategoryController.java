@@ -1,7 +1,7 @@
 package com.study.blog.admin.category.controller;
 
 import com.study.blog.admin.category.service.AdminCategoryService;
-import com.study.blog.model.dto.category.CreateCategoryRequest;
+import com.study.blog.admin.request.CreateCategoryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

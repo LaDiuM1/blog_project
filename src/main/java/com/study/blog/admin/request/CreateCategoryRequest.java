@@ -1,4 +1,4 @@
-package com.study.blog.model.dto.category;
+package com.study.blog.admin.request;
 
 import lombok.Getter;
 
