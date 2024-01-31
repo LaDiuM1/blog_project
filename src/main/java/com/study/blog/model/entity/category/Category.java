@@ -4,6 +4,7 @@ import com.study.blog.model.entity.BaseTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
 @Table(name = "category")
 @DynamicInsert
 @DynamicUpdate
-@Getter @NoArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
 public class Category extends BaseTime {
 
     @Id
@@ -29,4 +31,9 @@ public class Category extends BaseTime {
     @Column
     private int sequence;
 
+    public Category(String name, String description, int sequence) {
+        this.name = name;
+        this.description = description;
+        this.sequence = sequence;
+    }
 }

@@ -1,5 +1,6 @@
 package com.study.blog.admin.category.controller;
 
+import com.study.blog.admin.category.service.AdminCategoryService;
 import com.study.blog.model.dto.category.CreateCategoryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,12 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class CreateCategoryController {
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+    private final AdminCategoryService adminCategoryService;
 
+    @PostMapping("/create")
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+
+        adminCategoryService.createCategory(createCategoryRequest);
 
         return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
     }
