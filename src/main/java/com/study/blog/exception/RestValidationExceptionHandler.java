@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class RestValidationExceptionHandler {
@@ -18,12 +20,14 @@ public class RestValidationExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+        Map<String, String> errors = new LinkedHashMap<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String message = error.getDefaultMessage();
-            errors.put(fieldName, message);
+//            String fieldName = ((FieldError) error).getField();
+            String message = Objects.requireNonNull(error.getDefaultMessage()).split("&")[0];
+            String errorCode = Objects.requireNonNull(error.getDefaultMessage()).split("&")[1];
+            errors.put("Error Code", errorCode);
+            errors.put("message", message);
         });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -31,9 +35,18 @@ public class RestValidationExceptionHandler {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+    public ResponseEntity<Map<String, String>> handleConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        String message = ex.getMessage();
+        String errorCode = "10000";
 
-        String errorMessage = "Database Manipulation Error: " + ex.getMessage();
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        if(message.contains("Duplicate entry")) {
+            errorCode = "10001";
+            message = "이미 존재합니다.";
+        }
+
+        errors.put("Error Code", errorCode);
+        errors.put("message", message);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

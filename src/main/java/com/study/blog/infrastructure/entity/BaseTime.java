@@ -8,7 +8,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@MappedSuperclass // 생성 시간, 수정 시간 상속
+@MappedSuperclass // 자식 클래스에 컴포넌트 등록
 @EntityListeners( AuditingEntityListener.class )
 public class BaseTime {
 

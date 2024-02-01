@@ -7,11 +7,12 @@ import javax.validation.constraints.*;
 @Getter
 public class CreateCategoryRequest {
 
-    @NotBlank(message = "Category name cannot be blank")
-    @Size(max = 100, message = "Category name must be at most 100 characters")
+    @NotBlank(message = "카테고리 이름을 입력해 주세요.&20001")
+    @Size(max = 100, message = "카테고리 이름은 100글자를 넘을 수 없습니다.&20002")
     private String name;
 
-    @Size(max = 255, message = "Description must be at most 255 characters")
+    @NotBlank(message = "카테고리 설명을 입력해 주세요.&20003")
+    @Size(max = 255, message = "카테고리 설명은 255글자 이내로 입력해 주세요.20004")
     private String description;
 
 }
