@@ -49,7 +49,7 @@ public class AdminCategoryService {
     public void updateCategoryStatus(UpdateCategoryStatusRequest request){
 
         jpaCategoryRepository.findByIdOrThrow(request.getId())
-                .setStatus(request.getStatus());
+                .setStatus(!request.getStatus());
 
     }
 
@@ -61,6 +61,7 @@ public class AdminCategoryService {
                     .setSequence(request.getSequence());
         });
     }
+
 
     @Transactional
     public void updateCategory(UpdateCategoryRequest request){

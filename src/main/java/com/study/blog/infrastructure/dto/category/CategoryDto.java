@@ -1,5 +1,6 @@
 package com.study.blog.infrastructure.dto.category;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.study.blog.infrastructure.entity.category.CategoryEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class CategoryDto {
     private String description;
     private boolean status;
     private int sequence;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime updateDate;
 
     public CategoryDto(long id, String name, String description, boolean status, int sequence) {
