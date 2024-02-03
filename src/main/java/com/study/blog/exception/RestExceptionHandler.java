@@ -2,11 +2,13 @@ package com.study.blog.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -36,7 +38,7 @@ public class RestExceptionHandler {
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
         Map<String, String> errors = new LinkedHashMap<>();
         String message = ex.getMessage();
-        String errorCode = "10000";
+        String errorCode = "50000";
 
         if(message.contains("Duplicate entry")) {
             errorCode = "10001";
@@ -47,4 +49,23 @@ public class RestExceptionHandler {
         errors.put("message", message);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        errors.put("Error Code", "50001");
+        errors.put("message", "전송 포맷이 JSON 형태가 아닙니다.");
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(EntityNotFoundException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        errors.put("Error Code", "50002");
+        errors.put("message", "해당 id로 엔티티를 찾을 수 없습니다.");
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
 }

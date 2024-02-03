@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/category")
+@RequestMapping("/admin/category/create")
 @RequiredArgsConstructor
-public class CreateCategoryController {
+public class AdminCreateCategoryController {
 
     private final AdminCategoryService adminCategoryService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
 
         adminCategoryService.createCategory(createCategoryRequest);

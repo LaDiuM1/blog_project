@@ -1,11 +1,13 @@
 package com.study.blog.infrastructure.dto.category;
 
-import lombok.AllArgsConstructor;
+import com.study.blog.infrastructure.entity.category.CategoryEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
@@ -15,14 +17,27 @@ public class CategoryDto {
     private long id;
     private String name;
     private String description;
-    private boolean state;
+    private boolean status;
     private int sequence;
+    protected LocalDateTime createDate;
+    protected LocalDateTime updateDate;
 
-    public CategoryDto(long id, String name, String description, boolean state, int sequence) {
+    public CategoryDto(long id, String name, String description, boolean status, int sequence) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.state = state;
+        this.status = status;
         this.sequence = sequence;
     }
+
+    public CategoryDto(long id, String name, String description, boolean status, int sequence, LocalDateTime createDate, LocalDateTime updateDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.sequence = sequence;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
 }
