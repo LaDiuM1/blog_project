@@ -68,4 +68,14 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(IllegalStateException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        errors.put("Error Code", "50003");
+        errors.put("message", "값이 중복되었거나 저장된 카테고리 수와 다릅니다.");
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+
 }

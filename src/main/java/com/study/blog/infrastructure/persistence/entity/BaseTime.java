@@ -1,4 +1,4 @@
-package com.study.blog.infrastructure.entity;
+package com.study.blog.infrastructure.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,28 +1,25 @@
-package com.study.blog.admin.category.repository;
+package com.study.blog.infrastructure.persistence.repository.category;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.infrastructure.dto.category.CategoryDto;
-import com.study.blog.infrastructure.entity.category.CategoryEntity;
+import com.study.blog.domain.admin.category.response.CategoryListResponse;
+import com.study.blog.domain.admin.category.response.CategoryResponse;
 import com.study.blog.infrastructure.entity.category.QCategory;
-import com.study.blog.infrastructure.persistence.category.JpaCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CategoryRepository {
 
     private final JPAQueryFactory query;
 
-    public int getCreateSequenceNumber(){
+    public Integer getCreateSequenceNumber(){
         QCategory category = QCategory.category;
 
         return query.select(category.sequence.max().add(1).coalesce(1))
@@ -31,10 +28,10 @@ public class CategoryRepository {
 
     }
 
-    public List<CategoryDto> getAdminCategoryList() {
+    public List<CategoryListResponse> getAdminCategoryList() {
         QCategory category = QCategory.category;
 
-        return query.select(Projections.constructor(CategoryDto.class,
+        return query.select(Projections.constructor(CategoryListResponse.class,
                         category.id,
                         category.name,
                         category.description,

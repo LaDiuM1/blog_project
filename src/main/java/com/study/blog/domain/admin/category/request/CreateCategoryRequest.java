@@ -1,4 +1,4 @@
-package com.study.blog.admin.request;
+package com.study.blog.domain.admin.category.request;
 
 import lombok.Getter;
 

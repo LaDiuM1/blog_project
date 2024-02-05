@@ -1,7 +1,7 @@
-package com.study.blog.admin.category.controller;
+package com.study.blog.domain.admin.category.controller;
 
-import com.study.blog.admin.category.service.AdminCategoryService;
-import com.study.blog.admin.request.CreateCategoryRequest;
+import com.study.blog.domain.admin.category.service.AdminCategoryService;
+import com.study.blog.domain.admin.category.request.CreateCategoryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +20,11 @@ public class AdminCreateCategoryController {
     private final AdminCategoryService adminCategoryService;
 
     @PostMapping
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+    public ResponseEntity<Void> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
 
         adminCategoryService.createCategory(createCategoryRequest);
 
-        return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
 
 }

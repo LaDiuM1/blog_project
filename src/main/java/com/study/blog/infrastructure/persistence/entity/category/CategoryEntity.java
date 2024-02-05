@@ -1,7 +1,7 @@
-package com.study.blog.infrastructure.entity.category;
+package com.study.blog.infrastructure.persistence.entity.category;
 
-import com.study.blog.infrastructure.dto.category.CategoryDto;
-import com.study.blog.infrastructure.entity.BaseTime;
+import com.study.blog.domain.admin.category.response.CategoryResponse;
+import com.study.blog.infrastructure.persistence.entity.BaseTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,8 +39,8 @@ public class CategoryEntity extends BaseTime {
         this.sequence = sequence;
     }
 
-    public CategoryDto toDto() {
-        return new CategoryDto(
+    public CategoryResponse toDto() {
+        return new CategoryResponse(
                 this.getId(),
                 this.getName(),
                 this.getDescription(),
@@ -58,7 +58,6 @@ public class CategoryEntity extends BaseTime {
     public LocalDateTime getCreateDate(){
         return this.createDate;
     }
-
 
 
 
