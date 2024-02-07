@@ -87,4 +87,11 @@ public class AdminCategoryService {
 
     }
 
+    @Transactional
+    public void deleteCategory(Long id){
+
+        jpaCategoryRepository.deleteById(id);
+
+    }
+
 }

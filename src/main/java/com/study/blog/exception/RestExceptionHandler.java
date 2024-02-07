@@ -1,5 +1,6 @@
 package com.study.blog.exception;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -76,6 +77,18 @@ public class RestExceptionHandler {
         errors.put("message", "값이 중복되었거나 저장된 카테고리 수와 다릅니다.");
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Map<String, String>> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        errors.put("Error Code", "50004");
+        errors.put("message", "삭제할 id를 찾을 수 없습니다.");
+
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
 
 
 }
