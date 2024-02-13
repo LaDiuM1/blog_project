@@ -1,4 +1,4 @@
-package com.study.blog.infrastructure.persistence.entity.category;
+package com.study.blog.infrastructure.persistence.entity;
 
 import com.study.blog.domain.admin.category.response.CategoryResponse;
 import com.study.blog.infrastructure.persistence.entity.BaseTime;

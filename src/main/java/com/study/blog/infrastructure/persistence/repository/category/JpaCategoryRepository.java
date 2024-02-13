@@ -1,6 +1,6 @@
 package com.study.blog.infrastructure.persistence.repository.category;
 
-import com.study.blog.infrastructure.persistence.entity.category.CategoryEntity;
+import com.study.blog.infrastructure.persistence.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityNotFoundException;

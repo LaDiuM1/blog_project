@@ -7,14 +7,13 @@ import com.study.blog.domain.admin.category.request.UpdateCategoryRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategorySequenceRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategoryStatusRequest;
 import com.study.blog.domain.admin.category.response.CategoryResponse;
-import com.study.blog.infrastructure.persistence.entity.category.CategoryEntity;
+import com.study.blog.infrastructure.persistence.entity.CategoryEntity;
 import com.study.blog.infrastructure.persistence.repository.category.JpaCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
