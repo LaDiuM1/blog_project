@@ -30,4 +30,7 @@ public class Tag extends BaseTime {
     @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
+    public Tag(String name) {
+        this.name = name;
+    }
 }

@@ -4,11 +4,10 @@ import com.study.blog.infrastructure.persistence.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long>, TagRepositoryCustom {
 
-    default Tag findByIdOrThrow(Long id) {
-        return findById(id).orElseThrow(EntityNotFoundException::new);
-    }
+    Optional<Tag> findTagByName(String name);
 
 }

@@ -10,11 +10,11 @@ import java.util.*;
 @Getter
 public class CreatePostRequest {
 
-    @NotBlank(message = "글 제목을 입력해 주세요.&20101")
-    @Size(max = 100, message = "글 제목은 100글자를 넘을 수 없습니다.&20102")
+    @NotBlank(message = "글 제목을 입력해 주세요.")
+    @Size(max = 100, message = "글 제목은 100글자를 넘을 수 없습니다.")
     private String title;
 
-    @NotBlank(message = "글 내용을 입력해 주세요.&20103")
+    @NotBlank(message = "글 내용을 입력해 주세요.")
     private String content;
 
     @TagNameSetValid(message = "태그는 공백으로만 이루어 질 수 없습니다.")

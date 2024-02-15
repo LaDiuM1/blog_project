@@ -1,6 +1,7 @@
 package com.study.blog.domain.admin.post.controller;
 
 import com.study.blog.domain.admin.post.request.CreatePostRequest;
+import com.study.blog.domain.admin.post.service.AdminPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +16,12 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AdminCreatePostController {
 
+    private final AdminPostService adminPostService;
+
     @PostMapping
     public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
 
+        adminPostService.createPost(createPostRequest);
 
         return ResponseEntity.ok().build();
     }

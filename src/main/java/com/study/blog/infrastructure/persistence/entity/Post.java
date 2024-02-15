@@ -39,4 +39,9 @@ public class Post extends BaseTime{
     )
     private Set<Tag> tags = new HashSet<>();
 
+    public Post(String title, String content, Set<Tag> tags) {
+        this.title = title;
+        this.content = content;
+        this.tags = tags;
+    }
 }
