@@ -1,18 +1,18 @@
 package com.study.blog.admin.category.repository;
 
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
+import com.study.blog.infrastructure.persistence.repository.category.CategoryRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CategoryEntityRepositoryTest {
+class CategoryRepositoryImplTest {
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepositoryImpl categoryRepositoryImpl;
 
     @Test
     void getCreateSequenceNumber() {
-        int sequenceNumber = categoryRepository.getCreateSequenceNumber();
+        int sequenceNumber = categoryRepositoryImpl.getCreateSequenceNumber();
 
         System.out.println("sequenceNumber = " + sequenceNumber);
     }

@@ -12,6 +12,6 @@ import java.util.TreeSet;
 @Getter
 public class UpdateCategorySequenceRequest {
 
-    LinkedHashSet<Long> idSet;
+    private LinkedHashSet<Long> idSet;
 
 }

@@ -1,14 +1,14 @@
 package com.study.blog.domain.admin.category.service;
 
 import com.study.blog.domain.admin.category.response.CategoryListResponse;
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
+import com.study.blog.infrastructure.persistence.repository.category.CategoryRepositoryImpl;
 import com.study.blog.domain.admin.category.request.CreateCategoryRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategoryRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategorySequenceRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategoryStatusRequest;
 import com.study.blog.domain.admin.category.response.CategoryResponse;
-import com.study.blog.infrastructure.persistence.entity.CategoryEntity;
-import com.study.blog.infrastructure.persistence.repository.category.JpaCategoryRepository;
+import com.study.blog.infrastructure.persistence.entity.Category;
+import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AdminCategoryService {
 
-    private final JpaCategoryRepository jpaCategoryRepository;
     private final CategoryRepository categoryRepository;
 
     public List<CategoryListResponse> getAdminCategoryList() {
@@ -27,7 +26,7 @@ public class AdminCategoryService {
     }
 
     public CategoryResponse getCategory(Long id){
-        return jpaCategoryRepository.findByIdOrThrow(id).toDto();
+        return categoryRepository.findByIdOrThrow(id).toDto();
 
     }
 
@@ -36,20 +35,20 @@ public class AdminCategoryService {
 
         int sequenceNumber = categoryRepository.getCreateSequenceNumber();
 
-        CategoryEntity categoryEntity = new CategoryEntity(
+        Category category = new Category(
                 request.getName(),
                 request.getDescription(),
                 sequenceNumber
         );
 
-        jpaCategoryRepository.save(categoryEntity);
+        categoryRepository.save(category);
 
     }
 
     @Transactional
     public void updateCategoryStatus(UpdateCategoryStatusRequest request){
 
-        jpaCategoryRepository.findByIdOrThrow(request.getId())
+        categoryRepository.findByIdOrThrow(request.getId())
                 .setStatus(!request.getStatus());
 
     }
@@ -58,21 +57,21 @@ public class AdminCategoryService {
     public void updateCategorySequence(UpdateCategorySequenceRequest request){
         LinkedHashSet<Long> idSet = request.getIdSet();
 
-        long categoryCount = jpaCategoryRepository.count();
+        long categoryCount = categoryRepository.count();
         int requestCount = idSet.size();
 
         if(categoryCount != requestCount){ throw new IllegalStateException(); }
 
-        List<CategoryEntity> categoryEntityList = new ArrayList<>();
+        List<Category> categoryList = new ArrayList<>();
 
         int sequence = 1;
         for (Long id : idSet) {
-            CategoryEntity entity = jpaCategoryRepository.findByIdOrThrow(id).setSequence(sequence);
-            categoryEntityList.add(entity);
+            Category entity = categoryRepository.findByIdOrThrow(id).setSequence(sequence);
+            categoryList.add(entity);
             sequence++;
         }
 
-        jpaCategoryRepository.saveAll(categoryEntityList);
+        categoryRepository.saveAll(categoryList);
 
     }
 
@@ -80,7 +79,7 @@ public class AdminCategoryService {
     @Transactional
     public void updateCategory(UpdateCategoryRequest request){
 
-        jpaCategoryRepository.findByIdOrThrow(request.getId())
+        categoryRepository.findByIdOrThrow(request.getId())
                 .setName(request.getName())
                 .setDescription(request.getDescription());
 
@@ -89,7 +88,7 @@ public class AdminCategoryService {
     @Transactional
     public void deleteCategory(Long id){
 
-        jpaCategoryRepository.deleteById(id);
+        categoryRepository.deleteById(id);
 
     }
 

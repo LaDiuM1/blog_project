@@ -1,44 +1,14 @@
 package com.study.blog.infrastructure.persistence.repository.category;
 
-import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.domain.admin.category.response.CategoryListResponse;
-import com.study.blog.domain.admin.category.response.CategoryResponse;
-import com.study.blog.infrastructure.entity.category.QCategory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import com.study.blog.infrastructure.persistence.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
 
+public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryRepositoryCustom {
 
-@Repository
-@Transactional(readOnly = true)
-@RequiredArgsConstructor
-public class CategoryRepository {
-
-    private final JPAQueryFactory query;
-
-    public Integer getCreateSequenceNumber(){
-        QCategory category = QCategory.category;
-
-        return query.select(category.sequence.max().add(1).coalesce(1))
-                .from(category)
-                .fetchOne();
-
-    }
-
-    public List<CategoryListResponse> getAdminCategoryList() {
-        QCategory category = QCategory.category;
-
-        return query.select(Projections.constructor(CategoryListResponse.class,
-                        category.id,
-                        category.name,
-                        category.description,
-                        category.status,
-                        category.sequence))
-                .from(category)
-                .fetch();
+    default Category findByIdOrThrow(Long id) {
+        return findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
 }

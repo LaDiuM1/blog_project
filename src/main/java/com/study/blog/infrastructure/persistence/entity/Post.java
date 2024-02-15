@@ -12,21 +12,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "post")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CommentEntity extends BaseTime{
+public class Post extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100, unique = true, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
-    @Column
+    @Column(nullable = false)
+    @Lob
     private String content;
     @Column(nullable = false)
     private boolean status = true;
@@ -36,6 +37,6 @@ public class CommentEntity extends BaseTime{
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<TagEntity> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 
 }

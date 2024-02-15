@@ -19,23 +19,15 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class PostEntity extends BaseTime{
+public class Tag extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100, unique = true, nullable = false)
-    private String title;
-    @Column
-    private String content;
-    @Column(nullable = false)
-    private boolean status = true;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "post_tag",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private Set<TagEntity> tags = new HashSet<>();
+
+    private String name;
+
+    @ManyToMany(mappedBy = "tags")
+    private Set<Post> posts = new HashSet<>();
 
 }

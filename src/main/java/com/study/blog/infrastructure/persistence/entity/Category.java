@@ -1,7 +1,6 @@
 package com.study.blog.infrastructure.persistence.entity;
 
 import com.study.blog.domain.admin.category.response.CategoryResponse;
-import com.study.blog.infrastructure.persistence.entity.BaseTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CategoryEntity extends BaseTime {
+public class Category extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +32,7 @@ public class CategoryEntity extends BaseTime {
     @Column(nullable = false)
     private int sequence;
 
-    public CategoryEntity(String name, String description, int sequence) {
+    public Category(String name, String description, int sequence) {
         this.name = name;
         this.description = description;
         this.sequence = sequence;
