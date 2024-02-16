@@ -30,6 +30,7 @@ public class AdminPostService {
 
         Post post = new Post(category, request.getTitle(), request.getContent());
 
+
         if(Optional.ofNullable(request.getTagNameSet()).isPresent()){
             request.getTagNameSet().forEach(tagName -> {
                 Tag tag = tagRepository.findTagByName(tagName)
