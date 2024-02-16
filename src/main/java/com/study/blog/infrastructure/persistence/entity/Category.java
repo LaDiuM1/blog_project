@@ -10,6 +10,10 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -31,6 +35,9 @@ public class Category extends BaseTime {
     private boolean status = true;
     @Column(nullable = false)
     private int sequence;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     public Category(String name, String description, int sequence) {
         this.name = name;

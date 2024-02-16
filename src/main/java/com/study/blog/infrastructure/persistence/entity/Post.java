@@ -31,7 +31,11 @@ public class Post extends BaseTime{
     private String content;
     @Column(nullable = false)
     private boolean status = true;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -39,9 +43,9 @@ public class Post extends BaseTime{
     )
     private Set<Tag> tags = new HashSet<>();
 
-    public Post(String title, String content, Set<Tag> tags) {
+    public Post(Category category, String title, String content) {
+        this.category = category;
         this.title = title;
         this.content = content;
-        this.tags = tags;
     }
 }
