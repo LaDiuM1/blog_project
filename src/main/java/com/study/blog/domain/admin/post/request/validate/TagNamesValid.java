@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = TagNameSetValidator.class)
-public @interface TagNameSetValid {
+public @interface TagNamesValid {
 
     String message();
 

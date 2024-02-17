@@ -1,6 +1,6 @@
 package com.study.blog.domain.admin.post.request;
 
-import com.study.blog.domain.admin.post.request.validate.TagNameSetValid;
+import com.study.blog.domain.admin.post.request.validate.TagNamesValid;
 import lombok.Getter;
 
 import javax.validation.constraints.Min;
@@ -11,9 +11,6 @@ import java.util.*;
 
 @Getter
 public class CreatePostRequest {
-
-
-
     @NotNull(message = "카테고리 id값이 null입니다.")
     @Min(value = 1, message = "카테고리 id는 정수 1 이상 요청바랍니다.")
     private Long categoryId;
@@ -25,7 +22,7 @@ public class CreatePostRequest {
     @NotBlank(message = "글 내용을 입력해 주세요.")
     private String content;
 
-    @TagNameSetValid(message = "태그는 공백으로만 이루어 질 수 없습니다.")
-    private HashSet<String> tagNameSet;
+    @TagNamesValid(message = "태그는 공백으로만 이루어 질 수 없습니다.")
+    private HashSet<String> tagNames;
 
 }

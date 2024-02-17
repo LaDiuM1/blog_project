@@ -4,7 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Set;
 
-public class TagNameSetValidator implements ConstraintValidator<TagNameSetValid, Set<String>> {
+public class TagNameSetValidator implements ConstraintValidator<TagNamesValid, Set<String>> {
 
     public boolean isValid(Set<String> tagNameSet, ConstraintValidatorContext context) {
         if (tagNameSet == null) {

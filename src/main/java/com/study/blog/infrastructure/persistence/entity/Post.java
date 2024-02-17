@@ -8,7 +8,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +37,10 @@ public class Post extends BaseTime{
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "post_tag",
@@ -49,3 +55,5 @@ public class Post extends BaseTime{
         this.content = content;
     }
 }
+
+
