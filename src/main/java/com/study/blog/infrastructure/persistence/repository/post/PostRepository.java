@@ -1,8 +1,13 @@
 package com.study.blog.infrastructure.persistence.repository.post;
 
+import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends JpaRepository<Post, Long>, PostRepositoryCustom{
+import javax.persistence.EntityNotFoundException;
 
+public interface PostRepository extends JpaRepository<Post, Long>, PostRepositoryCustom{
+    default Post findByIdOrThrow(Long id) {
+        return findById(id).orElseThrow(EntityNotFoundException::new);
+    }
 }

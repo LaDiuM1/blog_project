@@ -22,14 +22,7 @@ public class AdminUpdateCategoryController {
 
     private final AdminCategoryService adminCategoryService;
 
-    @GetMapping
-    public ResponseEntity<CategoryResponse> getCategory(@Param("id") Long id){
 
-        CategoryResponse category = adminCategoryService.getCategory(id);
-
-        return ResponseEntity.ok(category);
-
-    }
 
     @PutMapping
     public ResponseEntity<Void> updateCategory(@Valid @RequestBody UpdateCategoryRequest request) {

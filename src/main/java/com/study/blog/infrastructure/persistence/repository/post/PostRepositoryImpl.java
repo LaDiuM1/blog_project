@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.domain.admin.post.response.PostListResponse;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional(readOnly = true)
@@ -79,7 +77,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
                     .from(tag)
                     .where(tag.posts.any().id.eq(postResponse.getId()))
                     .fetch());
-            postResponse.setTags(tags);
+            postResponse.setTagNames(tags);
         });
 
         JPAQuery<Long> count = query.select(post.count())

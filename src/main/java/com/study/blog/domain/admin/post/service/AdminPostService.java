@@ -3,6 +3,7 @@ package com.study.blog.domain.admin.post.service;
 import com.study.blog.domain.admin.post.request.CreatePostRequest;
 import com.study.blog.domain.admin.post.request.PostListRequest;
 import com.study.blog.domain.admin.post.response.PostListResponse;
+import com.study.blog.domain.admin.post.response.PostResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import com.study.blog.infrastructure.persistence.entity.Tag;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +52,15 @@ public class AdminPostService {
         Boolean searchStatus = request.getSearchStatus();
 
         return postRepository.getPostList(searchCategoryIds, searchKeyword, searchStatus, pageable);
+    }
 
+    public PostResponse getPost(Long id){
+        Post post = postRepository.findByIdOrThrow(id);
+        String title = post.getTitle();
+        String content = post.getContent();
+        Set<String> tagNames = post.getTags().stream().map(Tag::getName).collect(Collectors.toSet());
+
+        return new PostResponse(id, title, content, tagNames);
     }
 
 }

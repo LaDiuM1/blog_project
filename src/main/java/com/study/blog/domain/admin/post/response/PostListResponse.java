@@ -16,7 +16,7 @@ public class PostListResponse {
     private String title;
     private Boolean status;
     private String categoryName;
-    private Set<String> tags = new HashSet<>();
+    private Set<String> tagNames = new HashSet<>();
     private Long commentCount;
 
     public PostListResponse(Long id, String title, Boolean status, String categoryName, Long commentCount) {
