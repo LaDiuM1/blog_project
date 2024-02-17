@@ -94,4 +94,10 @@ public class AdminPostService {
         postRepository.save(post);
     }
 
+    @Transactional
+    public void deletePost(Long id){
+        Post post = postRepository.findByIdOrThrow(id);
+        postRepository.delete(post);
+    }
+
 }
