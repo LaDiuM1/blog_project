@@ -21,7 +21,6 @@ import java.util.Set;
 @DynamicUpdate
 @Getter @Setter
 @NoArgsConstructor
-@Accessors(chain = true)
 public class Category extends BaseTime {
 
     @Id

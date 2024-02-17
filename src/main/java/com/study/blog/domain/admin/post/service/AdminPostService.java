@@ -56,7 +56,7 @@ public class AdminPostService {
 
     }
 
-    public Page<PostListResponse> getPostList (PostListRequest request, Pageable pageable){
+    public Page<PostListResponse> getPostList(PostListRequest request, Pageable pageable){
 
         Set<Long> searchCategoryIds = request.getSearchCategoryIds();
         String searchKeyword = request.getSearchKeyword();
@@ -84,6 +84,14 @@ public class AdminPostService {
         post.setContent(request.getContent());
 
         postRepository.save(updatePostTags(post, request.getTagNames()));
+    }
+
+    @Transactional
+    public void updatePostStatus(Long id){
+        Post post = postRepository.findByIdOrThrow(id);
+        post.setStatus(!post.isStatus());
+
+        postRepository.save(post);
     }
 
 }

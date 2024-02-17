@@ -1,11 +1,9 @@
 package com.study.blog.domain.admin.category.service;
 
 import com.study.blog.domain.admin.category.response.CategoryListResponse;
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepositoryImpl;
 import com.study.blog.domain.admin.category.request.CreateCategoryRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategoryRequest;
 import com.study.blog.domain.admin.category.request.UpdateCategorySequenceRequest;
-import com.study.blog.domain.admin.category.request.UpdateCategoryStatusRequest;
 import com.study.blog.domain.admin.category.response.CategoryResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
@@ -46,11 +44,12 @@ public class AdminCategoryService {
     }
 
     @Transactional
-    public void updateCategoryStatus(UpdateCategoryStatusRequest request){
+    public void updateCategoryStatus(Long id){
 
-        categoryRepository.findByIdOrThrow(request.getId())
-                .setStatus(!request.getStatus());
+        Category category = categoryRepository.findByIdOrThrow(id);
+        category.setStatus(!category.isStatus());
 
+        categoryRepository.save(category);
     }
 
     @Transactional
@@ -66,7 +65,8 @@ public class AdminCategoryService {
 
         int sequence = 1;
         for (Long id : idSet) {
-            Category entity = categoryRepository.findByIdOrThrow(id).setSequence(sequence);
+            Category entity = categoryRepository.findByIdOrThrow(id);
+            entity.setSequence(sequence);
             categoryList.add(entity);
             sequence++;
         }
@@ -79,9 +79,12 @@ public class AdminCategoryService {
     @Transactional
     public void updateCategory(UpdateCategoryRequest request){
 
-        categoryRepository.findByIdOrThrow(request.getId())
-                .setName(request.getName())
-                .setDescription(request.getDescription());
+        Category category = categoryRepository.findByIdOrThrow(request.getId());
+
+        category.setName(request.getName());
+        category.setDescription(request.getDescription());;
+
+        categoryRepository.save(category);
 
     }
 
