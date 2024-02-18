@@ -18,9 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +30,25 @@ public class AdminPostService {
     private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
 
+    private void updatePostTags(Post post, HashSet<String> tagNames){
+        List<Tag> existingTags = tagRepository.existingTagsByName(tagNames);
+
+        Map<String, Tag> existingTagsMap = existingTags.stream()
+                .collect(Collectors.toMap(Tag::getName, Function.identity()));
+
+        Set<Tag> newTags = new HashSet<>();
+        for (String tagName : tagNames) {
+            if (existingTagsMap.containsKey(tagName)) {
+                post.getTags().add(existingTagsMap.get(tagName));
+            }
+            else {
+                newTags.add(new Tag(tagName));
+            }
+
+            tagRepository.saveAll(newTags).forEach(post.getTags()::add);
+        }
+    }
+
     @Transactional
     public void createPost(CreatePostRequest request){
         Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
@@ -38,7 +56,7 @@ public class AdminPostService {
         Post post = new Post(category, request.getTitle(), request.getContent());
 
         if(Optional.ofNullable(request.getTagNames()).isPresent()){
-            tagRepository.addTagsToPost(post, request.getTagNames());
+            updatePostTags(post, request.getTagNames());
         }
         postRepository.save(post);
     }
@@ -69,7 +87,7 @@ public class AdminPostService {
         post.setCategory(category);
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        tagRepository.addTagsToPost(post, request.getTagNames());
+        updatePostTags(post, request.getTagNames());
     }
 
     @Transactional
