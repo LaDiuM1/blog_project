@@ -17,13 +17,6 @@ public class AdminUpdatePostController {
 
     private final AdminPostService adminPostService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id) {
-
-        PostResponse post = adminPostService.getPost(id);
-
-        return ResponseEntity.ok(post);
-    }
 
     @PutMapping()
     public ResponseEntity<Void> updatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {

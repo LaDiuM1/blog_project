@@ -48,8 +48,6 @@ public class AdminCategoryService {
 
         Category category = categoryRepository.findByIdOrThrow(id);
         category.setStatus(!category.isStatus());
-
-        categoryRepository.save(category);
     }
 
     @Transactional
@@ -83,16 +81,12 @@ public class AdminCategoryService {
 
         category.setName(request.getName());
         category.setDescription(request.getDescription());;
-
-        categoryRepository.save(category);
-
     }
 
     @Transactional
     public void deleteCategory(Long id){
 
         categoryRepository.deleteById(id);
-
     }
 
 }

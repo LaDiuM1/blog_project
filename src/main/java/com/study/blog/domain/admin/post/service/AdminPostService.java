@@ -32,15 +32,12 @@ public class AdminPostService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public Post updatePostTags(Post post, HashSet<String> tagNames){
-
+    public void updatePostTags(Post post, HashSet<String> tagNames){
         tagNames.forEach(tagName -> {
             Tag tag = tagRepository.findTagByName(tagName)
                     .orElseGet(() -> tagRepository.save(new Tag(tagName)));
             post.getTags().add(tag);
         });
-
-        return post;
     }
 
     @Transactional
@@ -50,7 +47,7 @@ public class AdminPostService {
         Post post = new Post(category, request.getTitle(), request.getContent());
 
         if(Optional.ofNullable(request.getTagNames()).isPresent()){
-            post = updatePostTags(post, request.getTagNames());
+            updatePostTags(post, request.getTagNames());
         }
         postRepository.save(post);
 
@@ -82,8 +79,9 @@ public class AdminPostService {
         post.setCategory(category);
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
+        updatePostTags(post, request.getTagNames());
 
-        postRepository.save(updatePostTags(post, request.getTagNames()));
+        postRepository.save(post);
     }
 
     @Transactional
