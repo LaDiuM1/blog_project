@@ -25,12 +25,10 @@ public class AdminCategoryService {
 
     public CategoryResponse getCategory(Long id){
         return categoryRepository.findByIdOrThrow(id).toDto();
-
     }
 
     @Transactional
     public void createCategory(CreateCategoryRequest request){
-
         int sequenceNumber = categoryRepository.getCreateSequenceNumber();
 
         Category category = new Category(
@@ -38,45 +36,26 @@ public class AdminCategoryService {
                 request.getDescription(),
                 sequenceNumber
         );
-
         categoryRepository.save(category);
-
     }
 
     @Transactional
     public void updateCategoryStatus(Long id){
-
         Category category = categoryRepository.findByIdOrThrow(id);
         category.setStatus(!category.isStatus());
     }
 
-    @Transactional
     public void updateCategorySequence(UpdateCategorySequenceRequest request){
         LinkedHashSet<Long> idSet = request.getIdSet();
 
-        long categoryCount = categoryRepository.count();
-        int requestCount = idSet.size();
+        boolean updateValid = categoryRepository.updateCategoryValid(idSet);
+        if(updateValid){ throw new IllegalStateException(); }
 
-        if(categoryCount != requestCount){ throw new IllegalStateException(); }
-
-        List<Category> categoryList = new ArrayList<>();
-
-        int sequence = 1;
-        for (Long id : idSet) {
-            Category entity = categoryRepository.findByIdOrThrow(id);
-            entity.setSequence(sequence);
-            categoryList.add(entity);
-            sequence++;
-        }
-
-        categoryRepository.saveAll(categoryList);
-
+        categoryRepository.updateCategorySequence(idSet);
     }
-
 
     @Transactional
     public void updateCategory(UpdateCategoryRequest request){
-
         Category category = categoryRepository.findByIdOrThrow(request.getId());
 
         category.setName(request.getName());
@@ -85,7 +64,7 @@ public class AdminCategoryService {
 
     @Transactional
     public void deleteCategory(Long id){
-
+        categoryRepository.findByIdOrThrow(id);
         categoryRepository.deleteById(id);
     }
 

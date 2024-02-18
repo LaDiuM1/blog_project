@@ -1,6 +1,9 @@
 package com.study.blog.infrastructure.persistence.repository.category;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.domain.admin.category.response.CategoryListResponse;
 import com.study.blog.infrastructure.persistence.entity.QCategory;
@@ -9,14 +12,26 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
 
     private final JPAQueryFactory query;
+
+    private NumberExpression<Integer> sequenceCaseBuilder(QCategory category, Set<Long> idSet){
+        CaseBuilder caseBuilder = new CaseBuilder();
+        NumberExpression<Integer> categorySequence = category.sequence;
+        int sequenceNumber = 1;
+        for (Long id : idSet) {
+            categorySequence = caseBuilder.when(category.id.eq(id)).then(sequenceNumber++).otherwise(categorySequence);
+        }
+        return categorySequence;
+    }
 
     public Integer getCreateSequenceNumber(){
         QCategory category = QCategory.category;
@@ -40,4 +55,25 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
                 .fetch();
     }
 
+    public boolean updateCategoryValid(Set<Long> idSet){
+        QCategory category = QCategory.category;
+
+        JPAQuery<Long> jpaQuery = query.select(category.count())
+                .from(category);
+
+        Long categoryCount = jpaQuery.fetchOne();
+        Long requestCount = jpaQuery.where(category.id.in(idSet)).fetchOne();
+
+        return !Objects.equals(requestCount, categoryCount);
+    }
+
+    public void updateCategorySequence(Set<Long> idSet){
+        QCategory category = QCategory.category;
+        NumberExpression<Integer> cases = sequenceCaseBuilder(category, idSet);
+
+        query.update(category)
+                .set(category.sequence, cases)
+                .where(category.id.in(idSet))
+                .execute();
+    }
 }

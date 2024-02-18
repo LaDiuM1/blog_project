@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/admin/post")
 @RequiredArgsConstructor
@@ -25,8 +27,17 @@ public class AdminPostController {
         return ResponseEntity.ok(post);
     }
 
-    @PostMapping
-    public ResponseEntity<Page<PostListResponse>> getPostList(@RequestBody PostListRequest postListRequest, Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<Page<PostListResponse>> getPostList(
+                                                              @RequestParam(required = false) Set<Long> searchCategoryIds,
+                                                              @RequestParam(required = false) String searchKeyword,
+                                                              @RequestParam(required = false) Boolean searchStatus,
+                                                              Pageable pageable) {
+
+        PostListRequest postListRequest = new PostListRequest();
+        postListRequest.setSearchCategoryIds(searchCategoryIds);
+        postListRequest.setSearchKeyword(searchKeyword);
+        postListRequest.setSearchStatus(searchStatus);
 
         Page<PostListResponse> postList = adminPostService.getPostList(postListRequest, pageable);
 
