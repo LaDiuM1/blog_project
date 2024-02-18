@@ -30,7 +30,7 @@ public class AdminPostService {
     private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
 
-    private void updatePostTags(Post post, HashSet<String> tagNames){
+    private void updatePostTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.existingTagsByName(tagNames);
 
         Map<String, Tag> existingTagsMap = existingTags.stream()
