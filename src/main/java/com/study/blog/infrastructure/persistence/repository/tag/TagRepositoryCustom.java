@@ -11,8 +11,6 @@ import java.util.Set;
 
 public interface TagRepositoryCustom {
     List<SearchTagResponse> searchTag(String name);
-    List<Tag> existingTagsByName(Set<String> tagNames);
 
     Map<Long, List<TagResponse>> getPostIdAndTagMap(Set<Long> postIds);
-
 }

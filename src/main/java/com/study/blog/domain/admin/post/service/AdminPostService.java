@@ -13,7 +13,6 @@ import com.study.blog.infrastructure.persistence.repository.category.CategoryRep
 import com.study.blog.infrastructure.persistence.repository.post.PostRepository;
 import com.study.blog.infrastructure.persistence.repository.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,8 +30,8 @@ public class AdminPostService {
     private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
 
-    private void updatePostTags(Post post, Set<String> tagNames){
-        List<Tag> existingTags = tagRepository.existingTagsByName(tagNames);
+    private void postAddTags(Post post, Set<String> tagNames){
+        List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
 
         Map<String, Tag> existingTagsMap = existingTags.stream()
                 .collect(Collectors.toMap(Tag::getName, Function.identity()));
@@ -56,7 +55,7 @@ public class AdminPostService {
         Post post = new Post(category, request.getTitle(), request.getContent());
 
         if(Optional.ofNullable(request.getTagNames()).isPresent()){
-            updatePostTags(post, request.getTagNames());
+            postAddTags(post, request.getTagNames());
         }
         postRepository.save(post);
     }
@@ -97,7 +96,7 @@ public class AdminPostService {
         post.setCategory(category);
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        updatePostTags(post, request.getTagNames());
+        postAddTags(post, request.getTagNames());
     }
 
     @Transactional

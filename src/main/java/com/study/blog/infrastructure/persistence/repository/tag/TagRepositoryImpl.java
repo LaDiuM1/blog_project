@@ -25,15 +25,6 @@ import java.util.stream.Collectors;
 public class TagRepositoryImpl implements TagRepositoryCustom{
 
     private final JPAQueryFactory query;
-    private final EntityManager entityManager;
-
-    public List<Tag> existingTagsByName(Set<String> tagNames) {
-        QTag tag = QTag.tag;
-        return query.select(tag)
-                .from(tag)
-                .where(tag.name.in(tagNames))
-                .fetch();
-    }
 
     public List<SearchTagResponse> searchTag(String name) {
         QTag tag = QTag.tag;
@@ -45,12 +36,6 @@ public class TagRepositoryImpl implements TagRepositoryCustom{
                 .orderBy(tag.name.length().asc())
                 .limit(10)
                 .fetch();
-    }
-
-    public void saveTags(Set<Tag> tags){
-        for (Tag tag : tags) {
-            entityManager.persist(tag);
-        }
     }
 
     public Map<Long, List<TagResponse>> getPostIdAndTagMap(Set<Long> postIds){
