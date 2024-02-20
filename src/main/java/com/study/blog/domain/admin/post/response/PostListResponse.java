@@ -1,14 +1,13 @@
 package com.study.blog.domain.admin.post.response;
 
+import com.study.blog.domain.admin.tag.response.TagResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class PostListResponse {
 
@@ -16,8 +15,9 @@ public class PostListResponse {
     private String title;
     private Boolean status;
     private String categoryName;
-    private Set<String> tagNames = new HashSet<>();
     private Long commentCount;
+    @Setter
+    private List<TagResponse> tags;
 
     public PostListResponse(Long id, String title, Boolean status, String categoryName, Long commentCount) {
         this.id = id;
@@ -26,4 +26,6 @@ public class PostListResponse {
         this.categoryName = categoryName;
         this.commentCount = commentCount;
     }
+
+
 }

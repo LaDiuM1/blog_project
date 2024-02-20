@@ -7,7 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.persistence.EntityNotFoundException;
 
 public interface PostRepository extends JpaRepository<Post, Long>, PostRepositoryCustom{
-    default Post findByIdOrThrow(Long id) {
-        return findById(id).orElseThrow(EntityNotFoundException::new);
-    }
+
 }

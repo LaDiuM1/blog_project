@@ -5,6 +5,7 @@ import com.study.blog.domain.admin.post.request.PostListRequest;
 import com.study.blog.domain.admin.post.request.UpdatePostRequest;
 import com.study.blog.domain.admin.post.response.PostListResponse;
 import com.study.blog.domain.admin.post.response.PostResponse;
+import com.study.blog.domain.admin.tag.response.TagResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import com.study.blog.infrastructure.persistence.entity.Tag;
@@ -49,7 +50,6 @@ public class AdminPostService {
         }
     }
 
-    @Transactional
     public void createPost(CreatePostRequest request){
         Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
 
@@ -67,7 +67,17 @@ public class AdminPostService {
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
 
-        return postRepository.getPostList(searchCategoryIds, searchKeyword, searchStatus, pageable);
+        Page<PostListResponse> postList = postRepository.getPostAndCommentCountList(searchCategoryIds, searchKeyword, searchStatus, pageable);
+        Set<Long> postIds = postList.getContent().stream().map(PostListResponse::getId).collect(Collectors.toSet());
+
+        Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);
+
+        postList.forEach(postResponse -> {
+            List<TagResponse> tags = postTagsMap.getOrDefault(postResponse.getId(), Collections.emptyList());
+            postResponse.setTags(tags);
+        });
+
+        return postList;
     }
 
     public PostResponse getPost(Long id){
@@ -96,7 +106,6 @@ public class AdminPostService {
         post.setStatus(!post.isStatus());
     }
 
-    @Transactional
     public void deletePost(Long id){
         Post post = postRepository.findByIdOrThrow(id);
         postRepository.delete(post);

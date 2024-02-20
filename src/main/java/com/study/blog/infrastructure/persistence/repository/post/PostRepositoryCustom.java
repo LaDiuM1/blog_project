@@ -1,11 +1,14 @@
 package com.study.blog.infrastructure.persistence.repository.post;
 
 import com.study.blog.domain.admin.post.response.PostListResponse;
+import com.study.blog.infrastructure.persistence.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Set;
 
 public interface PostRepositoryCustom {
-    Page<PostListResponse> getPostList(Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus, Pageable pageable);
+    Post findByIdOrThrow(Long id);
+
+    Page<PostListResponse> getPostAndCommentCountList(Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus, Pageable pageable);
 }
