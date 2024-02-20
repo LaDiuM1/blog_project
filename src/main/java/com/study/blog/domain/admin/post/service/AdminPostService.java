@@ -45,9 +45,9 @@ public class AdminPostService {
             else {
                 newTags.add(new Tag(tagName));
             }
-
-            tagRepository.saveAll(newTags).forEach(post.getTags()::add);
         }
+        tagRepository.saveAll(newTags)
+                .forEach(post.getTags()::add);
     }
 
     public void createPost(CreatePostRequest request){
