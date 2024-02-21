@@ -1,19 +1,16 @@
 package com.study.blog.infrastructure.persistence.entity;
 
-import com.study.blog.domain.admin.category.response.CategoryResponse;
+import com.study.blog.service.category.response.CategoryResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "category")

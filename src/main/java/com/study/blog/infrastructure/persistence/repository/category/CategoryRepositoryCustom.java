@@ -1,6 +1,6 @@
 package com.study.blog.infrastructure.persistence.repository.category;
 
-import com.study.blog.domain.admin.category.response.CategoryListResponse;
+import com.study.blog.service.category.response.CategoryListResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.domain.admin.category.response.CategoryListResponse;
+import com.study.blog.service.category.response.CategoryListResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.entity.QCategory;
 import lombok.RequiredArgsConstructor;

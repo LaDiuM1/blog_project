@@ -1,6 +1,6 @@
 package com.study.blog.infrastructure.persistence.repository.post;
 
-import com.study.blog.domain.admin.post.response.PostListResponse;
+import com.study.blog.service.post.response.PostListResponse;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

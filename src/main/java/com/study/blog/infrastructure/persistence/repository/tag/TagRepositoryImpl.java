@@ -3,21 +3,17 @@ package com.study.blog.infrastructure.persistence.repository.tag;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.domain.admin.post.response.PostListResponse;
-import com.study.blog.domain.admin.tag.response.SearchTagResponse;
-import com.study.blog.domain.admin.tag.response.TagResponse;
+import com.study.blog.service.tag.response.SearchTagResponse;
+import com.study.blog.service.tag.response.TagResponse;
 import com.study.blog.infrastructure.persistence.entity.QPost;
 import com.study.blog.infrastructure.persistence.entity.QTag;
-import com.study.blog.infrastructure.persistence.entity.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional

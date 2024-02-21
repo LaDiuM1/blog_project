@@ -1,14 +1,12 @@
 package com.study.blog.infrastructure.persistence.repository.post;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.domain.admin.post.response.PostListResponse;
-import com.study.blog.domain.admin.tag.response.TagResponse;
+import com.study.blog.service.post.response.PostListResponse;
 import com.study.blog.infrastructure.persistence.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,11 +16,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional(readOnly = true)
