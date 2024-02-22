@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminDeletePostController {
 
-    PostService postService;
+    private final PostService postService;
 
     @DeleteMapping
     public ResponseEntity<Void> deletePost(@Param("id") Long id) {

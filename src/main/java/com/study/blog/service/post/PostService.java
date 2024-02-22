@@ -51,7 +51,6 @@ public class PostService {
                 .forEach(post.getTags()::add);
     }
 
-    @Transactional
     public void createPost(CreatePostRequest request){
         Category categoryRef = categoryRepository.getReferenceById(request.getCategoryId());
 
@@ -66,7 +65,6 @@ public class PostService {
     }
 
     public Page<PostListResponse> getPostList(PostListRequest request, Pageable pageable){
-
         Set<Long> searchCategoryIds = request.getSearchCategoryIds();
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
@@ -111,8 +109,7 @@ public class PostService {
     }
 
     public void deletePost(Long id){
-        Post post = postRepository.findByIdOrThrow(id);
-        postRepository.delete(post);
+        postRepository.deleteById(id);
     }
 
 }

@@ -9,8 +9,8 @@ import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -27,7 +27,6 @@ public class CategoryService {
         return categoryRepository.findByIdOrThrow(id).toDto();
     }
 
-    @Transactional
     public void createCategory(CreateCategoryRequest request){
         int sequenceNumber = categoryRepository.getCreateSequenceNumber();
 
@@ -62,9 +61,7 @@ public class CategoryService {
         category.setDescription(request.getDescription());;
     }
 
-    @Transactional
     public void deleteCategory(Long id){
-        categoryRepository.findByIdOrThrow(id);
         categoryRepository.deleteById(id);
     }
 
