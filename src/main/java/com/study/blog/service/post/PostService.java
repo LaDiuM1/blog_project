@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Function;
@@ -29,6 +30,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
+    private final EntityManager entityManager;
 
     private void postAddTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
@@ -49,13 +51,16 @@ public class PostService {
                 .forEach(post.getTags()::add);
     }
 
+    @Transactional
     public void createPost(CreatePostRequest request){
-        Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
+        Category categoryRef = categoryRepository.getReferenceById(request.getCategoryId());
 
-        Post post = new Post(category, request.getTitle(), request.getContent());
+        Post post = new Post(categoryRef, request.getTitle(), request.getContent());
 
         if(Optional.ofNullable(request.getTagNames()).isPresent()){
-            postAddTags(post, request.getTagNames());
+            if(!request.getTagNames().isEmpty()){
+                postAddTags(post, request.getTagNames());
+            }
         }
         postRepository.save(post);
     }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.PersistenceConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,6 +42,10 @@ public class Category extends BaseTime {
         this.sequence = sequence;
     }
 
+    public Category(Long id){
+        this.id = id;
+    }
+
     public CategoryResponse toDto() {
         return new CategoryResponse(
                 this.getId(),
@@ -52,6 +57,8 @@ public class Category extends BaseTime {
                 this.getUpdateDate()
         );
     }
+
+
 
     public LocalDateTime getUpdateDate(){
         return this.updateDate;
