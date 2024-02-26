@@ -40,6 +40,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
     private NumberExpression<Integer> sequenceCaseBuilder(QCategory category, Set<Long> idSet){
         CaseBuilder caseBuilder = new CaseBuilder();
         NumberExpression<Integer> categorySequence = category.sequence;
+//        번호 설정 코드 최적화
         int sequenceNumber = 1;
         for (Long id : idSet) {
             categorySequence = caseBuilder.when(category.id.eq(id)).then(sequenceNumber++).otherwise(categorySequence);

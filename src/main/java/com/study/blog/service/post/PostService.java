@@ -30,7 +30,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
-    private final EntityManager entityManager;
 
     private void postAddTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
@@ -52,6 +51,7 @@ public class PostService {
     }
 
     public void createPost(CreatePostRequest request){
+        // 카테고리 확인 로직 추가 여부 확인
         Category categoryRef = categoryRepository.getReferenceById(request.getCategoryId());
 
         Post post = new Post(categoryRef, request.getTitle(), request.getContent());

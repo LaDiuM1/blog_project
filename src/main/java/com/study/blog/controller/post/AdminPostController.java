@@ -33,7 +33,7 @@ public class AdminPostController {
                                                               @RequestParam(required = false) String searchKeyword,
                                                               @RequestParam(required = false) Boolean searchStatus,
                                                               Pageable pageable) {
-
+        // 배열값을 쿼리스트링으로 받는 방법 확인
         PostListRequest postListRequest = new PostListRequest();
         postListRequest.setSearchCategoryIds(searchCategoryIds);
         postListRequest.setSearchKeyword(searchKeyword);

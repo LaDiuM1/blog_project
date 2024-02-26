@@ -60,7 +60,6 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
     public Page<PostListResponse> getPostAndCommentCountList(Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
-        QTag tag = QTag.tag;
 
         BooleanBuilder builder = getPostListBooleanBuilder(post, searchCategoryIds, searchKeyword, searchStatus);
 
