@@ -1,4 +1,4 @@
-package com.study.blog.controller.tag;
+package com.study.blog.controller;
 
 
 import com.study.blog.service.tag.response.SearchTagResponse;
@@ -13,19 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/tag/search")
+@RequestMapping("/admin/tag")
 @RequiredArgsConstructor
-public class AdminSearchTagController {
+public class AdminTagController {
 
     private final TagService tagService;
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<List<SearchTagResponse>> searchTag(@Param("keyword") String searchTagKeyword) {
 
         List<SearchTagResponse> searchTagResponseList = tagService.searchTag(searchTagKeyword);
 
         return ResponseEntity.ok(searchTagResponseList);
-
     }
 
 

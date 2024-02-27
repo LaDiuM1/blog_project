@@ -1,4 +1,4 @@
-package com.study.blog.controller.post.request.validate;
+package com.study.blog.service.post.request.validate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

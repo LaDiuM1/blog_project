@@ -1,8 +1,8 @@
 package com.study.blog.service.post;
 
-import com.study.blog.controller.post.request.CreatePostRequest;
-import com.study.blog.controller.post.request.PostListRequest;
-import com.study.blog.controller.post.request.UpdatePostRequest;
+import com.study.blog.service.post.request.CreatePostRequest;
+import com.study.blog.service.post.request.PostListRequest;
+import com.study.blog.service.post.request.UpdatePostRequest;
 import com.study.blog.service.post.response.PostListResponse;
 import com.study.blog.service.post.response.PostResponse;
 import com.study.blog.service.tag.response.TagResponse;
@@ -17,7 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Function;
@@ -51,7 +51,9 @@ public class PostService {
     }
 
     public void createPost(CreatePostRequest request){
-        // 카테고리 확인 로직 추가 여부 확인
+        boolean categoryIdCheck = categoryRepository.existsById(request.getCategoryId());
+        if(categoryIdCheck) { throw new EntityNotFoundException(); }
+
         Category categoryRef = categoryRepository.getReferenceById(request.getCategoryId());
 
         Post post = new Post(categoryRef, request.getTitle(), request.getContent());
@@ -65,11 +67,11 @@ public class PostService {
     }
 
     public Page<PostListResponse> getPostList(PostListRequest request, Pageable pageable){
-        Set<Long> searchCategoryIds = request.getSearchCategoryIds();
+        Long searchCategoryId = request.getSearchCategoryId();
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
 
-        Page<PostListResponse> postList = postRepository.getPostAndCommentCountList(searchCategoryIds, searchKeyword, searchStatus, pageable);
+        Page<PostListResponse> postList = postRepository.getPostAndCommentCountList(searchCategoryId, searchKeyword, searchStatus, pageable);
         Set<Long> postIds = postList.getContent().stream().map(PostListResponse::getId).collect(Collectors.toSet());
 
         Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);

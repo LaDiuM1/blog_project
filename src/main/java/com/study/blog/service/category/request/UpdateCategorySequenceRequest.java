@@ -1,4 +1,4 @@
-package com.study.blog.controller.category.request;
+package com.study.blog.service.category.request;
 
 import lombok.Getter;
 

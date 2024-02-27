@@ -38,11 +38,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return post;
     }
 
-    private BooleanBuilder getPostListBooleanBuilder(QPost post, Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus){
+    private BooleanBuilder getPostListBooleanBuilder(QPost post, Long searchCategoryId, String searchKeyword, Boolean searchStatus){
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (searchCategoryIds != null && !searchCategoryIds.isEmpty()) {
-            builder.and(post.category.id.in(searchCategoryIds));
+        if (searchCategoryId != null) {
+            builder.and(post.category.id.eq(searchCategoryId));
         }
 
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
@@ -57,11 +57,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return builder;
     }
 
-    public Page<PostListResponse> getPostAndCommentCountList(Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus, Pageable pageable) {
+    public Page<PostListResponse> getPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 
-        BooleanBuilder builder = getPostListBooleanBuilder(post, searchCategoryIds, searchKeyword, searchStatus);
+        BooleanBuilder builder = getPostListBooleanBuilder(post, searchCategoryId, searchKeyword, searchStatus);
 
         List<PostListResponse> fetch = query.select(Projections.constructor(PostListResponse.class,
                         post.id,

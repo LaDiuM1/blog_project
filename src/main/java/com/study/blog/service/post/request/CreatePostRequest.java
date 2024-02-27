@@ -1,20 +1,16 @@
-package com.study.blog.controller.post.request;
+package com.study.blog.service.post.request;
 
-import com.study.blog.controller.post.request.validate.TagNamesValid;
+import com.study.blog.service.post.request.validate.TagNamesValid;
 import lombok.Getter;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
+import java.util.*;
 
 @Getter
-public class UpdatePostRequest {
-    @NotNull(message = "게시글 id값이 null입니다.")
-    @Min(value = 1, message = "게시글 id는 정수 1 이상 요청바랍니다.")
-    private Long id;
-    
+public class CreatePostRequest {
     @NotNull(message = "카테고리 id값이 null입니다.")
     @Min(value = 1, message = "카테고리 id는 정수 1 이상 요청바랍니다.")
     private Long categoryId;
@@ -28,4 +24,5 @@ public class UpdatePostRequest {
 
     @TagNamesValid(message = "태그는 공백으로만 이루어질 수 없습니다.")
     private HashSet<String> tagNames;
+
 }

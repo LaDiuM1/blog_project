@@ -10,5 +10,5 @@ import java.util.Set;
 public interface PostRepositoryCustom {
     Post findByIdOrThrow(Long id);
 
-    Page<PostListResponse> getPostAndCommentCountList(Set<Long> searchCategoryIds, String searchKeyword, Boolean searchStatus, Pageable pageable);
+    Page<PostListResponse> getPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable);
 }
