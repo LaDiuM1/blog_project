@@ -1,6 +1,6 @@
-package com.study.blog.service.post.response;
+package com.study.blog.infrastructure.persistence.repository.post.response;
 
-import com.study.blog.service.tag.response.TagResponse;
+import com.study.blog.infrastructure.persistence.repository.tag.response.TagResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

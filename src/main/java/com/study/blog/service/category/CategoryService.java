@@ -1,10 +1,10 @@
 package com.study.blog.service.category;
 
-import com.study.blog.service.category.response.CategoryListResponse;
+import com.study.blog.infrastructure.persistence.repository.category.response.CategoryListResponse;
 import com.study.blog.service.category.request.CreateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategorySequenceRequest;
-import com.study.blog.service.category.response.CategoryResponse;
+import com.study.blog.infrastructure.persistence.repository.category.response.CategoryResponse;
 import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +58,7 @@ public class CategoryService {
         Category category = categoryRepository.findByIdOrThrow(request.getId());
 
         category.setName(request.getName());
-        category.setDescription(request.getDescription());;
+        category.setDescription(request.getDescription());
     }
 
     public void deleteCategory(Long id){

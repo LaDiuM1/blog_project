@@ -1,7 +1,7 @@
 package com.study.blog.infrastructure.persistence.repository.tag;
 
-import com.study.blog.service.tag.response.SearchTagResponse;
-import com.study.blog.service.tag.response.TagResponse;
+import com.study.blog.infrastructure.persistence.repository.tag.response.SearchTagResponse;
+import com.study.blog.infrastructure.persistence.repository.tag.response.TagResponse;
 
 import java.util.List;
 import java.util.Map;

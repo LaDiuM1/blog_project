@@ -13,7 +13,6 @@ import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @RestControllerAdvice
 public class RestExceptionHandler {

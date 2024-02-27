@@ -1,4 +1,4 @@
-package com.study.blog.service.category.response;
+package com.study.blog.infrastructure.persistence.repository.category.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

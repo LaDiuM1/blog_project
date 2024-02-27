@@ -1,6 +1,6 @@
 package com.study.blog.service.tag;
 
-import com.study.blog.service.tag.response.SearchTagResponse;
+import com.study.blog.infrastructure.persistence.repository.tag.response.SearchTagResponse;
 import com.study.blog.infrastructure.persistence.repository.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

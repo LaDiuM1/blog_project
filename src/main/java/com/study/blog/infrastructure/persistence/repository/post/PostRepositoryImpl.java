@@ -6,7 +6,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.service.post.response.PostListResponse;
+import com.study.blog.infrastructure.persistence.repository.post.response.PostListResponse;
 import com.study.blog.infrastructure.persistence.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)

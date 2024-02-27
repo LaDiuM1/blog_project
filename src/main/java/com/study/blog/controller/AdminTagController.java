@@ -1,7 +1,7 @@
 package com.study.blog.controller;
 
 
-import com.study.blog.service.tag.response.SearchTagResponse;
+import com.study.blog.infrastructure.persistence.repository.tag.response.SearchTagResponse;
 import com.study.blog.service.tag.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.study.blog.service.tag.response;
+package com.study.blog.infrastructure.persistence.repository.tag.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

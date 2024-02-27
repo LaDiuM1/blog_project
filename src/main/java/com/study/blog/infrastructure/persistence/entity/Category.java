@@ -1,6 +1,6 @@
 package com.study.blog.infrastructure.persistence.entity;
 
-import com.study.blog.service.category.response.CategoryResponse;
+import com.study.blog.infrastructure.persistence.repository.category.response.CategoryResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
