@@ -16,22 +16,29 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Accessors(chain = true)
 public class Comment extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100, unique = true, nullable = false)
-    private String title;
-    @Column
-    private String content;
+
+    @Column(name = "parent_comment_id")
+    private Long parentCommentId;
+
+    @Column(nullable = false)
+    private String commentContent;
+
+    @Column(nullable = false)
+    private String commentAuthorName;
+
+    @Column(nullable = false)
+    private String commentAuthorEmail;
+
     @Column(nullable = false)
     private boolean status = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
-
 
 }

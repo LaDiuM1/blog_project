@@ -32,8 +32,15 @@ public class Category extends BaseTime {
     @Column(nullable = false)
     private int sequence;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
     private List<Post> posts = new ArrayList<>();
+
+    @PreRemove
+    private void preRemove() {
+        for (Post post : posts) {
+            post.setCategory(null);
+        }
+    }
 
     public Category(String name, String description, int sequence) {
         this.name = name;

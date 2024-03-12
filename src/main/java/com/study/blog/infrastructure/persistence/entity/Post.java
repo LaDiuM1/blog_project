@@ -38,7 +38,7 @@ public class Post extends BaseTime{
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -48,6 +48,13 @@ public class Post extends BaseTime{
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
+
+    @PreRemove
+    private void preRemove() {
+        for (Comment comment : comments) {
+            comment.setPost(null);
+        }
+    }
 
     public Post(Category category, String title, String content) {
         this.category = category;
