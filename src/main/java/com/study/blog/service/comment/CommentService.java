@@ -1,6 +1,7 @@
 package com.study.blog.service.comment;
 
 import com.study.blog.infrastructure.persistence.entity.Category;
+import com.study.blog.infrastructure.persistence.entity.Comment;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import com.study.blog.infrastructure.persistence.entity.Tag;
 import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
@@ -16,6 +17,8 @@ import com.study.blog.service.post.request.CreatePostRequest;
 import com.study.blog.service.post.request.PostListRequest;
 import com.study.blog.service.post.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,13 +34,20 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
 
     public Page<CommentListResponse> getCommentList(CommentListRequest request, Pageable pageable){
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
 
         return commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
+    }
+
+    @Transactional
+    public void updateCommentStatus(Long id){
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        comment.setStatus(!comment.isStatus());
     }
 
 }

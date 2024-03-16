@@ -45,4 +45,12 @@ public class AdminCommentController {
         return ResponseEntity.ok(postList);
     }
 
+    @PutMapping("/update/status")
+    public ResponseEntity<Void> updateCommentStatus(@Param("id") Long id) {
+
+        commentService.updateCommentStatus(id);
+
+        return ResponseEntity.ok().build();
+    }
+
 }

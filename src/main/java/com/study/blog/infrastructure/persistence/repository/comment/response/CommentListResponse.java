@@ -19,11 +19,11 @@ public class CommentListResponse {
     private boolean status;
 
     private Long postId;
-    private Long postTitle;
+    private String postTitle;
 
     private String parentCommentContent;
 
-    public CommentListResponse(Long id, Long parentCommentId, String commentContent, String commentAuthorName, String commentAuthorEmail, boolean status, Long postId, Long postTitle, String parentCommentContent) {
+    public CommentListResponse(Long id, Long parentCommentId, String commentContent, String commentAuthorName, String commentAuthorEmail, boolean status, Long postId, String postTitle, String parentCommentContent) {
         this.id = id;
         this.parentCommentId = parentCommentId;
         this.commentContent = commentContent;
