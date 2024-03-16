@@ -22,8 +22,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AdminCommentController.class)
 class AdminCommentControllerTest {
@@ -35,23 +33,16 @@ class AdminCommentControllerTest {
     private CommentService commentService;
 
     @Test
-    public void getCommentList() throws Exception {
-        CommentListResponse commentListResponse = new CommentListResponse(
-                1L, // id
-                null, // parentCommentId (부모 댓글이 없는 경우 null)
-                "테스트 댓글 내용", // commentContent
-                "작성자 이름", // commentAuthorName
-                "작성자@email.com", // commentAuthorEmail
-                true, // status (댓글 상태, true or false)
-                1L, // postId (댓글이 달린 게시글의 ID)
-                "게시글 제목", // postTitle
-                null // parentCommentContent (부모 댓글 내용이 없는 경우 null)
-        );
+    public void getCommentList_invalidStatusParam_fail() throws Exception {
+        mockMvc.perform(get("/admin/comment")
+                        .param("searchKeyword", "test")
+                        .param("searchStatus", "NotBoolean")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 
-        PageImpl<CommentListResponse> page = new PageImpl<>(Collections.singletonList(commentListResponse));
-
-        given(commentService.getCommentList(any(CommentListRequest.class), any(PageRequest.class))).willReturn(page);
-
+    @Test
+    public void getCommentList_invalidParams_fail() throws Exception {
         mockMvc.perform(get("/admin/comment")
                         .param("searchKeyword", "test")
                         .param("searchStatus", "true")
@@ -60,10 +51,25 @@ class AdminCommentControllerTest {
     }
 
     @Test
-    public void updateCommentStatus() throws Exception {
+    public void getCommentList_noParams_pass() throws Exception {
+        mockMvc.perform(get("/admin/comment")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void updateCommentStatus_idParam_pass() throws Exception {
         mockMvc.perform(put("/admin/comment/update/status")
                         .param("id", "1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateCommentStatus_noParam_fail() throws Exception {
+        mockMvc.perform(put("/admin/comment/update/status")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }
