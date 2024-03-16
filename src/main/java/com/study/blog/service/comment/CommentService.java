@@ -42,12 +42,12 @@ public class CommentService {
         return commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
     }
 
-    @Transactional
     public void updateCommentStatus(Long id){
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
         comment.setStatus(!comment.isStatus());
+        commentRepository.save(comment);
     }
 
 }

@@ -51,7 +51,7 @@ class AdminCommentControllerTest {
     }
 
     @Test
-    public void getCommentList_noParams_pass() throws Exception {
+    public void getCommentList_noParams_success() throws Exception {
         mockMvc.perform(get("/admin/comment")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -59,7 +59,7 @@ class AdminCommentControllerTest {
 
 
     @Test
-    public void updateCommentStatus_idParam_pass() throws Exception {
+    public void updateCommentStatus_idParam_success() throws Exception {
         mockMvc.perform(put("/admin/comment/update/status")
                         .param("id", "1")
                         .contentType(MediaType.APPLICATION_JSON))
