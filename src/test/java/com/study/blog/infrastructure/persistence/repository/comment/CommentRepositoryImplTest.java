@@ -28,24 +28,39 @@ class CommentRepositoryImplTest {
     private CommentRepository commentRepository;
 
 
-
     @Test
     @DisplayName("keyword = '테스트', status = true : 댓글 검색")
     void getCommentList_validKeyword_success() {
+        // given
         Pageable pageable = PageRequest.of(0, 10);
         String searchKeyword = "테스트";
         Boolean searchStatus = true;
 
-        List<Comment> comments = commentRepository.findAll();
-        System.out.println("comments = " + comments);
-
+        // when
         Page<CommentListResponse> searchCommentList = commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
 
+        // then
         searchCommentList.getContent().forEach( comment -> {
-            System.out.println("comment.getCommentContent() = " + comment.getCommentContent());
-            System.out.println("comment.isStatus() = " + comment.isStatus());
             assertThat(comment.getCommentContent()).contains("테스트");
-            assertThat(comment.isStatus()).isEqualTo(false);
+            assertThat(comment.isStatus()).isEqualTo(true);
         });
     }
+
+    @Test
+    @DisplayName("keyword = 'null', status = null : 댓글 검색")
+    void getCommentList_keywordsIsNull_success() {
+        // given
+        Pageable pageable = PageRequest.of(0, 10);
+        String searchKeyword = null;
+        Boolean searchStatus = null;
+        int commentCount = (int) commentRepository.count();
+
+        // when
+        Page<CommentListResponse> searchCommentList = commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
+
+        // then
+        assertThat(searchCommentList.getContent().size()).isEqualTo(commentCount);
+    }
+
+
 }

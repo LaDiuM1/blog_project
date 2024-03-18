@@ -44,6 +44,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
 
     public Page<CommentListResponse> getCommentList(String searchKeyword, Boolean searchStatus, Pageable pageable) {
         QComment comment = QComment.comment;
+        QComment commentSub = new QComment("commentSub");
 
         BooleanBuilder builder = getCommentListBooleanBuilder(comment, searchKeyword, searchStatus);
 
@@ -58,12 +59,13 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
                         comment.post.title,
                         ExpressionUtils.as(
                                 JPAExpressions
-                                        .select(comment.commentContent)
-                                        .from(comment)
-                                        .where(comment.id.eq(comment.parentCommentId)),
+                                        .select(commentSub.commentContent)
+                                        .from(commentSub)
+                                        .where(commentSub.id.eq(comment.parentCommentId)),
                                 "parentCommentContent")
                 ))
                 .from(comment)
+                .leftJoin(comment.post) // post가 null일 경우 검색하기 위한 left outer join
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

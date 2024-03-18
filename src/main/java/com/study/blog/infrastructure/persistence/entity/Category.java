@@ -48,6 +48,7 @@ public class Category extends BaseTime {
         this.sequence = sequence;
     }
 
+
     public Category(Long id){
         this.id = id;
     }

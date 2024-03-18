@@ -33,6 +33,7 @@ public class PostService {
 
     private void postAddTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
+        Set<Tag> tags = new HashSet<>();
 
         Map<String, Tag> existingTagsMap = existingTags.stream()
                 .collect(Collectors.toMap(Tag::getName, Function.identity()));
@@ -40,21 +41,22 @@ public class PostService {
         Set<Tag> newTags = new HashSet<>();
         for (String tagName : tagNames) {
             if (existingTagsMap.containsKey(tagName)) {
-                post.getTags().add(existingTagsMap.get(tagName));
+                tags.add(existingTagsMap.get(tagName));
             }
             else {
                 newTags.add(new Tag(tagName));
             }
         }
-        tagRepository.saveAll(newTags)
-                .forEach(post.getTags()::add);
+        tags.addAll(tagRepository.saveAll(newTags));
+        post.setTags(tags);
     }
 
+    @Transactional
     public void createPost(CreatePostRequest request){
         boolean categoryIdCheck = categoryRepository.existsById(request.getCategoryId());
-        if(categoryIdCheck) { throw new EntityNotFoundException(); }
+        if(!categoryIdCheck) { throw new EntityNotFoundException(); }
 
-        Category categoryRef = categoryRepository.getReferenceById(request.getCategoryId());
+        Category categoryRef = new Category(request.getCategoryId());
 
         Post post = new Post(categoryRef, request.getTitle(), request.getContent());
 
