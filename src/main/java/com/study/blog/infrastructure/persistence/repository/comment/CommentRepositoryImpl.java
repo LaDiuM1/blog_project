@@ -60,7 +60,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
                                 JPAExpressions
                                         .select(comment.commentContent)
                                         .from(comment)
-                                        .where(comment.parentCommentId.eq(comment.id)),
+                                        .where(comment.id.eq(comment.parentCommentId)),
                                 "parentCommentContent")
                 ))
                 .from(comment)
