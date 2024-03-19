@@ -38,10 +38,11 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-    @Transactional
     public void updateCategoryStatus(Long id){
         Category category = categoryRepository.findByIdOrThrow(id);
         category.setStatus(!category.isStatus());
+
+        categoryRepository.save(category);
     }
 
     public void updateCategorySequence(UpdateCategorySequenceRequest request){
@@ -53,12 +54,12 @@ public class CategoryService {
         categoryRepository.updateCategorySequence(idSet);
     }
 
-    @Transactional
     public void updateCategory(UpdateCategoryRequest request){
         Category category = categoryRepository.findByIdOrThrow(request.getId());
-
         category.setName(request.getName());
         category.setDescription(request.getDescription());
+
+        categoryRepository.save(category);
     }
 
     public void deleteCategory(Long id){

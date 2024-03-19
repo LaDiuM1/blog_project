@@ -22,4 +22,9 @@ public class UpdateCategoryRequest {
     @Size(max = 255, message = "카테고리 설명은 255글자 이내로 입력해 주세요.")
     private String description;
 
+    public UpdateCategoryRequest(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

@@ -72,8 +72,7 @@ public class AdminCategoryController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteCategory(@Param("id") Long id) {
-
+    public ResponseEntity<Void> deleteCategory(@RequestParam("id") Long id) {
         categoryService.deleteCategory(id);
 
         return ResponseEntity.ok().build();
