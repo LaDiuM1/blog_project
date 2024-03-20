@@ -9,4 +9,7 @@ public class UpdateCategorySequenceRequest {
 
     private LinkedHashSet<Long> idSet;
 
+    public UpdateCategorySequenceRequest(LinkedHashSet<Long> idSet) {
+        this.idSet = idSet;
+    }
 }
