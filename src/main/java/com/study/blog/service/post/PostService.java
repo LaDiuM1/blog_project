@@ -68,12 +68,12 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public Page<PostListResponse> getPostList(PostListRequest request, Pageable pageable){
+    public Page<PostListResponse> searchPostList(PostListRequest request, Pageable pageable){
         Long searchCategoryId = request.getSearchCategoryId();
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
 
-        Page<PostListResponse> postList = postRepository.getPostAndCommentCountList(searchCategoryId, searchKeyword, searchStatus, pageable);
+        Page<PostListResponse> postList = postRepository.searchPostAndCommentCountList(searchCategoryId, searchKeyword, searchStatus, pageable);
         Set<Long> postIds = postList.getContent().stream().map(PostListResponse::getId).collect(Collectors.toSet());
 
         Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);

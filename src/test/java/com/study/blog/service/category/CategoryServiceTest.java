@@ -25,7 +25,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-category-service-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-category-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 }) // SqlGroup을 특정 configuration으로 지정하여 원하는 메서드에만 사용하는 방법?
 class CategoryServiceTest {
@@ -82,9 +82,9 @@ class CategoryServiceTest {
         AtomicInteger testValue = new AtomicInteger(5);
 
         assertThat(categoryList.size()).isNotEqualTo(0);
-        categoryList.forEach( category -> {
-            assertThat(category.getSequence()).isEqualTo(testValue.getAndDecrement());
-        });
+        categoryList.forEach( category ->
+            assertThat(category.getSequence()).isEqualTo(testValue.getAndDecrement())
+        );
     }
 
     @Test

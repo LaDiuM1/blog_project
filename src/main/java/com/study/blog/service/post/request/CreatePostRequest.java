@@ -1,6 +1,7 @@
 package com.study.blog.service.post.request;
 
 import com.study.blog.service.post.request.validate.TagNamesValid;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.Min;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 @Getter
+@AllArgsConstructor
 public class CreatePostRequest {
     @NotNull(message = "카테고리 id 값이 null 입니다.")
     @Min(value = 1, message = "카테고리 id는 정수 1 이상 요청바랍니다.")

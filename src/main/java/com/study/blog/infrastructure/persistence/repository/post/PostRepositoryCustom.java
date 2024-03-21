@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable;
 public interface PostRepositoryCustom {
     Post findByIdOrThrow(Long id);
 
-    Page<PostListResponse> getPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable);
+    Page<PostListResponse> searchPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable);
 }

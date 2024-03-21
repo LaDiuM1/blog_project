@@ -56,7 +56,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return builder;
     }
 
-    public Page<PostListResponse> getPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable) {
+    public Page<PostListResponse> searchPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 

@@ -1,6 +1,5 @@
 package com.study.blog.infrastructure.persistence.repository.comment;
 
-import com.study.blog.infrastructure.persistence.entity.Comment;
 import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,14 +12,12 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
-import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-comment-repository-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-comment-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class CommentRepositoryImplTest {

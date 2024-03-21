@@ -43,7 +43,7 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("name 100글자 초과' : 카테고리 생성 파라미터 유효성 검증")
     void createCategory_invalidRequest_fail() throws Exception {
-        String nameLongerThan100Chars = "가".repeat(101);
+        String nameLongerThan100Chars = "a".repeat(101);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("name", nameLongerThan100Chars);

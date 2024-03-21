@@ -1,20 +1,18 @@
 package com.study.blog.controller;
 
-import com.study.blog.service.post.request.CreatePostRequest;
-import com.study.blog.service.post.request.PostListRequest;
-import com.study.blog.service.post.request.UpdatePostRequest;
 import com.study.blog.infrastructure.persistence.repository.post.response.PostListResponse;
 import com.study.blog.infrastructure.persistence.repository.post.response.PostResponse;
 import com.study.blog.service.post.PostService;
+import com.study.blog.service.post.request.CreatePostRequest;
+import com.study.blog.service.post.request.PostListRequest;
+import com.study.blog.service.post.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/post")
@@ -32,7 +30,7 @@ public class AdminPostController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostListResponse>> getPostList(
+    public ResponseEntity<Page<PostListResponse>> searchPostList(
                                                               @RequestParam(required = false) Long searchCategoryId,
                                                               @RequestParam(required = false) String searchKeyword,
                                                               @RequestParam(required = false) Boolean searchStatus,
@@ -43,7 +41,7 @@ public class AdminPostController {
         postListRequest.setSearchStatus(searchStatus);
 
 
-        Page<PostListResponse> postList = postService.getPostList(postListRequest, pageable);
+        Page<PostListResponse> postList = postService.searchPostList(postListRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }
@@ -65,7 +63,7 @@ public class AdminPostController {
     }
 
     @PutMapping("/update/status")
-    public ResponseEntity<Void> updatePostStatus(@Param("id") Long id) {
+    public ResponseEntity<Void> updatePostStatus(@RequestParam("id") Long id) {
 
         postService.updatePostStatus(id);
 
@@ -73,7 +71,7 @@ public class AdminPostController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deletePost(@Param("id") Long id) {
+    public ResponseEntity<Void> deletePost(@RequestParam("id") Long id) {
 
         postService.deletePost(id);
 
