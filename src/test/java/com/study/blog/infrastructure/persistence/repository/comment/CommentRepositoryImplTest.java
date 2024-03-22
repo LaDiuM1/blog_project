@@ -24,7 +24,6 @@ class CommentRepositoryImplTest {
     @Autowired
     private CommentRepository commentRepository;
 
-
     @Test
     @DisplayName("keyword = '테스트', status = true : 댓글 검색")
     void getCommentList_validKeyword_success() {

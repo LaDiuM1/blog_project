@@ -152,14 +152,14 @@ class PostServiceTest {
     public void deletePost_success() {
         // given
         Long id = 1L;
-        Optional<Post> beforeDeletePost = postRepository.findById(id);
+        boolean beforeDeletePost = postRepository.findById(id).isPresent();
 
         // when
         postService.deletePost(id);
-        Optional<Post> afterDeletePost = postRepository.findById(id);
+        boolean afterDeletePost = postRepository.findById(id).isPresent();
 
         // then
-        assertThat(beforeDeletePost.isPresent()).isNotEqualTo(afterDeletePost.isPresent());
+        assertThat(beforeDeletePost).isNotEqualTo(afterDeletePost);
     }
 
 

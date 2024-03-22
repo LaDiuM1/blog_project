@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
@@ -20,7 +22,7 @@ public class AdminTagController {
     private final TagService tagService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<SearchTagResponse>> searchTag(@Param("keyword") String searchTagKeyword) {
+    public ResponseEntity<List<SearchTagResponse>> searchTag(@Valid @Param("keyword") String searchTagKeyword) {
 
         List<SearchTagResponse> searchTagResponseList = tagService.searchTag(searchTagKeyword);
 

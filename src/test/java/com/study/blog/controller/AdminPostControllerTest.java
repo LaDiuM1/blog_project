@@ -28,7 +28,6 @@ class AdminPostControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private PostService postService;
-
     private Validator validator;
 
     @BeforeEach // 메서드 실행 전 validator 객체 초기화

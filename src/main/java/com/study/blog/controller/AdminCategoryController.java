@@ -57,7 +57,6 @@ public class AdminCategoryController {
 
     @PutMapping("/update/status")
     public ResponseEntity<Void> updateCategoryStatus(@Param("id") Long id) {
-
         categoryService.updateCategoryStatus(id);
 
         return ResponseEntity.ok().build();
