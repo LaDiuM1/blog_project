@@ -43,6 +43,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
     }
 
     public Page<CommentListResponse> getCommentList(String searchKeyword, Boolean searchStatus, Pageable pageable) {
+        System.out.println("searchKeyword = " + searchKeyword);
         QComment comment = QComment.comment;
         QComment commentSub = new QComment("commentSub");
 

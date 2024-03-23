@@ -25,7 +25,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    public Category findByIdOrThrow(Long id) {
+    public Category findByIdOrThrow(Long id) throws EntityNotFoundException {
         QCategory qCategory = QCategory.category;
 
         Category category = query.selectFrom(qCategory)

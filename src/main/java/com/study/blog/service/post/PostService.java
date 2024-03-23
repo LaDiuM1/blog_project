@@ -13,6 +13,7 @@ import com.study.blog.infrastructure.persistence.repository.category.CategoryRep
 import com.study.blog.infrastructure.persistence.repository.post.PostRepository;
 import com.study.blog.infrastructure.persistence.repository.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,7 @@ public class PostService {
                 postAddTags(post, request.getTagNames());
             }
         }
+
         postRepository.save(post);
     }
 
@@ -97,13 +99,17 @@ public class PostService {
 
     @Transactional
     public void updatePost(UpdatePostRequest request){
-        Post post = postRepository.findByIdOrThrow(request.getId());
-        Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
+        try {
+            Post post = postRepository.findByIdOrThrow(request.getId());
+            Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
 
-        post.setCategory(category);
-        post.setTitle(request.getTitle());
-        post.setContent(request.getContent());
-        postAddTags(post, request.getTagNames());
+            post.setCategory(category);
+            post.setTitle(request.getTitle());
+            post.setContent(request.getContent());
+            postAddTags(post, request.getTagNames());
+        } catch (EntityNotFoundException e) {
+            throw e;
+        }
     }
 
     @Transactional
@@ -113,7 +119,12 @@ public class PostService {
     }
 
     public void deletePost(Long id){
-        postRepository.deleteById(id);
+        try {
+            postRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new RuntimeException();
+        }
+
     }
 
 }

@@ -27,27 +27,29 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.function.Function;
+import java.util.jar.JarException;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-
     private final CommentRepository commentRepository;
 
     public Page<CommentListResponse> getCommentList(CommentListRequest request, Pageable pageable){
         String searchKeyword = request.getSearchKeyword();
         Boolean searchStatus = request.getSearchStatus();
 
+        System.out.println("searchStatus = " + searchStatus);
+
         return commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
     }
 
+    @Transactional
     public void updateCommentStatus(Long id){
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
         comment.setStatus(!comment.isStatus());
-        commentRepository.save(comment);
     }
 
 }

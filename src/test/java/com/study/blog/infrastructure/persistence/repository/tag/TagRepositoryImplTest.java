@@ -23,10 +23,11 @@ class TagRepositoryImplTest {
     @Autowired
     private TagRepository tagRepository;
 
+    // 서비스로 이동 필요
     @Test
     @DisplayName("태그 검색 Repository, 검색 값 일치 여부 확인")
     @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void searchTag() {
+    public void searchTag_success() {
         // given
         Set<Tag> testTagSet = new HashSet<>();
         testTagSet.add(new Tag("검색1"));
