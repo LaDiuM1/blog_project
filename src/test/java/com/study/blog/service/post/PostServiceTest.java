@@ -22,10 +22,14 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
@@ -47,13 +51,15 @@ class PostServiceTest extends PostSupportService {
 
     @Test
     @DisplayName("게시글 생성 서비스 검증")
-    @Transactional // post의 tag가 Lazy로 설정되어있어 세션 연결을 위해 Transactional 선언
+    @Transactional
     public void createPost_success() {
         // given
         Long categoryId = 1L;
-        String postTitle = "테스트 제목";
-        String postContent = "테스트 내용";
-        HashSet<String> tagSet = new HashSet<>(List.of("태그1", "태그2"));
+        String postTitle = "게시글 생성 테스트 제목";
+        String postContent = "게시글 생성 테스트 내용";
+        String tagName1 = "게시글 생성 테스트 태그1";
+        String tagName2 = "게시글 생성 테스트 태그2";
+        HashSet<String> tagSet = new HashSet<>(List.of(tagName1, tagName2));
 
         CreatePostRequest request = new CreatePostRequest(categoryId, postTitle, postContent, tagSet);
 
@@ -61,45 +67,65 @@ class PostServiceTest extends PostSupportService {
         postService.createPost(request);
 
         // then
-        Post verifyPost = postRepository.findByIdOrThrow(6L);
+        Post verifyPost = postRepository.findById(postRepository.count()).get();
 
         assertThat(verifyPost.getTitle()).isEqualTo(request.getTitle());
         assertThat(verifyPost.getContent()).isEqualTo(request.getContent());
         assertThat(verifyPost.isStatus()).isTrue();
         assertThat(verifyPost.getCategory().getId()).isEqualTo(request.getCategoryId());
 
-        assertThat(verifyPost.getTags().size()).isEqualTo(2);
-        boolean verifyTagName1 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals("태그1"));
-        boolean verifyTagName2 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals("태그2"));
+        assertThat(verifyPost.getTags().size()).isEqualTo(tagSet.size());
+        boolean verifyTagName1 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals(tagName1));
+        boolean verifyTagName2 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals(tagName2));
 
         assertThat(verifyTagName1).isTrue();
         assertThat(verifyTagName2).isTrue();
     }
 
     @Test
+    @DisplayName("게시글 생성 서비스, 존재하지 않는 카테고리 id -> throw")
+    @Transactional
+    public void createPost_throw() {
+        // given
+        long notExistingCategoryId = categoryRepository.count()+1;
+        CreatePostRequest request = new CreatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>());
+
+        // when, then
+        assertThatThrownBy(() -> postService.createPost(request))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
     @DisplayName("게시글 검색 서비스, 검색 항목 일치 확인")
+    @Transactional
     public void searchPost_success() {
         // given
+        long searchCategoryId = 1L;
+        String searchKeyword = "테스트";
+        boolean searchStatus = true;
+
         Pageable pageable = PageRequest.of(0, 10);
         PostListRequest request = new PostListRequest();
-        request.setSearchStatus(true);
-        request.setSearchKeyword("테스트");
-        request.setSearchCategoryId(1L);
+        request.setSearchCategoryId(searchCategoryId);
+        request.setSearchKeyword(searchKeyword);
+        request.setSearchStatus(searchStatus);
 
         // when
         Page<PostListResponse> searchPostList = postService.searchPostList(request, pageable);
 
         // then
+        String CategoryName = categoryRepository.findById(searchCategoryId).get().getName();
+
         assertThat(searchPostList.getContent().size()).isNotZero();
         searchPostList.getContent().forEach( post -> {
-            assertThat(post.getTitle()).contains("테스트");
-            assertThat(post.getCategoryName()).isEqualTo("카테고리 이름1"); // 사전 입력된 id 1의 카테고리 이름
-            assertThat(post.getStatus()).isTrue(); // 상기 조건 검색 시 3개의 항목 검색, 여기서 status가 true인 2개 검증
+            assertThat(post.getTitle()).contains(searchKeyword);
+            assertThat(post.getCategoryName()).isEqualTo(CategoryName);
+            assertThat(post.getStatus()).isEqualTo(searchStatus); // 상기 조건 검색 시 3개의 항목 검색, 여기서 status가 true인 2개 검증
         });
     }
 
     @Test
-    @DisplayName("게시글 조회 서비스, 일치 여부 확인")
+    @DisplayName("개별 게시글 조회 서비스, 일치 여부 확인")
     @Transactional
     public void getPost_success() {
         // given
@@ -113,49 +139,75 @@ class PostServiceTest extends PostSupportService {
     }
 
     @Test
-    @Sql(value = "/sql/test-category-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    // 클래스 레벨로 선언된 post insert를 사용하지 않도록 필요 sql로만 재정의
-    @DisplayName("게시글 업데이트 서비스, 변경 여부 확인")
+    @DisplayName("게시글 조회 서비스, 존재하지 않는 id -> throw")
+    @Transactional
+    public void getPost_throw() {
+        // given
+        long notExistingPostId = postRepository.count()+1;
+
+        // when, then
+        assertThatThrownBy(() -> postService.getPost(notExistingPostId))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("게시글 업데이트 서비스, 변경 여부 검증")
     @Transactional
     public void updatePost_success() {
         // given
-        Long requestUpdatePostId = 1L;
-        Long beforeCategoryId = 1L;
-        String beforeTitle = "변경 전 제목";
-        String beforeContent = "변경 전 제목";
-        HashSet<Tag> beforeTagSet = new HashSet<>(List.of(
-                new Tag("beforeTag1"),new Tag("beforeTag2"), new Tag("beforeTag3")));
+        Long requestPostId = 1L;
+        Post requestPost = postRepository.findById(requestPostId).get();
+        Set<Tag> tegSet = new HashSet<>(List.of(new Tag("tag1"),new Tag("tag2")));
+        requestPost.setTags(tegSet);
 
-        Post beforePost = new Post();
-        beforePost.setId(requestUpdatePostId);
-        beforePost.setTitle(beforeTitle);
-        beforePost.setContent(beforeContent);
-        beforePost.setTags(beforeTagSet);
-        beforePost.setCategory(new Category(beforeCategoryId));
-        postRepository.save(beforePost);
+        String verifyStr = "after";
+        Long updateCategoryId = requestPost.getCategory().getId() + 1;
+        String updateTitle = requestPost.getTitle() + verifyStr;
+        String updateContent = requestPost.getContent() + verifyStr;
+        HashSet<String> updateTagSet = tegSet.stream().map( tagName -> tagName+verifyStr).collect(Collectors.toCollection(HashSet::new));
 
-        Long afterCategoryId = 2L;
-        String afterTitle = "변경 후 제목";
-        String afterContent = "변경 후 제목";
-        HashSet<String> afterTagSet = new HashSet<>(List.of("afterTag1", "afterTag2", "afterTag3"));
-
-        UpdatePostRequest request = new UpdatePostRequest(
-                requestUpdatePostId, afterCategoryId, afterTitle, afterContent, afterTagSet);
+        UpdatePostRequest request = new UpdatePostRequest(requestPostId, updateCategoryId, updateTitle, updateContent, updateTagSet);
 
         // when
         postService.updatePost(request);
 
-        Post updatedPost = postRepository.findByIdOrThrow(requestUpdatePostId);
-
         // then
-        assertThat(updatedPost.getId()).isEqualTo(requestUpdatePostId);
-        assertThat(updatedPost.getTitle()).isEqualTo(afterTitle);
-        assertThat(updatedPost.getContent()).isEqualTo(afterContent);
-        assertThat(updatedPost.getCategory().getId()).isEqualTo(afterCategoryId);
+        Post updatedPost = postRepository.findById(requestPostId).get();
+
+        assertThat(updatedPost.getTitle()).isEqualTo(updateTitle);
+        assertThat(updatedPost.getContent()).isEqualTo(updateContent);
+        assertThat(updatedPost.getCategory().getId()).isEqualTo(updateCategoryId);
+        assertThat(updatedPost.getTags().size()).isNotZero();
         updatedPost.getTags().forEach(tag ->
-            assertThat(afterTagSet.contains(tag.getName())).isTrue()
+            assertThat(updateTagSet.contains(tag.getName())).isTrue()
         );
+    }
+    @Test
+    @DisplayName("게시글 업데이트 서비스, 존재하지 않는 게시글 id -> throw")
+    public void updatePost_notExistingPostId_throw() {
+        // given
+        long notExistingPostId = postRepository.count()+1;
+        long existingCategoryId = 1L;
+
+        UpdatePostRequest request = new UpdatePostRequest(notExistingPostId, existingCategoryId, new String(), new String(), new HashSet<String>());
+
+        // when, then
+        assertThatThrownBy(() -> postService.updatePost(request))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("게시글 업데이트 서비스, 존재하지 않는 카테고리 id -> throw")
+    public void updatePost_notExistingCategoryId_throw() {
+        // given
+        long existingPostId = 1L;
+        long notExistingCategoryId = postRepository.count()+1;
+
+        UpdatePostRequest request = new UpdatePostRequest(existingPostId, notExistingCategoryId, new String(), new String(), new HashSet<String>());
+
+        // when, then
+        assertThatThrownBy(() -> postService.updatePost(request))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
@@ -174,6 +226,17 @@ class PostServiceTest extends PostSupportService {
     }
 
     @Test
+    @DisplayName("게시글 상태 업데이트 서비스, 존재하지 않는 id -> throw")
+    public void updatePostStatus_throw() {
+        // given
+        long notExistingPostId = postRepository.count()+1;
+
+        // when, then
+        assertThatThrownBy(() -> postService.updatePostStatus(notExistingPostId))
+                .isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
     @DisplayName("게시글 삭제 서비스 검증")
     public void deletePost_success() {
         // given
@@ -186,6 +249,17 @@ class PostServiceTest extends PostSupportService {
 
         // then
         assertThat(beforeDeletePost).isNotEqualTo(afterDeletePost);
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 서비스, 존재하지 않는 id -> throw")
+    public void deletePost_throw() {
+        // given
+        long notExistingPostId = postRepository.count()+1;
+
+        // when, then
+        assertThatThrownBy(() -> postService.deletePost(notExistingPostId))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
 

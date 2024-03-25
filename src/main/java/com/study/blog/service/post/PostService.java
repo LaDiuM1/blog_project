@@ -89,7 +89,7 @@ public class PostService {
     }
 
     public PostResponse getPost(Long id){
-        Post post = postRepository.findByIdOrThrow(id);
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         String title = post.getTitle();
         String content = post.getContent();
         Set<String> tagNames = post.getTags().stream().map(Tag::getName).collect(Collectors.toSet());
@@ -100,8 +100,8 @@ public class PostService {
     @Transactional
     public void updatePost(UpdatePostRequest request){
         try {
-            Post post = postRepository.findByIdOrThrow(request.getId());
-            Category category = categoryRepository.findByIdOrThrow(request.getCategoryId());
+            Post post = postRepository.findById(request.getId()).orElseThrow(EntityNotFoundException::new);
+            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(EntityNotFoundException::new);
 
             post.setCategory(category);
             post.setTitle(request.getTitle());
@@ -114,17 +114,16 @@ public class PostService {
 
     @Transactional
     public void updatePostStatus(Long id){
-        Post post = postRepository.findByIdOrThrow(id);
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         post.setStatus(!post.isStatus());
     }
 
     public void deletePost(Long id){
-        try {
-            postRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new RuntimeException();
-        }
+        boolean existingPostCheck = postRepository.existsById(id);
 
+        if(!existingPostCheck) { throw new EntityNotFoundException(); }
+
+        postRepository.deleteById(id);
     }
 
 }
