@@ -1,23 +1,13 @@
 package com.study.blog.controller;
 
 import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
-import com.study.blog.infrastructure.persistence.repository.post.response.PostListResponse;
-import com.study.blog.infrastructure.persistence.repository.post.response.PostResponse;
 import com.study.blog.service.comment.CommentService;
 import com.study.blog.service.comment.request.CommentListRequest;
-import com.study.blog.service.post.PostService;
-import com.study.blog.service.post.request.CreatePostRequest;
-import com.study.blog.service.post.request.PostListRequest;
-import com.study.blog.service.post.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/comment")
@@ -35,7 +25,7 @@ public class AdminCommentController {
         commentListRequest.setSearchKeyword(searchKeyword);
         commentListRequest.setSearchStatus(searchStatus);
 
-        Page<CommentListResponse> postList = commentService.getCommentList(commentListRequest, pageable);
+        Page<CommentListResponse> postList = commentService.searchCommentList(commentListRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }

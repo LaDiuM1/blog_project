@@ -2,64 +2,91 @@ package com.study.blog.service.comment;
 
 import com.study.blog.infrastructure.persistence.entity.Comment;
 import com.study.blog.infrastructure.persistence.repository.comment.CommentRepository;
+import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
+import com.study.blog.service.comment.request.CommentListRequest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
+@SqlGroup({
+        @Sql(value = "/sql/test-comment-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+})
 class CommentServiceTest {
-    @Mock
+    @Autowired
     private CommentRepository commentRepository;
 
-    @InjectMocks    // commentService의 인스턴스를 생성, Mock의 모의 객체 주입
+    @Autowired
     private CommentService commentService;
 
-    @Captor // Comment의 상태 포착을 위한 기능
-    private ArgumentCaptor<Comment> mockCommentCaptor;
-
-    @BeforeEach
-    void setUp() {
-        // 테스트 전 모의 객체 초기화
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    @Transactional
-    void updateCommentStatus_existingComment_success() {
-        long oldCommentId = 1L;
-        boolean oldCommentStatus = true;
+    @DisplayName("댓글 검색 호출 검증")
+    void searchCommentList_success() {
+        // given
+        Pageable pageable = PageRequest.of(0, 10);
+        String searchKeyword = "테스트";
+        boolean searchStatus = true;
 
-        // 테스트 comment 객체 생성
-        Comment mockComment = new Comment();
-        mockComment.setId(oldCommentId);
-        mockComment.setStatus(oldCommentStatus); // 초기 상태 값 true
+        CommentListRequest request = new CommentListRequest();
+        request.setSearchKeyword(searchKeyword);
+        request.setSearchStatus(searchStatus);
 
-        // 메서드 호출 시 반환 객체를 위 comment 객체로 지정
-        when(commentRepository.findById(oldCommentId)).thenReturn(Optional.of(mockComment));
+        // when
+        List<CommentListResponse> verifyResponse = commentService.searchCommentList(request, pageable).getContent();
 
-        // result
-        commentService.updateCommentStatus(oldCommentId);
-        assertNotEquals(mockComment.isStatus(), oldCommentStatus);
-    }
-
-    @Test
-    void updateCommentStatus_nonExistingComment_fail() {
-        // 존재하지 않는 id를 위한 설정, 객체 생성이 없으므로 해당 객체는 없음을 가정
-        long nonExistingCommentId = 1L;
-
-        when(commentRepository.findById(nonExistingCommentId)).thenReturn(Optional.empty());
-
-        // 상태 업데이트 메서드 호출 시 예외 발생 여부 검증
-        assertThrows(EntityNotFoundException.class, () -> {
-            commentService.updateCommentStatus(nonExistingCommentId);
+        // then
+        assertThat(verifyResponse.size()).isNotZero();
+        verifyResponse.forEach(verifyComment -> {
+            assertThat(verifyComment.getCommentContent()).contains(request.getSearchKeyword());
+            assertThat(verifyComment.isStatus()).isEqualTo(request.getSearchStatus());
         });
+    }
+
+    @Test
+    @DisplayName("댓글 상태 변경 검증")
+    void updateCommentStatus_existingComment_success() {
+        // given
+        long commentId = 1L;
+        boolean beforeCommentStatus = commentRepository.findById(commentId).get().isStatus();
+
+        // when
+        commentService.updateCommentStatus(commentId);
+        boolean afterCommentStatus = commentRepository.findById(commentId).get().isStatus();
+
+        assertThat(afterCommentStatus).isNotEqualTo(beforeCommentStatus);
+    }
+
+    @Test
+    @DisplayName("댓글 상태 변경, 존재하지 않는 id -> throw")
+    void updateCommentStatus_nonExistingComment_throw() {
+        // given
+        long nonExistingCommentId = commentRepository.count()+1;
+
+        // when, then
+        assertThrows(EntityNotFoundException.class, () ->
+            commentService.updateCommentStatus(nonExistingCommentId)
+        );
     }
 
 }

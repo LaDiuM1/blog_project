@@ -1,6 +1,5 @@
 package com.study.blog.service.post;
 
-import com.study.blog.infrastructure.persistence.entity.Category;
 import com.study.blog.infrastructure.persistence.entity.Post;
 import com.study.blog.infrastructure.persistence.entity.Tag;
 import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
@@ -38,7 +37,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
         @Sql(value = "/sql/test-post-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
-class PostServiceTest extends PostSupportService {
+class PostServiceTest {
 
     @Autowired
     private PostRepository postRepository;
