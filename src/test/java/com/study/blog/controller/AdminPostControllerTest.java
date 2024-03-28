@@ -1,14 +1,17 @@
 package com.study.blog.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.service.post.PostService;
 import com.study.blog.service.post.request.CreatePostRequest;
 import com.study.blog.service.post.request.UpdatePostRequest;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.validation.Validation;
@@ -18,8 +21,12 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 
 @WebMvcTest(AdminPostController.class)
 class AdminPostControllerTest {
@@ -28,6 +35,8 @@ class AdminPostControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private PostService postService;
+    @Autowired
+    ObjectMapper objectMapper;
     private Validator validator;
 
     @BeforeEach // 메서드 실행 전 validator 객체 초기화
@@ -62,7 +71,7 @@ class AdminPostControllerTest {
     }
     @Test
     @DisplayName("게시글 생성 검증, null값 유효성 검증 확인")
-    void createPost_nullParams_validate() {
+    void createPost_nullParams_validate() throws Exception {
         CreatePostRequest request = new CreatePostRequest(
                 null, null, null, new HashSet<>(List.of("")));
 

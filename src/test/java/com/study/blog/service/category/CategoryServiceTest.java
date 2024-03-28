@@ -9,18 +9,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
@@ -37,18 +37,20 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Test
-    @DisplayName("카테고리 생성 서비스 검증, 결과 일치 확인")
+    @DisplayName("카테고리 생성 서비스 검증")
     public void createCategory_success() {
         // given
-        CreateCategoryRequest request = new CreateCategoryRequest("테스트1", "테스트2");
+        String testName = "카테고리 생성 테스트 이름";
+        String testDescription = "카테고리 생성 테스트 설명";
+        CreateCategoryRequest request = new CreateCategoryRequest(testName, testDescription);
 
         // when
         categoryService.createCategory(request);
 
         // then
-        Category verifyCategory = categoryRepository.findByIdOrThrow(6L);
-        assertThat(verifyCategory.getName()).isEqualTo("테스트1");
-        assertThat(verifyCategory.getDescription()).isEqualTo("테스트2");
+        Category verifyCreateCategory = categoryRepository.findByIdOrThrow(categoryRepository.count());
+        assertThat(verifyCreateCategory.getName()).isEqualTo(request.getName());
+        assertThat(verifyCreateCategory.getDescription()).isEqualTo(request.getDescription());
     }
 
     @Test
@@ -56,76 +58,128 @@ class CategoryServiceTest {
     public void updateCategoryStatus_success() {
         // given
         long id = 1L;
+        boolean beforeStatus = categoryRepository.findById(id).get().isStatus();
 
         // when
         categoryService.updateCategoryStatus(id);
 
         // then
-        Category category = categoryRepository.findByIdOrThrow(id);
-        assertThat(category.isStatus()).isEqualTo(false);
+        boolean afterStatus = categoryRepository.findById(id).get().isStatus();
+        assertThat(afterStatus).isNotEqualTo(beforeStatus);
     }
 
     @Test
-    @DisplayName("카테고리 순서 변경 검증 1,2,3,4,5 -> 5,4,3,2,1")
+    @DisplayName("카테고리 순서 변경 검증")
     public void updateCategorySequence_success() {
         // given
-        LinkedHashSet<Long> idSet = new LinkedHashSet<>(Arrays.asList(5L, 4L, 3L, 2L, 1L));
-        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(idSet);
+        Map<Integer, Long> sequenceAndIdMap = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "id"))
+                .stream()
+                .collect(Collectors.toMap(Category::getSequence, Category::getId));
+
+        List<Integer> updateSequence = new ArrayList<>();
+
+        sequenceAndIdMap.forEach( (sequence, id) -> {
+            if(sequence % sequenceAndIdMap.size() != 0){
+                updateSequence.add(sequence+1);
+            }else{
+                updateSequence.add(sequence % sequenceAndIdMap.size()+1);
+            }
+        });
+
+        LinkedHashSet<Long> updateSequenceIdSet = updateSequence
+                .stream()
+                .map(sequenceAndIdMap::get).collect(Collectors.toCollection(LinkedHashSet::new));
+
+        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(updateSequenceIdSet);
 
         // when
         categoryService.updateCategorySequence(request);
 
-        List<Category> categoryList = categoryRepository.findAll();
-        categoryList.sort(Comparator.comparing(Category::getId));
+        List<Category> categoryList = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "sequence"));
 
         // then
-        AtomicInteger testValue = new AtomicInteger(5);
-
         assertThat(categoryList.size()).isNotEqualTo(0);
-        categoryList.forEach( category ->
-            assertThat(category.getSequence()).isEqualTo(testValue.getAndDecrement())
-        );
+        int index = 0;
+        for (Long updateSequenceId : updateSequenceIdSet) {
+            assertThat(categoryList.get(index++).getId()).isEqualTo(updateSequenceId);
+        }
     }
 
     @Test
-    @DisplayName("카테고리 순서 변경에서 카테고리 개수 불일치 검증 테스트4, 실제5")
-    public void updateCategorySequence_mismatchedCategoryCount_throw() {
+    @DisplayName("카테고리 순서 변경 검증, 요청 카테고리 수 불일치 -> throw")
+    public void updateCategorySequence_unmatchedCount_throw() {
         // given
-        LinkedHashSet<Long> idSet = new LinkedHashSet<>(Arrays.asList(1L, 2L, 3L, 4L));
-        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(idSet);
+        LinkedHashSet<Long> unmatchedCategorySet = categoryRepository.findAll()
+                .stream().map(Category::getId)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        int verifyCount = unmatchedCategorySet.size();
+
+        unmatchedCategorySet.remove(unmatchedCategorySet.iterator().next()); // 첫번째 요소 제거
+        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(unmatchedCategorySet);
 
         // when, then
-        assertThatThrownBy(() -> categoryService.updateCategorySequence(request))
-                .isInstanceOf(IllegalStateException.class);
+        assertThat(request.getIdSet().size()).isNotZero();
+        assertThat(request.getIdSet().size()).isNotEqualTo(verifyCount);
+        assertThatThrownBy(() ->
+            categoryService.updateCategorySequence(request)
+        ).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     @DisplayName("카테고리 업데이트 검증 : 이름, 설명 변경 후 일치 여부 검증")
     public void updateCategory_success() {
         // given
-        UpdateCategoryRequest request = new UpdateCategoryRequest(1L, "변경 이름", "변경 설명");
+        Long updateCategoryId = 1L;
+        String flag = "verifyUpdate";
+        Category beforeUpdateCategory = categoryRepository.findById(updateCategoryId).get();
+        String updateCategoryName = beforeUpdateCategory.getName()+flag;
+        String updateCategoryDescription = beforeUpdateCategory.getDescription()+flag;
+        UpdateCategoryRequest request = new UpdateCategoryRequest(updateCategoryId, updateCategoryName, updateCategoryDescription);
 
         // when
         categoryService.updateCategory(request);
 
         // then
-        Category category = categoryRepository.findByIdOrThrow(1L);
-        assertThat(category.getName()).isEqualTo("변경 이름");
-        assertThat(category.getDescription()).isEqualTo("변경 설명");
+        Category afterUpdateCategory = categoryRepository.findById(updateCategoryId).get();
+        assertThat(afterUpdateCategory.getName()).isEqualTo(updateCategoryName);
+        assertThat(afterUpdateCategory.getDescription()).isEqualTo(updateCategoryDescription);
+    }
+
+    @Test
+    @DisplayName("카테고리 업데이트 검증, 존재하지 않는 id -> throw")
+    public void updateCategory_notExistingId_throw() {
+        // given
+        long notExistingCategoryId = categoryRepository.count()+1;
+        UpdateCategoryRequest request = new UpdateCategoryRequest(notExistingCategoryId, new String(), new String());
+        // when, then
+        assertThatThrownBy(() -> categoryService.updateCategory(request))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
     @DisplayName("카테고리 삭제 여부 검증")
-    public void deleteCategory_throw() {
+    public void deleteCategory_success() {
         // given
         long id = 1L;
-
+        boolean beforeDeleteCategory = categoryRepository.findById(id).isPresent();
         // when
         categoryService.deleteCategory(id);
 
         // then
-        assertThatThrownBy(() -> categoryRepository.findByIdOrThrow(1L))
-                .isInstanceOf(Exception.class);
+        boolean afterDeleteCategory = categoryRepository.findById(id).isPresent();
+        assertThat(beforeDeleteCategory).isTrue();
+        assertThat(afterDeleteCategory).isFalse();
+    }
+
+    @Test
+    @DisplayName("카테고리 삭제 여부 검증, 존재하지 않는 id -> throw")
+    public void deleteCategory_throw() {
+        // given
+        long notExistingCategoryId = categoryRepository.count()+1;
+
+        // when, then
+        assertThatThrownBy(() -> categoryService.deleteCategory(notExistingCategoryId))
+                .isInstanceOf(EntityNotFoundException.class);
     }
 
 

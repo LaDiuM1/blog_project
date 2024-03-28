@@ -214,14 +214,14 @@ class PostServiceTest {
     public void updatePostStatus_success() {
         // given
         Long id = 1L;
-        boolean beforeStatus = postRepository.findByIdOrThrow(id).isStatus();
+        boolean beforeUpdateStatus = postRepository.findByIdOrThrow(id).isStatus();
 
         // when
         postService.updatePostStatus(id);
-        boolean afterStatus = postRepository.findByIdOrThrow(id).isStatus();
+        boolean afterUpdateStatus = postRepository.findByIdOrThrow(id).isStatus();
 
         // then
-        assertThat(beforeStatus).isNotEqualTo(afterStatus);
+        assertThat(beforeUpdateStatus).isNotEqualTo(afterUpdateStatus);
     }
 
     @Test
@@ -247,7 +247,8 @@ class PostServiceTest {
         boolean afterDeletePost = postRepository.findById(id).isPresent();
 
         // then
-        assertThat(beforeDeletePost).isNotEqualTo(afterDeletePost);
+        assertThat(beforeDeletePost).isTrue();
+        assertThat(afterDeletePost).isFalse();
     }
 
     @Test

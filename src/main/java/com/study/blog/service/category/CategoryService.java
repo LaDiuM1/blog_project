@@ -10,6 +10,7 @@ import com.study.blog.infrastructure.persistence.repository.category.CategoryRep
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -39,7 +40,8 @@ public class CategoryService {
     }
 
     public void updateCategoryStatus(Long id){
-        Category category = categoryRepository.findByIdOrThrow(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
         category.setStatus(!category.isStatus());
 
         categoryRepository.save(category);
@@ -54,15 +56,19 @@ public class CategoryService {
         categoryRepository.updateCategorySequence(idSet);
     }
 
+    @Transactional
     public void updateCategory(UpdateCategoryRequest request){
-        Category category = categoryRepository.findByIdOrThrow(request.getId());
+        Category category = categoryRepository.findById(request.getId())
+                .orElseThrow(EntityNotFoundException::new);
         category.setName(request.getName());
         category.setDescription(request.getDescription());
 
-        categoryRepository.save(category);
     }
 
     public void deleteCategory(Long id){
+        boolean existingCategoryCheck = categoryRepository.existsById(id);
+
+        if(!existingCategoryCheck) { throw new EntityNotFoundException(); }
         categoryRepository.deleteById(id);
     }
 

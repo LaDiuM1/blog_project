@@ -23,11 +23,7 @@ public class RestExceptionHandler {
         Map<String, String> errors = new LinkedHashMap<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-//            String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
-//            String message = Objects.requireNonNull(error.getDefaultMessage()).split("&")[0];
-//            String errorCode = Objects.requireNonNull(error.getDefaultMessage()).split("&")[1];
-//            errors.put("Error Code", errorCode);
             errors.put("message", message);
         });
 

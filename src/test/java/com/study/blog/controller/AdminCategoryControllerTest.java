@@ -2,6 +2,7 @@ package com.study.blog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.service.category.CategoryService;
+import com.study.blog.service.category.request.CreateCategoryRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,15 +27,17 @@ class AdminCategoryControllerTest {
     ObjectMapper objectMapper;
     @MockBean
     private CategoryService categoryService;
+    private Validator validator;
 
     @Test
-    @DisplayName("name = '테스트', description = '테스트' : 정상 파라미터 카테고리 생성 검증")
+    @DisplayName("카테고리 생성 요청 컨트롤러 검증")
     void createCategory_validRequest_success() throws Exception {
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("name", "테스트");
-        requestBody.put("description", "테스트");
 
-        String jsonRequest = objectMapper.writeValueAsString(requestBody);
+        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest(
+                "테스트 이름",
+                "테스트 설명");
+
+        String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
 
         mockMvc.perform(post("/admin/category/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -41,20 +46,22 @@ class AdminCategoryControllerTest {
     }
 
     @Test
-    @DisplayName("name 100글자 초과' : 카테고리 생성 파라미터 유효성 검증")
+    @DisplayName("카테고리 생성 요청 컨트롤러 검증, 이름 100글자 초과 -> valid 메시지 응답")
     void createCategory_invalidRequest_fail() throws Exception {
         String nameLongerThan100Chars = "a".repeat(101);
 
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("name", nameLongerThan100Chars);
-        requestBody.put("description", "테스트");
+        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest(
+                nameLongerThan100Chars,
+                "테스트 설명");
 
-        String jsonRequest = objectMapper.writeValueAsString(requestBody);
+        String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
 
         mockMvc.perform(post("/admin/category/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
+
+//        assertThat(violations).anyMatch(v -> v.getMessage().contains("카테고리 id 값이 null 입니다."));
     }
 
     @Test
