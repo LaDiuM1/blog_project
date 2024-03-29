@@ -1,8 +1,8 @@
 package com.study.blog.service.comment;
 
-import com.study.blog.infrastructure.persistence.entity.Comment;
-import com.study.blog.infrastructure.persistence.repository.comment.CommentRepository;
-import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
+import com.study.blog.persistence.entity.Comment;
+import com.study.blog.persistence.repository.comment.CommentRepository;
+import com.study.blog.persistence.repository.comment.response.CommentListResponse;
 import com.study.blog.service.comment.request.CommentListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package com.study.blog.controller;
 
-import com.study.blog.infrastructure.persistence.repository.post.response.PostListResponse;
-import com.study.blog.infrastructure.persistence.repository.post.response.PostResponse;
+import com.study.blog.persistence.repository.post.response.PostListResponse;
+import com.study.blog.persistence.repository.post.response.PostResponse;
 import com.study.blog.service.post.PostService;
 import com.study.blog.service.post.request.CreatePostRequest;
 import com.study.blog.service.post.request.PostListRequest;

@@ -1,12 +1,12 @@
 package com.study.blog.service.category;
 
-import com.study.blog.infrastructure.persistence.repository.category.response.CategoryListResponse;
+import com.study.blog.persistence.repository.category.response.CategoryListResponse;
 import com.study.blog.service.category.request.CreateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategorySequenceRequest;
-import com.study.blog.infrastructure.persistence.repository.category.response.CategoryResponse;
-import com.study.blog.infrastructure.persistence.entity.Category;
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
+import com.study.blog.persistence.repository.category.response.CategoryResponse;
+import com.study.blog.persistence.entity.Category;
+import com.study.blog.persistence.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +39,11 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
+    @Transactional
     public void updateCategoryStatus(Long id){
         Category category = categoryRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         category.setStatus(!category.isStatus());
-
-        categoryRepository.save(category);
     }
 
     public void updateCategorySequence(UpdateCategorySequenceRequest request){

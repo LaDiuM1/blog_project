@@ -1,7 +1,7 @@
 package com.study.blog.service.category;
 
-import com.study.blog.infrastructure.persistence.entity.Category;
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
+import com.study.blog.persistence.entity.Category;
+import com.study.blog.persistence.repository.category.CategoryRepository;
 import com.study.blog.service.category.request.CreateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategoryRequest;
 import com.study.blog.service.category.request.UpdateCategorySequenceRequest;
@@ -13,11 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;

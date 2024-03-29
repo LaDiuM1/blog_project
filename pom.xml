@@ -7,13 +7,15 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.14</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>sample-custmer</artifactId>
+
+    <groupId>com.study.blog</groupId>
+    <artifactId>blog-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sample-custmer</name>
-    <description>sample-custmer</description>
+    <name>blog-project</name>
+    <description>blog-project</description>
+
     <properties>
         <java.version>17</java.version>
         <querydsl.version>5.0.0</querydsl.version>

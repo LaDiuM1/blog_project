@@ -1,7 +1,7 @@
 package com.study.blog.controller;
 
 
-import com.study.blog.infrastructure.persistence.repository.tag.response.SearchTagResponse;
+import com.study.blog.persistence.repository.tag.response.SearchTagResponse;
 import com.study.blog.service.tag.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController

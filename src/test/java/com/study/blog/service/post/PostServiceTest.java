@@ -1,11 +1,11 @@
 package com.study.blog.service.post;
 
-import com.study.blog.infrastructure.persistence.entity.Post;
-import com.study.blog.infrastructure.persistence.entity.Tag;
-import com.study.blog.infrastructure.persistence.repository.category.CategoryRepository;
-import com.study.blog.infrastructure.persistence.repository.post.PostRepository;
-import com.study.blog.infrastructure.persistence.repository.post.response.PostListResponse;
-import com.study.blog.infrastructure.persistence.repository.post.response.PostResponse;
+import com.study.blog.persistence.entity.Post;
+import com.study.blog.persistence.entity.Tag;
+import com.study.blog.persistence.repository.category.CategoryRepository;
+import com.study.blog.persistence.repository.post.PostRepository;
+import com.study.blog.persistence.repository.post.response.PostListResponse;
+import com.study.blog.persistence.repository.post.response.PostResponse;
 import com.study.blog.service.post.request.CreatePostRequest;
 import com.study.blog.service.post.request.PostListRequest;
 import com.study.blog.service.post.request.UpdatePostRequest;

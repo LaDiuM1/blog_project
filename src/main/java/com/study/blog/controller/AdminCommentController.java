@@ -1,6 +1,6 @@
 package com.study.blog.controller;
 
-import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
+import com.study.blog.persistence.repository.comment.response.CommentListResponse;
 import com.study.blog.service.comment.CommentService;
 import com.study.blog.service.comment.request.CommentListRequest;
 import lombok.RequiredArgsConstructor;

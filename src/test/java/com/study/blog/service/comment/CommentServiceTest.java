@@ -1,16 +1,12 @@
 package com.study.blog.service.comment;
 
-import com.study.blog.infrastructure.persistence.entity.Comment;
-import com.study.blog.infrastructure.persistence.repository.comment.CommentRepository;
-import com.study.blog.infrastructure.persistence.repository.comment.response.CommentListResponse;
+import com.study.blog.persistence.repository.comment.CommentRepository;
+import com.study.blog.persistence.repository.comment.response.CommentListResponse;
 import com.study.blog.service.comment.request.CommentListRequest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
@@ -18,14 +14,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
