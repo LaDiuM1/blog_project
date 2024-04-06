@@ -20,7 +20,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
+    protected void doFilterInternal(
+            HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
@@ -31,11 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            // JWT 인증 실패 시 처리하는 로직을 추가할 수 있습니다.
-            // 예를 들어, SecurityContext를 비우거나, 특정 예외를 던지는 것 등이 있을 수 있습니다.
+            // 인증 실패 처리 로직 작성 필요
             SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-            return; // 이후의 필터 체인 실행을 멈추고 예외 처리
+            return;
         }
 
         filterChain.doFilter(request, response);

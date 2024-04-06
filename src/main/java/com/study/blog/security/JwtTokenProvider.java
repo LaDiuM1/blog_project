@@ -32,11 +32,10 @@ public class JwtTokenProvider {
     }
 
     public String createToken(Authentication authentication) {
-        // Authentication 객체의 권한 정보를 가져옵니다.
         String username = ((User) authentication.getPrincipal()).getUsername();
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("auth", authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority) // 이 부분이 수정되었습니다.
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
 
         Date now = new Date();
@@ -51,8 +50,6 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        // 토큰에서 사용자 정보를 가져오는 로직을 구현합니다.
-        // 이 예시에서는 단순화를 위해 실제 사용자 정보를 로드하지 않고 토큰에 포함된 정보를 사용합니다.
         UserDetails userDetails = new User(getUsername(token), "", getAuthorities(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

@@ -8,6 +8,7 @@ import com.study.blog.persistence.repository.category.response.CategoryResponse;
 import com.study.blog.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/category")
+@RequestMapping("/admin/categories")
 @RequiredArgsConstructor
 public class AdminCategoryController {
 
@@ -29,40 +30,41 @@ public class AdminCategoryController {
         return ResponseEntity.ok(categoryList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("id") Long id){
+    @PostMapping
+    public ResponseEntity<Long> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+        Long createdCategoryId = categoryService.createCategory(createCategoryRequest);
+        return new ResponseEntity<>(createdCategoryId, HttpStatus.CREATED);
+    }
 
-        CategoryResponse category = categoryService.getCategory(id);
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("categoryId") Long categoryId){
+
+        CategoryResponse category = categoryService.getCategory(categoryId);
 
         return ResponseEntity.ok(category);
 
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Void> updateCategory(
+            @PathVariable Long categoryId,
+            @RequestBody @Valid UpdateCategoryRequest request
+    ) {
 
-        categoryService.createCategory(createCategoryRequest);
-
-        return ResponseEntity.ok().build();
-    }
-
-
-    @PutMapping("/update")
-    public ResponseEntity<Void> updateCategory(@Valid @RequestBody UpdateCategoryRequest request) {
-
-        categoryService.updateCategory(request);
+        categoryService.updateCategory(categoryId, request);
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update/status")
+    @PutMapping("/{categoryId}/status")
     public ResponseEntity<Void> updateCategoryStatus(@Param("id") Long id) {
         categoryService.updateCategoryStatus(id);
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update/sequence")
+
+    @PutMapping("/{categoryId}/sequence")
     public ResponseEntity<Void> updateCategorySequence(@Valid @RequestBody UpdateCategorySequenceRequest request) {
 
         categoryService.updateCategorySequence(request);
@@ -70,11 +72,10 @@ public class AdminCategoryController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("{categoryId}")
     public ResponseEntity<Void> deleteCategory(@RequestParam("id") Long id) {
         categoryService.deleteCategory(id);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     private final JwtTokenProvider jwtTokenProvider;
 
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -23,15 +22,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // JWT를 사용하므로 CSRF 보호를 비활성화합니다.
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 사용하지 않도록 설정
                 .and()
-                .authorizeRequests() // 요청에 대한 사용권한 체크
-                .antMatchers("/api/auth/**").permitAll() // `/api/auth/**` 패턴의 요청은 인증 없이 접근 허용
-                .anyRequest().authenticated() // 나머지 요청들은 모두 인증 필요
+                .authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class); // JWT 필터를 등록
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

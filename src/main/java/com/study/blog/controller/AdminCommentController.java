@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/comment")
+@RequestMapping("/admin/comments")
 @RequiredArgsConstructor
 public class AdminCommentController {
 
