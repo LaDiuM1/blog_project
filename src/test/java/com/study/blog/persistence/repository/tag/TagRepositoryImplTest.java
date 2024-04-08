@@ -1,8 +1,8 @@
 package com.study.blog.persistence.repository.tag;
 
-import com.study.blog.persistence.entity.Tag;
-import com.study.blog.persistence.repository.tag.TagRepository;
-import com.study.blog.persistence.repository.tag.response.SearchTagResponse;
+import com.study.blog.domain.tag.repository.Tag;
+import com.study.blog.domain.tag.repository.TagRepository;
+import com.study.blog.domain.tag.response.SearchTagResponse;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

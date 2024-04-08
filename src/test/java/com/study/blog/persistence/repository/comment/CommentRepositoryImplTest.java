@@ -1,7 +1,8 @@
 package com.study.blog.persistence.repository.comment;
 
-import com.study.blog.persistence.repository.comment.CommentRepository;
-import com.study.blog.persistence.repository.comment.response.CommentListResponse;
+import com.study.blog.domain.comment.repository.CommentRepository;
+import com.study.blog.domain.comment.request.CommentListRequest;
+import com.study.blog.domain.comment.response.CommentListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,12 @@ class CommentRepositoryImplTest {
         String searchKeyword = "테스트";
         Boolean searchStatus = true;
 
+        CommentListRequest request = new CommentListRequest();
+        request.setSearchKeyword(searchKeyword);
+        request.setSearchStatus(searchStatus);
+
         // when
-        Page<CommentListResponse> searchCommentList = commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
+        Page<CommentListResponse> searchCommentList = commentRepository.searchCommentList(request, pageable);
 
         // then
         searchCommentList.getContent().forEach( comment -> {
@@ -48,12 +53,12 @@ class CommentRepositoryImplTest {
     void getCommentList_keywordsIsNull_success() {
         // given
         Pageable pageable = PageRequest.of(0, 10);
-        String searchKeyword = null;
-        Boolean searchStatus = null;
         int commentCount = (int) commentRepository.count();
 
+        CommentListRequest request = new CommentListRequest();
+
         // when
-        Page<CommentListResponse> searchCommentList = commentRepository.getCommentList(searchKeyword, searchStatus, pageable);
+        Page<CommentListResponse> searchCommentList = commentRepository.searchCommentList(request, pageable);
 
         // then
         assertThat(searchCommentList.getContent().size()).isEqualTo(commentCount);
