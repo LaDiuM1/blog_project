@@ -9,22 +9,23 @@ import com.study.blog.domain.post.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/post")
+@RequestMapping("/admin/posts")
 @RequiredArgsConstructor
 public class AdminPostController {
 
     private final PostService postService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id) {
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostResponse> getPost(@PathVariable("postId") Long postId) {
 
-        PostResponse post = postService.getPost(id);
+        PostResponse post = postService.getPost(postId);
 
         return ResponseEntity.ok(post);
     }
@@ -46,36 +47,37 @@ public class AdminPostController {
         return ResponseEntity.ok(postList);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+    @PostMapping
+    public ResponseEntity<Long> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+        Long createdPostId = postService.createPost(createPostRequest);
 
-        postService.createPost(createPostRequest);
+        return new ResponseEntity<>(createdPostId, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<Void> updatePost(
+            @PathVariable("postId") Long postId,
+            @RequestBody @Valid UpdatePostRequest updatePostRequest) {
+
+        postService.updatePost(postId, updatePostRequest);
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> updatePost(@Valid @RequestBody UpdatePostRequest updatePostRequest) {
+    @PutMapping("/{postId}/status")
+    public ResponseEntity<Void> updatePostStatus(@PathVariable("postId") Long postId) {
 
-        postService.updatePost(updatePostRequest);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("/update/status")
-    public ResponseEntity<Void> updatePostStatus(@RequestParam("id") Long id) {
-
-        postService.updatePostStatus(id);
+        postService.updatePostStatus(postId);
 
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deletePost(@RequestParam("id") Long id) {
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId) {
 
-        postService.deletePost(id);
+        postService.deletePost(postId);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }

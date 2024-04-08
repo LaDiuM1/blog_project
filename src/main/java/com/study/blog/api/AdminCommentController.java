@@ -30,10 +30,9 @@ public class AdminCommentController {
         return ResponseEntity.ok(postList);
     }
 
-    @PutMapping("/update/status")
-    public ResponseEntity<Void> updateCommentStatus(@RequestParam(value = "id") Long id) {
-
-        commentService.switchCommentStatus(id);
+    @PutMapping("/{commentId}/status")
+    public ResponseEntity<Void> updateCommentStatus(@PathVariable("commentId") Long commentId) {
+        commentService.switchCommentStatus(commentId);
 
         return ResponseEntity.ok().build();
     }

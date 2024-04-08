@@ -29,16 +29,8 @@ import java.util.stream.Collectors;
 public class PostTagUpdater {
 
     private final TagRepository tagRepository;
-    private final PostRepository postRepository;
 
-    @Transactional
-    public void postAddTags(Long postId, Set<String> tagNames){
-        boolean existingPostCheck = postRepository.existsById(postId);
-
-        if(!existingPostCheck) { throw new EntityNotFoundException(); }
-
-        Post postRef = new Post(postId);
-
+    public void postAddTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
         Set<Tag> tags = new HashSet<>();
 
@@ -55,7 +47,18 @@ public class PostTagUpdater {
             }
         }
         tags.addAll(tagRepository.saveAll(newTags));
-        postRef.updateTags(tags);
+        post.updateTags(tags);
+    }
+
+    public void matchPostAndTags(List<PostListResponse> postList){
+        Set<Long> postIds = postList.stream().map(PostListResponse::getId).collect(Collectors.toSet());
+
+        Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);
+
+        postList.forEach(postResponse -> {
+            List<TagResponse> tags = postTagsMap.getOrDefault(postResponse.getId(), Collections.emptyList());
+            postResponse.setTags(tags);
+        });
     }
 
 }

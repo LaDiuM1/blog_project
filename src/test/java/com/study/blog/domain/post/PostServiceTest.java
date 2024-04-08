@@ -157,7 +157,7 @@ class PostServiceTest {
         Long requestPostId = 1L;
         Post requestPost = postRepository.findById(requestPostId).get();
         Set<Tag> tegSet = new HashSet<>(List.of(new Tag("tag1"),new Tag("tag2")));
-        requestPost.setTags(tegSet);
+        requestPost.updateTags(tegSet);
 
         String verifyStr = "after";
         Long updateCategoryId = requestPost.getCategory().getId() + 1;
@@ -168,7 +168,7 @@ class PostServiceTest {
         UpdatePostRequest request = new UpdatePostRequest(requestPostId, updateCategoryId, updateTitle, updateContent, updateTagSet);
 
         // when
-        postService.updatePost(request);
+        postService.updatePost(requestPostId, request);
 
         // then
         Post updatedPost = postRepository.findById(requestPostId).get();
@@ -188,10 +188,10 @@ class PostServiceTest {
         long notExistingPostId = postRepository.count()+1;
         long existingCategoryId = 1L;
 
-        UpdatePostRequest request = new UpdatePostRequest(notExistingPostId, existingCategoryId, new String(), new String(), new HashSet<String>());
+        UpdatePostRequest request = new UpdatePostRequest(existingCategoryId, new String(), new String(), new HashSet<String>());
 
         // when, then
-        assertThatThrownBy(() -> postService.updatePost(request))
+        assertThatThrownBy(() -> postService.updatePost(notExistingPostId, request))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
@@ -202,10 +202,10 @@ class PostServiceTest {
         long existingPostId = 1L;
         long notExistingCategoryId = postRepository.count()+1;
 
-        UpdatePostRequest request = new UpdatePostRequest(existingPostId, notExistingCategoryId, new String(), new String(), new HashSet<String>());
+        UpdatePostRequest request = new UpdatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>());
 
         // when, then
-        assertThatThrownBy(() -> postService.updatePost(request))
+        assertThatThrownBy(() -> postService.updatePost(existingPostId, request))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 

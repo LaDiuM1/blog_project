@@ -54,7 +54,7 @@ public class Category extends BaseTime {
         this.id = id;
     }
 
-    public CategoryResponse toDto() {
+    public CategoryResponse toResponse() {
         return new CategoryResponse(
                 this.getId(),
                 this.getName(),
@@ -64,6 +64,15 @@ public class Category extends BaseTime {
                 this.getCreateDate(),
                 this.getUpdateDate()
         );
+    }
+
+    public void updateCategory(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public void switchStatus() {
+        this.status = !this.status;
     }
 
     public LocalDateTime getUpdateDate(){

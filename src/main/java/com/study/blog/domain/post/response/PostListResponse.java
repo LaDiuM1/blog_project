@@ -1,5 +1,6 @@
 package com.study.blog.domain.post.response;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.study.blog.domain.tag.response.TagResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

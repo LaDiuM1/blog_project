@@ -6,7 +6,6 @@ import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.domain.category.response.CategoryListResponse;
-import com.study.blog.persistence.entity.QCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +48,12 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
     public Integer getCreateSequenceNumber(){
         QCategory category = QCategory.category;
 
-        return query.select(category.sequence.max().add(1).coalesce(1))
+        return query.select(category.sequence.max().add(1).nullif(1))
                 .from(category)
                 .fetchOne();
-
     }
 
-    public List<CategoryListResponse> getAdminCategoryList() {
+    public List<CategoryListResponse> getCategoryList() {
         QCategory category = QCategory.category;
 
         return query.select(Projections.constructor(CategoryListResponse.class,

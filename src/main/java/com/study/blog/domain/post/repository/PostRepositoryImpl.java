@@ -6,9 +6,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.study.blog.domain.comment.repository.QComment;
+import com.study.blog.domain.post.request.PostListRequest;
 import com.study.blog.domain.post.response.PostListResponse;
-import com.study.blog.persistence.entity.QComment;
-import com.study.blog.persistence.entity.QPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +57,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return builder;
     }
 
-    public Page<PostListResponse> searchPostAndCommentCountList(Long searchCategoryId, String searchKeyword, Boolean searchStatus, Pageable pageable) {
+    public Page<PostListResponse> searchPost(PostListRequest request, Pageable pageable) {
+        Long searchCategoryId = request.getSearchCategoryId();
+        String searchKeyword = request.getSearchKeyword();
+        Boolean searchStatus = request.getSearchStatus();
+
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 

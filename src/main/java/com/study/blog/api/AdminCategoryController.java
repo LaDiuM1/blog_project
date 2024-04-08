@@ -22,10 +22,16 @@ public class AdminCategoryController {
 
     private final CategoryService categoryService;
 
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("categoryId") Long categoryId){
+        CategoryResponse category = categoryService.getCategory(categoryId);
+
+        return ResponseEntity.ok(category);
+    }
+
     @GetMapping
     public ResponseEntity<List<CategoryListResponse>> getCategoryList() {
-
-        List<CategoryListResponse> categoryList = categoryService.getAdminCategoryList();
+        List<CategoryListResponse> categoryList = categoryService.getCategoryList();
 
         return ResponseEntity.ok(categoryList);
     }
@@ -33,16 +39,8 @@ public class AdminCategoryController {
     @PostMapping
     public ResponseEntity<Long> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
         Long createdCategoryId = categoryService.createCategory(createCategoryRequest);
+
         return new ResponseEntity<>(createdCategoryId, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("categoryId") Long categoryId){
-
-        CategoryResponse category = categoryService.getCategory(categoryId);
-
-        return ResponseEntity.ok(category);
-
     }
 
     @PutMapping("/{categoryId}")
@@ -50,31 +48,30 @@ public class AdminCategoryController {
             @PathVariable Long categoryId,
             @RequestBody @Valid UpdateCategoryRequest request
     ) {
-
         categoryService.updateCategory(categoryId, request);
 
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{categoryId}/status")
-    public ResponseEntity<Void> updateCategoryStatus(@Param("id") Long id) {
-        categoryService.updateCategoryStatus(id);
+    public ResponseEntity<Void> updateCategoryStatus(@PathVariable("categoryId") Long categoryId) {
+        categoryService.updateCategoryStatus(categoryId);
 
         return ResponseEntity.ok().build();
     }
 
 
-    @PutMapping("/{categoryId}/sequence")
-    public ResponseEntity<Void> updateCategorySequence(@Valid @RequestBody UpdateCategorySequenceRequest request) {
-
+    @PutMapping("/sequence")
+    public ResponseEntity<Void> updateCategorySequence(@RequestBody @Valid UpdateCategorySequenceRequest request) {
         categoryService.updateCategorySequence(request);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{categoryId}")
-    public ResponseEntity<Void> deleteCategory(@RequestParam("id") Long id) {
-        categoryService.deleteCategory(id);
+    public ResponseEntity<Void> deleteCategory(@PathVariable("categoryId") Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+
         return ResponseEntity.noContent().build();
     }
 

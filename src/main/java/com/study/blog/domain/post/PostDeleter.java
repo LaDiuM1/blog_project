@@ -1,6 +1,5 @@
 package com.study.blog.domain.post;
 
-import com.study.blog.domain.category.repository.Category;
 import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.repository.PostRepository;
@@ -9,38 +8,27 @@ import com.study.blog.domain.post.request.PostListRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
-import com.study.blog.domain.tag.repository.Tag;
 import com.study.blog.domain.tag.repository.TagRepository;
-import com.study.blog.domain.tag.response.TagResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.*;
-import java.util.stream.Collectors;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class PostCreator {
+public class PostDeleter {
 
     private final PostRepository postRepository;
-    private final CategoryRepository categoryRepository;
 
-    public Post createPost(CreatePostRequest request){
-        boolean existingCategoryCheck = categoryRepository.existsById(request.getCategoryId());
+    public void deletePost(Long postId){
+        boolean existingPostCheck = postRepository.existsById(postId);
 
-        if(!existingCategoryCheck) { throw new EntityNotFoundException(); }
+        if(!existingPostCheck) { throw new EntityNotFoundException(); }
 
-        Category categoryRef = new Category(request.getCategoryId());
-
-        Post post = new Post(categoryRef, request.getTitle(), request.getContent());
-
-        return postRepository.save(post);
+        postRepository.deleteById(postId);
     }
-
 
 }

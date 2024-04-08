@@ -135,7 +135,7 @@ class CategoryServiceTest {
         UpdateCategoryRequest request = new UpdateCategoryRequest(updateCategoryId, updateCategoryName, updateCategoryDescription);
 
         // when
-        categoryService.updateCategory(request);
+        categoryService.updateCategory(updateCategoryId, request);
 
         // then
         Category afterUpdateCategory = categoryRepository.findById(updateCategoryId).get();
@@ -150,7 +150,7 @@ class CategoryServiceTest {
         long notExistingCategoryId = categoryRepository.count()+1;
         UpdateCategoryRequest request = new UpdateCategoryRequest(notExistingCategoryId, new String(), new String());
         // when, then
-        assertThatThrownBy(() -> categoryService.updateCategory(request))
+        assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, request))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 

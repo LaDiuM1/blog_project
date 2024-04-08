@@ -9,7 +9,7 @@ import java.util.Set;
 public interface CategoryRepositoryCustom {
     Category findByIdOrThrow(Long id);
     Integer getCreateSequenceNumber();
-    List<CategoryListResponse> getAdminCategoryList();
+    List<CategoryListResponse> getCategoryList();
     boolean updateCategoryValid(Set<Long> idSet);
     void updateCategorySequence(Set<Long> idSet);
 

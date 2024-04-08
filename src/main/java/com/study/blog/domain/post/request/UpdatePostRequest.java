@@ -13,10 +13,6 @@ import java.util.HashSet;
 @Getter
 @AllArgsConstructor
 public class UpdatePostRequest {
-    @NotNull(message = "게시글 id 값이 null 입니다.")
-    @Min(value = 1, message = "게시글 id는 정수 1 이상 요청바랍니다.")
-    private Long id;
-    
     @NotNull(message = "카테고리 id 값이 null 입니다.")
     @Min(value = 1, message = "카테고리 id는 정수 1 이상 요청바랍니다.")
     private Long categoryId;
