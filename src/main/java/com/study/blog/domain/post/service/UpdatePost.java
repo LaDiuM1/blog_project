@@ -1,4 +1,4 @@
-package com.study.blog.domain.post;
+package com.study.blog.domain.post.service;
 
 import com.study.blog.domain.category.repository.Category;
 import com.study.blog.domain.category.repository.CategoryRepository;
@@ -14,11 +14,11 @@ import javax.transaction.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class PostUpdater {
+public class UpdatePost {
 
-    private final PostQuery postQuery;
-    private final PostCreator postCreator;
-    private final PostTagUpdater postTagUpdater;
+    private final ReadPost readPost;
+    private final CreatePost createPost;
+    private final UpdatePostTag updatePostTag;
 
     private final PostRepository postRepository;
     private final TagRepository tagRepository;

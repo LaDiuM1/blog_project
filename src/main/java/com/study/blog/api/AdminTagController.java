@@ -2,7 +2,7 @@ package com.study.blog.api;
 
 
 import com.study.blog.domain.tag.response.SearchTagResponse;
-import com.study.blog.domain.tag.TagService;
+import com.study.blog.domain.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;

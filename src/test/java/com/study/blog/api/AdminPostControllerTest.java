@@ -1,7 +1,7 @@
 package com.study.blog.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.blog.domain.post.PostService;
+import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.post.request.CreatePostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,11 +98,10 @@ class AdminPostControllerTest {
     @DisplayName("게시글 업데이트 검증, null값 유효성 검증 확인")
     void updatePost_nullParams_validate() {
         UpdatePostRequest request = new UpdatePostRequest(
-                null, null, null, null, new HashSet<>(List.of("")));
+                null, null, null, new HashSet<>(List.of("")));
 
         var violations = validator.validate(request);
 
-        assertThat(violations).anyMatch(v -> v.getMessage().contains("게시글 id 값이 null 입니다."));
         assertThat(violations).anyMatch(v -> v.getMessage().contains("카테고리 id 값이 null 입니다."));
         assertThat(violations).anyMatch(v -> v.getMessage().contains("글 제목을 입력해 주세요."));
         assertThat(violations).anyMatch(v -> v.getMessage().contains("글 내용을 입력해 주세요."));

@@ -1,7 +1,8 @@
-package com.study.blog.domain.post;
+package com.study.blog.domain.post.service;
 
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.repository.PostRepository;
+import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.tag.repository.Tag;
 import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.post.response.PostListResponse;
@@ -165,7 +166,7 @@ class PostServiceTest {
         String updateContent = requestPost.getContent() + verifyStr;
         HashSet<String> updateTagSet = tegSet.stream().map( tagName -> tagName+verifyStr).collect(Collectors.toCollection(HashSet::new));
 
-        UpdatePostRequest request = new UpdatePostRequest(requestPostId, updateCategoryId, updateTitle, updateContent, updateTagSet);
+        UpdatePostRequest request = new UpdatePostRequest(updateCategoryId, updateTitle, updateContent, updateTagSet);
 
         // when
         postService.updatePost(requestPostId, request);

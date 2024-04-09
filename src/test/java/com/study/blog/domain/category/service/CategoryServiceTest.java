@@ -1,10 +1,11 @@
-package com.study.blog.domain.category;
+package com.study.blog.domain.category.service;
 
 import com.study.blog.domain.category.repository.Category;
 import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.category.request.CreateCategoryRequest;
 import com.study.blog.domain.category.request.UpdateCategoryRequest;
 import com.study.blog.domain.category.request.UpdateCategorySequenceRequest;
+import com.study.blog.domain.category.service.CategoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.study.blog.api;
 
 import com.study.blog.domain.comment.response.CommentListResponse;
-import com.study.blog.domain.comment.CommentService;
+import com.study.blog.domain.comment.service.CommentService;
 import com.study.blog.domain.comment.request.CommentListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

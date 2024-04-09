@@ -1,8 +1,9 @@
-package com.study.blog.domain.comment;
+package com.study.blog.domain.comment.service;
 
 import com.study.blog.domain.comment.repository.CommentRepository;
 import com.study.blog.domain.comment.response.CommentListResponse;
 import com.study.blog.domain.comment.request.CommentListRequest;
+import com.study.blog.domain.comment.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,29 +1,23 @@
-package com.study.blog.domain.post;
+package com.study.blog.domain.post.service;
 
-import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.repository.PostRepository;
 import com.study.blog.domain.post.request.PostListRequest;
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
 import com.study.blog.domain.tag.repository.Tag;
-import com.study.blog.domain.tag.repository.TagRepository;
-import com.study.blog.domain.tag.response.TagResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class PostQuery {
+public class ReadPost {
 
     private final PostRepository postRepository;
 

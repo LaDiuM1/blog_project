@@ -1,4 +1,4 @@
-package com.study.blog.persistence.repository.comment;
+package com.study.blog.domain.comment.repository;
 
 import com.study.blog.domain.comment.repository.CommentRepository;
 import com.study.blog.domain.comment.request.CommentListRequest;

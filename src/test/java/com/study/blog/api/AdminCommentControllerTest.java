@@ -1,6 +1,6 @@
 package com.study.blog.api;
 
-import com.study.blog.domain.comment.CommentService;
+import com.study.blog.domain.comment.service.CommentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

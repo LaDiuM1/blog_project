@@ -2,7 +2,7 @@ package com.study.blog.api;
 
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
-import com.study.blog.domain.post.PostService;
+import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.post.request.CreatePostRequest;
 import com.study.blog.domain.post.request.PostListRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;

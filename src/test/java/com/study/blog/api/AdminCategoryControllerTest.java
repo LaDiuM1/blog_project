@@ -1,7 +1,7 @@
 package com.study.blog.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.blog.domain.category.CategoryService;
+import com.study.blog.domain.category.service.CategoryService;
 import com.study.blog.domain.category.request.CreateCategoryRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class AdminCategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
 
-        mockMvc.perform(post("/admin/category/create")
+        mockMvc.perform(post("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk());
@@ -56,7 +56,7 @@ class AdminCategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
 
-        mockMvc.perform(post("/admin/category/create")
+        mockMvc.perform(post("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -72,7 +72,7 @@ class AdminCategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(post("/admin/category/create")
+        mockMvc.perform(post("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -90,7 +90,7 @@ class AdminCategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/admin/category/update")
+        mockMvc.perform(put("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk());
@@ -106,7 +106,7 @@ class AdminCategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/admin/category/update")
+        mockMvc.perform(put("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -115,7 +115,7 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("카테고리 삭제 정상 파라미터 검증")
     void deleteCategory_validRequest_success() throws Exception {
-        mockMvc.perform(delete("/admin/category/delete")
+        mockMvc.perform(delete("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("id", "1"))
                 .andExpect(status().isOk());
@@ -124,7 +124,7 @@ class AdminCategoryControllerTest {
     @Test
     @DisplayName("카테고리 삭제 비정상 파라미터 검증")
     void deleteCategory_invalidRequest_fail() throws Exception {
-        mockMvc.perform(delete("/admin/category/delete")
+        mockMvc.perform(delete("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }

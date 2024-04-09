@@ -1,4 +1,4 @@
-package com.study.blog.persistence.repository.tag;
+package com.study.blog.domain.tag.repository;
 
 import com.study.blog.domain.tag.repository.Tag;
 import com.study.blog.domain.tag.repository.TagRepository;
