@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key:secret}")
+    @Value("${security.jwt.token.secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:3600000}") // 1h in milliseconds
+    @Value("${security.jwt.token.expire-length}") // 1000 * 60 * 60 * 24 * 7
     private long validityInMilliseconds;
 
     @PostConstruct
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("Expired or invalid JWT token");
+            throw new JwtAuthenticationException("유효하지 않은 JWT 토큰");
         }
     }
 }

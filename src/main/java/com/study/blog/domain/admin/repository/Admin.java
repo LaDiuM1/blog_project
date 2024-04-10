@@ -1,4 +1,4 @@
-package com.study.blog.domain.admin;
+package com.study.blog.domain.admin.repository;
 
 import com.study.blog.domain.common.BaseTime;
 import lombok.Getter;

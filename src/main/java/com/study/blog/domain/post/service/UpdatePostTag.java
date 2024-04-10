@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class UpdatePostTag {
+class UpdatePostTag {
 
     private final TagRepository tagRepository;
 
-    public void postAddTags(Post post, Set<String> tagNames){
+    void postAddTags(Post post, Set<String> tagNames){
         List<Tag> existingTags = tagRepository.findTagsByNameIn(tagNames);
         Set<Tag> tags = new HashSet<>();
 
@@ -38,7 +38,7 @@ public class UpdatePostTag {
         post.updateTags(tags);
     }
 
-    public void matchPostAndTags(List<PostListResponse> postList){
+    void matchPostAndTags(List<PostListResponse> postList){
         Set<Long> postIds = postList.stream().map(PostListResponse::getId).collect(Collectors.toSet());
 
         Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);

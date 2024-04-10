@@ -16,12 +16,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class UpdatePost {
 
-    private final ReadPost readPost;
-    private final CreatePost createPost;
-    private final UpdatePostTag updatePostTag;
-
     private final PostRepository postRepository;
-    private final TagRepository tagRepository;
     private final CategoryRepository categoryRepository;
 
     @Transactional
