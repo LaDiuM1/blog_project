@@ -29,5 +29,17 @@ public class Admin extends BaseTime {
     @Column(nullable = false)
     private boolean status = true;
 
+    public Admin() {}
+
+    public Admin(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
+    public void updatePasswordAndName(String password, String name) {
+        this.password = password;
+        this.name = name;
+    }
 
 }

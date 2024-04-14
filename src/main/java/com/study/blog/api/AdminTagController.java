@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/tag")
+@RequestMapping("/admin/tags")
 @RequiredArgsConstructor
 public class AdminTagController {
 
