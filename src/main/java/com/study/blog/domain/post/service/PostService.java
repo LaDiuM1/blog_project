@@ -2,7 +2,7 @@ package com.study.blog.domain.post.service;
 
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.request.CreatePostRequest;
-import com.study.blog.domain.post.request.PostListRequest;
+import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
@@ -31,7 +31,7 @@ public class PostService {
         return createdPost.getId();
     }
 
-    public Page<PostListResponse> searchPostList(PostListRequest request, Pageable pageable){
+    public Page<PostListResponse> searchPostList(SearchPostRequest request, Pageable pageable){
         Page<PostListResponse> postList = readPost.searchPostList(request, pageable);
         updatePostTag.matchPostAndTags(postList.getContent());
 

@@ -2,13 +2,12 @@ package com.study.blog.domain.post.service;
 
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.repository.PostRepository;
-import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.tag.repository.Tag;
 import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
 import com.study.blog.domain.post.request.CreatePostRequest;
-import com.study.blog.domain.post.request.PostListRequest;
+import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -105,10 +104,7 @@ class PostServiceTest {
         boolean searchStatus = true;
 
         Pageable pageable = PageRequest.of(0, 10);
-        PostListRequest request = new PostListRequest();
-        request.setSearchCategoryId(searchCategoryId);
-        request.setSearchKeyword(searchKeyword);
-        request.setSearchStatus(searchStatus);
+        SearchPostRequest request = new SearchPostRequest(searchCategoryId, searchKeyword, searchStatus);
 
         // when
         Page<PostListResponse> searchPostList = postService.searchPostList(request, pageable);

@@ -2,7 +2,7 @@ package com.study.blog.domain.post.service;
 
 import com.study.blog.domain.post.repository.Post;
 import com.study.blog.domain.post.repository.PostRepository;
-import com.study.blog.domain.post.request.PostListRequest;
+import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
 import com.study.blog.domain.tag.repository.Tag;
@@ -21,8 +21,8 @@ public class ReadPost {
 
     private final PostRepository postRepository;
 
-    public Page<PostListResponse> searchPostList(PostListRequest request, Pageable pageable){
-        return postRepository.searchPost(request, pageable);
+    public Page<PostListResponse> searchPostList(SearchPostRequest request, Pageable pageable){
+        return postRepository.searchPostList(request, pageable);
     }
 
     public PostResponse getPost(Long id){

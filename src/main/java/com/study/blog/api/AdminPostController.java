@@ -4,7 +4,7 @@ import com.study.blog.domain.post.response.PostListResponse;
 import com.study.blog.domain.post.response.PostResponse;
 import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.post.request.CreatePostRequest;
-import com.study.blog.domain.post.request.PostListRequest;
+import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,25 +33,22 @@ public class AdminPostController {
     @GetMapping
     public ResponseEntity<Page<PostListResponse>> searchPostList(
                                                               @RequestParam(required = false) Long searchCategoryId,
-                                                              @RequestParam(required = false) String searchKeyword,
+                                                              @RequestParam(required = false) String searchTitle,
+                                                              @RequestParam(required = false) String searchContent,
                                                               @RequestParam(required = false) Boolean searchStatus,
                                                               Pageable pageable) {
-        PostListRequest postListRequest = new PostListRequest();
-        postListRequest.setSearchCategoryId(searchCategoryId);
-        postListRequest.setSearchKeyword(searchKeyword);
-        postListRequest.setSearchStatus(searchStatus);
+        SearchPostRequest searchPostRequest = new SearchPostRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
 
-
-        Page<PostListResponse> postList = postService.searchPostList(postListRequest, pageable);
+        Page<PostListResponse> postList = postService.searchPostList(searchPostRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }
 
     @PostMapping
-    public ResponseEntity<Long> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+    public ResponseEntity<String> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         Long createdPostId = postService.createPost(createPostRequest);
 
-        return new ResponseEntity<>(createdPostId, HttpStatus.CREATED);
+        return new ResponseEntity<>("created post id : "+createdPostId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{postId}")

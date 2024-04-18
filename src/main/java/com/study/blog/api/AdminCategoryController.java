@@ -36,10 +36,10 @@ public class AdminCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+    public ResponseEntity<String> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
         Long createdCategoryId = categoryService.createCategory(createCategoryRequest);
 
-        return new ResponseEntity<>(createdCategoryId, HttpStatus.CREATED);
+        return new ResponseEntity<>("createdCategoryId : "+createdCategoryId, HttpStatus.CREATED);
     }
 
     @PutMapping("/{categoryId}")

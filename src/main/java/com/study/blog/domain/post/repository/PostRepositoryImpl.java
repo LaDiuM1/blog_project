@@ -7,7 +7,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.domain.comment.repository.QComment;
-import com.study.blog.domain.post.request.PostListRequest;
+import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.response.PostListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,16 +38,23 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return post;
     }
 
-    private BooleanBuilder getPostListBooleanBuilder(QPost post, Long searchCategoryId, String searchKeyword, Boolean searchStatus){
+    private BooleanBuilder searchPostBooleanBuilder(QPost post, SearchPostRequest request){
         BooleanBuilder builder = new BooleanBuilder();
+        Long searchCategoryId = request.getSearchCategoryId();
+        String searchTitle = request.getSearchTitle();
+        String searchContent = request.getSearchContent();
+        Boolean searchStatus = request.getSearchStatus();
 
         if (searchCategoryId != null) {
             builder.and(post.category.id.eq(searchCategoryId));
         }
 
-        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            builder.and(post.title.containsIgnoreCase(searchKeyword)
-                    .or(post.content.containsIgnoreCase(searchKeyword)));
+        if (searchTitle != null && !searchTitle.trim().isEmpty()) {
+            builder.and(post.title.containsIgnoreCase(searchTitle));
+        }
+
+        if (searchContent != null && !searchContent.trim().isEmpty()) {
+            builder.and(post.content.containsIgnoreCase(searchContent));
         }
 
         if (searchStatus != null) {
@@ -57,15 +64,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return builder;
     }
 
-    public Page<PostListResponse> searchPost(PostListRequest request, Pageable pageable) {
-        Long searchCategoryId = request.getSearchCategoryId();
-        String searchKeyword = request.getSearchKeyword();
-        Boolean searchStatus = request.getSearchStatus();
-
+    public Page<PostListResponse> searchPostList(SearchPostRequest request, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 
-        BooleanBuilder builder = getPostListBooleanBuilder(post, searchCategoryId, searchKeyword, searchStatus);
+        BooleanBuilder builder = searchPostBooleanBuilder(post, request);
 
         List<PostListResponse> fetch = query.select(Projections.constructor(PostListResponse.class,
                         post.id,
