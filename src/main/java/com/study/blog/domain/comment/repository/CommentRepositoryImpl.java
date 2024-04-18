@@ -24,11 +24,11 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    private BooleanBuilder getCommentListBooleanBuilder(QComment comment, String searchKeyword, Boolean searchStatus){
+    private BooleanBuilder getCommentListBooleanBuilder(QComment comment, String searchContent, Boolean searchStatus){
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            builder.and(comment.commentContent.containsIgnoreCase(searchKeyword));
+        if (searchContent != null && !searchContent.trim().isEmpty()) {
+            builder.and(comment.commentContent.containsIgnoreCase(searchContent));
         }
 
         if (searchStatus != null) {
@@ -42,7 +42,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
         QComment comment = QComment.comment;
         QComment commentSub = new QComment("commentSub");
 
-        BooleanBuilder builder = getCommentListBooleanBuilder(comment, request.getSearchKeyword(), request.getSearchStatus());
+        BooleanBuilder builder = getCommentListBooleanBuilder(comment, request.getSearchContent(), request.getSearchStatus());
 
         List<CommentListResponse> fetch = query.select(Projections.constructor(CommentListResponse.class,
                         comment.id,

@@ -1,11 +1,14 @@
 package com.study.blog.domain.comment.request;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 public class CommentListRequest {
-    private String searchKeyword;
+    private String searchContent;
     private Boolean searchStatus;
+
+    public CommentListRequest(String searchContent, Boolean searchStatus) {
+        this.searchContent = searchContent;
+        this.searchStatus = searchStatus;
+    }
 }

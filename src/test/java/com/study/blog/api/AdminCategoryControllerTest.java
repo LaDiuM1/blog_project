@@ -6,6 +6,7 @@ import com.study.blog.domain.category.request.CreateCategoryRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AdminCategoryController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AdminCategoryControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +44,7 @@ class AdminCategoryControllerTest {
         mockMvc.perform(post("/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -60,8 +62,6 @@ class AdminCategoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
-
-//        assertThat(violations).anyMatch(v -> v.getMessage().contains("카테고리 id 값이 null 입니다."));
     }
 
     @Test
@@ -76,59 +76,45 @@ class AdminCategoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
-
-
     }
 
     @Test
-    @DisplayName("카테고리 업데이트 정상 파라미터 검증")
+    @DisplayName("카테고리 업데이트, 정상 파라미터 -> 성공 필요")
     void updateCategory_validRequest_success() throws Exception {
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("id", 1);
         requestBody.put("name", "테스트");
         requestBody.put("description", "테스트");
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/admin/categories")
+        mockMvc.perform(put("/admin/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("카테고리 업데이트 비정상 파라미터 검증")
+    @DisplayName("카테고리 업데이트 비정상 파라미터 검증 -> badRequest")
     void updateCategory_invalidRequest_fail() throws Exception {
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("id", null);
-        requestBody.put("name", "테스트");
+        requestBody.put("invalidParam", "테스트");
         requestBody.put("description", "테스트");
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/admin/categories")
+        mockMvc.perform(put("/admin/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("카테고리 삭제 정상 파라미터 검증")
+    @DisplayName("카테고리 삭제 검증")
     void deleteCategory_validRequest_success() throws Exception {
-        mockMvc.perform(delete("/admin/categories")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("id", "1"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("카테고리 삭제 비정상 파라미터 검증")
-    void deleteCategory_invalidRequest_fail() throws Exception {
-        mockMvc.perform(delete("/admin/categories")
+        mockMvc.perform(delete("/admin/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNoContent());
     }
-
 
 
 

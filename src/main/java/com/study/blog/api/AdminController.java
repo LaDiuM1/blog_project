@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admins")
@@ -30,16 +31,18 @@ public class AdminController {
             Pageable pageable) {
         SearchAdminRequest searchAdminRequest = new SearchAdminRequest(searchEmail, searchName, searchStatus);
 
-        Page<AdminListResponse> adminList = adminService.searchAdminList(searchAdminRequest, pageable);
+        Page<AdminListResponse> searchAdminList = adminService.searchAdminList(searchAdminRequest, pageable);
 
-        return ResponseEntity.ok(adminList);
+        return ResponseEntity.ok(searchAdminList);
     }
 
     @PostMapping
-    public ResponseEntity<String> registerAdmin(@Valid @RequestBody CreateAdminRequest createAdminRequest) {
+    public ResponseEntity<Map<String, Long>> registerAdmin(@Valid @RequestBody CreateAdminRequest createAdminRequest) {
         Long createdAdminId = adminService.registerAdmin(createAdminRequest);
 
-        return new ResponseEntity<>("created admin id : "+createdAdminId, HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("createdAdminId", createdAdminId));
     }
 
     @PutMapping("/{adminId}")

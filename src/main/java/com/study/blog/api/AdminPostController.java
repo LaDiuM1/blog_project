@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/posts")
@@ -45,10 +47,12 @@ public class AdminPostController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+    public ResponseEntity<Map<String, Long>> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
         Long createdPostId = postService.createPost(createPostRequest);
 
-        return new ResponseEntity<>("created post id : "+createdPostId, HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(Map.of("createdPostId", createdPostId));
     }
 
     @PutMapping("/{postId}")

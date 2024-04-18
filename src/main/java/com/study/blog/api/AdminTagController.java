@@ -21,7 +21,7 @@ public class AdminTagController {
     private final TagService tagService;
 
     @GetMapping
-    public ResponseEntity<List<SearchTagResponse>> searchTag(@Valid @Param("keyword") String searchTagKeyword) {
+    public ResponseEntity<List<SearchTagResponse>> searchTag(@Valid String searchTagKeyword) {
 
         List<SearchTagResponse> searchTagResponseList = tagService.searchTag(searchTagKeyword);
 

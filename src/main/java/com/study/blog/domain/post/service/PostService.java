@@ -42,8 +42,10 @@ public class PostService {
         return readPost.getPost(id);
     }
 
+    @Transactional
     public void updatePost(Long postId, UpdatePostRequest request){
-        updatePost.updatePost(postId, request);
+        Post post = updatePost.updatePost(postId, request);
+        updatePostTag.postAddTags(post, request.getTagNames());
     }
 
     public void updatePostStatus(Long postId){

@@ -20,11 +20,13 @@ public class UpdatePost {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void updatePost(Long postId, UpdatePostRequest request){
+    public Post updatePost(Long postId, UpdatePostRequest request){
             Post post = postRepository.findById(postId).orElseThrow(EntityNotFoundException::new);
             Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(EntityNotFoundException::new);
 
             post.updatePost(category, request.getTitle(), request.getContent());
+
+            return post;
     }
 
     @Transactional

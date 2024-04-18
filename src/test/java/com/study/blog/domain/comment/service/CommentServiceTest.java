@@ -3,7 +3,6 @@ package com.study.blog.domain.comment.service;
 import com.study.blog.domain.comment.repository.CommentRepository;
 import com.study.blog.domain.comment.response.CommentListResponse;
 import com.study.blog.domain.comment.request.CommentListRequest;
-import com.study.blog.domain.comment.service.CommentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-comment-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-comments-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class CommentServiceTest {
@@ -38,12 +37,10 @@ class CommentServiceTest {
     void searchCommentList_success() {
         // given
         Pageable pageable = PageRequest.of(0, 10);
-        String searchKeyword = "테스트";
+        String searchContent = "테스트";
         boolean searchStatus = true;
 
-        CommentListRequest request = new CommentListRequest();
-        request.setSearchKeyword(searchKeyword);
-        request.setSearchStatus(searchStatus);
+        CommentListRequest request = new CommentListRequest(searchContent, searchStatus);
 
         // when
         List<CommentListResponse> verifyResponse = commentService.searchCommentList(request, pageable).getContent();
@@ -51,7 +48,7 @@ class CommentServiceTest {
         // then
         assertThat(verifyResponse.size()).isNotZero();
         verifyResponse.forEach(verifyComment -> {
-            assertThat(verifyComment.getCommentContent()).contains(request.getSearchKeyword());
+            assertThat(verifyComment.getCommentContent()).contains(request.getSearchContent());
             assertThat(verifyComment.isStatus()).isEqualTo(request.getSearchStatus());
         });
     }

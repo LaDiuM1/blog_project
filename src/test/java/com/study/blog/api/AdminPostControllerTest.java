@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(AdminPostController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AdminPostControllerTest {
 
     @Autowired
@@ -46,15 +48,14 @@ class AdminPostControllerTest {
     @Test
     @DisplayName("특정 포스트 호출 검증, 정상 파라미터 -> isOk")
     void getPost_validParam_success() throws Exception {
-        mockMvc.perform(get("/admin/post")
-                .param("id", "1"))
+        mockMvc.perform(get("/admin/posts/" + 1))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("게시글 리스트 검색 검증, 정상 파라미터 -> isOk")
     void searchPostList_validParam_success() throws Exception {
-        mockMvc.perform(get("/admin/post")
+        mockMvc.perform(get("/admin/posts")
                 .param("searchCategoryId", "1")
                 .param("searchKeyword", "test2")
                 .param("searchStatus", "true"))
@@ -64,7 +65,7 @@ class AdminPostControllerTest {
     @Test
     @DisplayName("게시글 리스트 검색 검증, 파라미터 없음 -> isOk")
     void searchPostList_noParams_success() throws Exception {
-        mockMvc.perform(get("/admin/post"))
+        mockMvc.perform(get("/admin/posts"))
                 .andExpect(status().isOk());
     }
     @Test

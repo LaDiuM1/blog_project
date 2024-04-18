@@ -48,7 +48,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
     public Integer getCreateSequenceNumber(){
         QCategory category = QCategory.category;
 
-        return query.select(category.sequence.max().add(1).nullif(1))
+        return query.select(category.sequence.max().add(1).coalesce(1))
                 .from(category)
                 .fetchOne();
     }

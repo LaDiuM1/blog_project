@@ -5,7 +5,6 @@ import com.study.blog.domain.category.repository.CategoryRepository;
 import com.study.blog.domain.category.request.CreateCategoryRequest;
 import com.study.blog.domain.category.request.UpdateCategoryRequest;
 import com.study.blog.domain.category.request.UpdateCategorySequenceRequest;
-import com.study.blog.domain.category.service.CategoryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-category-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-categories-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class CategoryServiceTest {
@@ -133,7 +132,7 @@ class CategoryServiceTest {
         Category beforeUpdateCategory = categoryRepository.findById(updateCategoryId).get();
         String updateCategoryName = beforeUpdateCategory.getName()+flag;
         String updateCategoryDescription = beforeUpdateCategory.getDescription()+flag;
-        UpdateCategoryRequest request = new UpdateCategoryRequest(updateCategoryId, updateCategoryName, updateCategoryDescription);
+        UpdateCategoryRequest request = new UpdateCategoryRequest(updateCategoryName, updateCategoryDescription);
 
         // when
         categoryService.updateCategory(updateCategoryId, request);
@@ -149,7 +148,7 @@ class CategoryServiceTest {
     public void updateCategory_notExistingId_throw() {
         // given
         long notExistingCategoryId = categoryRepository.count()+1;
-        UpdateCategoryRequest request = new UpdateCategoryRequest(notExistingCategoryId, new String(), new String());
+        UpdateCategoryRequest request = new UpdateCategoryRequest(new String(), new String());
         // when, then
         assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, request))
                 .isInstanceOf(EntityNotFoundException.class);

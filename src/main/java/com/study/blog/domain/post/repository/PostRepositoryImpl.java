@@ -73,6 +73,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         List<PostListResponse> fetch = query.select(Projections.constructor(PostListResponse.class,
                         post.id,
                         post.title,
+                        post.content,
                         post.status,
                         post.category.name,
                         ExpressionUtils.as(

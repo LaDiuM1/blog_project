@@ -17,20 +17,18 @@ public class AdminCommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<Page<CommentListResponse>> getCommentList(
-                                                              @RequestParam(required = false) String searchKeyword,
+    public ResponseEntity<Page<CommentListResponse>> searchCommentList(
+                                                              @RequestParam(required = false) String searchContent,
                                                               @RequestParam(required = false) Boolean searchStatus,
                                                               Pageable pageable) {
-        CommentListRequest commentListRequest = new CommentListRequest();
-        commentListRequest.setSearchKeyword(searchKeyword);
-        commentListRequest.setSearchStatus(searchStatus);
+        CommentListRequest commentListRequest = new CommentListRequest(searchContent, searchStatus);
 
         Page<CommentListResponse> postList = commentService.searchCommentList(commentListRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }
 
-    @PutMapping("/{commentId}/status")
+    @PutMapping("/status/{commentId}")
     public ResponseEntity<Void> updateCommentStatus(@PathVariable("commentId") Long commentId) {
         commentService.switchCommentStatus(commentId);
 

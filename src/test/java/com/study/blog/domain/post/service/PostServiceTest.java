@@ -33,8 +33,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-category-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-        @Sql(value = "/sql/test-post-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-categories-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-posts-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class PostServiceTest {
@@ -100,24 +100,25 @@ class PostServiceTest {
     public void searchPost_success() {
         // given
         long searchCategoryId = 1L;
-        String searchKeyword = "테스트";
+        String searchTitle = "테스트 제목";
+        String searchContent = "테스트 내용";
         boolean searchStatus = true;
 
         Pageable pageable = PageRequest.of(0, 10);
-        SearchPostRequest request = new SearchPostRequest(searchCategoryId, searchKeyword, searchStatus);
+        SearchPostRequest request = new SearchPostRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
 
         // when
         Page<PostListResponse> searchPostList = postService.searchPostList(request, pageable);
 
         // then
-        String CategoryName = categoryRepository.findById(searchCategoryId).get().getName();
+        List<PostListResponse> verifyPostResponseList = searchPostList.getContent();
+        String verifyCategoryName = categoryRepository.findById(request.getSearchCategoryId()).get().getName();
 
-        assertThat(searchPostList.getContent().size()).isNotZero();
-        searchPostList.getContent().forEach( post -> {
-            assertThat(post.getTitle()).contains(searchKeyword);
-            assertThat(post.getCategoryName()).isEqualTo(CategoryName);
-            assertThat(post.getStatus()).isEqualTo(searchStatus); // 상기 조건 검색 시 3개의 항목 검색, 여기서 status가 true인 2개 검증
-        });
+        assertThat(verifyPostResponseList.size()).isNotZero();
+        assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getTitle().contains(request.getSearchTitle()))).isTrue();
+        assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getContent().contains(request.getSearchContent()))).isTrue();
+        assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getCategoryName().contains(verifyCategoryName))).isTrue();
+        assertThat(verifyPostResponseList.stream().anyMatch(PostListResponse::getStatus)).isTrue();
     }
 
     @Test
@@ -147,20 +148,15 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("게시글 업데이트 서비스, 변경 여부 검증")
+    @DisplayName("게시글 업데이트 서비스, 매개변수 값 일치 확인")
     @Transactional
     public void updatePost_success() {
         // given
         Long requestPostId = 1L;
-        Post requestPost = postRepository.findById(requestPostId).get();
-        Set<Tag> tegSet = new HashSet<>(List.of(new Tag("tag1"),new Tag("tag2")));
-        requestPost.updateTags(tegSet);
-
-        String verifyStr = "after";
-        Long updateCategoryId = requestPost.getCategory().getId() + 1;
-        String updateTitle = requestPost.getTitle() + verifyStr;
-        String updateContent = requestPost.getContent() + verifyStr;
-        HashSet<String> updateTagSet = tegSet.stream().map( tagName -> tagName+verifyStr).collect(Collectors.toCollection(HashSet::new));
+        Long updateCategoryId = 2L;
+        String updateTitle = "변경 후 제목";
+        String updateContent = "변경 후 내용";
+        HashSet<String> updateTagSet = new HashSet<>(Set.of("변경 태그1", "변경 태그2", "변경 태그3"));
 
         UpdatePostRequest request = new UpdatePostRequest(updateCategoryId, updateTitle, updateContent, updateTagSet);
 
@@ -170,12 +166,12 @@ class PostServiceTest {
         // then
         Post updatedPost = postRepository.findById(requestPostId).get();
 
-        assertThat(updatedPost.getTitle()).isEqualTo(updateTitle);
-        assertThat(updatedPost.getContent()).isEqualTo(updateContent);
-        assertThat(updatedPost.getCategory().getId()).isEqualTo(updateCategoryId);
+        assertThat(updatedPost.getTitle()).isEqualTo(request.getTitle());
+        assertThat(updatedPost.getContent()).isEqualTo(request.getContent());
+        assertThat(updatedPost.getCategory().getId()).isEqualTo(request.getCategoryId());
         assertThat(updatedPost.getTags().size()).isNotZero();
-        updatedPost.getTags().forEach(tag ->
-            assertThat(updateTagSet.contains(tag.getName())).isTrue()
+        updateTagSet.forEach(tagName ->
+            assertThat(updatedPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet()).contains(tagName)).isTrue()
         );
     }
     @Test

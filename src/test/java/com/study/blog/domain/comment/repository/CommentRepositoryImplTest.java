@@ -1,6 +1,5 @@
 package com.study.blog.domain.comment.repository;
 
-import com.study.blog.domain.comment.repository.CommentRepository;
 import com.study.blog.domain.comment.request.CommentListRequest;
 import com.study.blog.domain.comment.response.CommentListResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")
 @SqlGroup({
-        @Sql(value = "/sql/test-comment-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(value = "/sql/test-comments-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class CommentRepositoryImplTest {
@@ -31,12 +30,10 @@ class CommentRepositoryImplTest {
     void getCommentList_validKeyword_success() {
         // given
         Pageable pageable = PageRequest.of(0, 10);
-        String searchKeyword = "테스트";
+        String searchContent = "테스트";
         Boolean searchStatus = true;
 
-        CommentListRequest request = new CommentListRequest();
-        request.setSearchKeyword(searchKeyword);
-        request.setSearchStatus(searchStatus);
+        CommentListRequest request = new CommentListRequest(searchContent, searchStatus);
 
         // when
         Page<CommentListResponse> searchCommentList = commentRepository.searchCommentList(request, pageable);
@@ -55,7 +52,7 @@ class CommentRepositoryImplTest {
         Pageable pageable = PageRequest.of(0, 10);
         int commentCount = (int) commentRepository.count();
 
-        CommentListRequest request = new CommentListRequest();
+        CommentListRequest request = new CommentListRequest(null, null);
 
         // when
         Page<CommentListResponse> searchCommentList = commentRepository.searchCommentList(request, pageable);
