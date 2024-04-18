@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 @DynamicInsert
 @DynamicUpdate
 @Getter

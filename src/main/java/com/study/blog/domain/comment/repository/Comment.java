@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "comments")
 @DynamicInsert
 @DynamicUpdate
 @Getter

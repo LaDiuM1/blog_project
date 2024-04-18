@@ -14,7 +14,7 @@
 
     <!-- 프로젝트 기본 정보 -->
     <groupId>com.study.blog</groupId>
-    <artifactId>blog-project</artifactId>
+    <artifactId>MES_doosung</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>blog-project</name>
     <description>blog-project</description>

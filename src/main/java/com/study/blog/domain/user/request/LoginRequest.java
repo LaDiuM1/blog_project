@@ -1,4 +1,4 @@
-package com.study.blog.domain.admin.request;
+package com.study.blog.domain.user.request;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class AdminLoginRequest {
+public class LoginRequest {
 
     @NotBlank(message = "이메일을 입력해 주세요.")
     @Email(message = "이메일 형식이 아닙니다.")

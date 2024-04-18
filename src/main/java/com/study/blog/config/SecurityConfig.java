@@ -32,8 +32,9 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/admin/login").permitAll()
-                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
+//                        .antMatchers("/admin/login").permitAll()
+//                        .anyRequest().authenticated()
                 );
         return http.build();
     }

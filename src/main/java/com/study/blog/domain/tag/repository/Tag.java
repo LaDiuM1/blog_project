@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tag")
+@Table(name = "tags")
 @DynamicInsert
 @DynamicUpdate
 @Getter
