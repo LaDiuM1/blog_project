@@ -4,6 +4,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -97,6 +98,27 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Map<String, String>> badCredentialsException(BadCredentialsException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
 
+        errors.put("Error Code", "60002");
+        errors.put("message", "비밀번호가 일치하지 않습니다.");
+
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(JwtAuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Map<String, String>> jwtAuthenticationException(JwtAuthenticationException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        errors.put("Error Code", "70001");
+        errors.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.study.blog.api.security;
 
+import com.study.blog.domain.common.CustomUserDetails;
 import com.study.blog.exception.JwtAuthenticationException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,9 +35,9 @@ public class JwtTokenProvider {
 
     // 사용자 인증 정보로 JWT 토큰 생성
     public String createToken(Authentication authentication) {
-        String username = ((User) authentication.getPrincipal()).getUsername(); // 인증으로부터 사용자 이름 추출
+        String username = ((CustomUserDetails) authentication.getPrincipal()).getUsername(); // 인증으로부터 사용자 이름 추출
 
-        Claims claims = Jwts.claims().setSubject(username); // 토큰에 메타데이터 주입, 사용자 이름 설정, jwt 의 주제 속성으로 등록
+        Claims claims = Jwts.claims().setSubject(username); // 토큰에 메타데이터 주입, 사용자 이름 설정, jwt 의 subject 필드로 등록
         // 메타데이터에 auth 를 키로하여 권한 정보 설정, 현재 프로젝트는 단일 권한이나 추후 권한이 추가 될 수 있으므로 stream 으로 처리
         claims.put("auth", authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

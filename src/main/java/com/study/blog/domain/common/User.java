@@ -4,12 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Table(name = "users")
@@ -17,7 +13,7 @@ import java.util.Collections;
 @DynamicUpdate
 @Getter
 @Setter
-public class User extends BaseTime implements UserDetails {
+public class User extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,35 +45,4 @@ public class User extends BaseTime implements UserDetails {
         this.password = password;
         this.name = name;
     }
-
-    @Override
-    public String getUsername() {
-        return this.name;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(role);
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true; // 계정 만료가 아닌지 여부
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true; // 계정 락이 아닌지 여부
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true; // 자격 증명 만료가 아닌지 여부
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.status; // 계정 활성화 여부 반환
-    }
-
 }

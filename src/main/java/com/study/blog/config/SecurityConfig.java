@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/auth").permitAll()  // 해당 요청 경로는 비인가 접근 허용
                         .anyRequest().authenticated()) // 그 외 모든 요청은 인증 처리 활성화
+//                        .anyRequest().permitAll())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
                 // 시큐리티 필터 체인에서 UsernamePasswordAuthenticationFilter 처리 이전에 jwt 인증 필터 추가
                 // 인증 필터에 jwt 토큰 공급자 클래스를 매개변수로 전달하여 토큰 인증 처리를 필터와 분리
