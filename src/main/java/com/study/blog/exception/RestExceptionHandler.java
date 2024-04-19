@@ -4,6 +4,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -81,6 +82,17 @@ public class RestExceptionHandler {
 
         errors.put("Error Code", "50004");
         errors.put("message", "삭제할 id를 찾을 수 없습니다.");
+
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Map<String, String>> usernameNotFoundException(UsernameNotFoundException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        errors.put("Error Code", "60001");
+        errors.put("message", ex.getMessage());
 
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }

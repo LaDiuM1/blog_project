@@ -4,28 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 상위 POM 설정 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.14</version>
-        <relativePath/> <!-- 상대 경로 없음: 중앙 저장소에서 상위 POM 검색 -->
+        <relativePath/>
     </parent>
 
-    <!-- 프로젝트 기본 정보 -->
+    <!-- project info -->
     <groupId>com.study.blog</groupId>
     <artifactId>MES_doosung</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>blog-project</name>
     <description>blog-project</description>
 
-    <!-- 속성 섹션: java 및 QueryDSL 설정 -->
+    <!-- properties 설정 -->
     <properties>
         <java.version>17</java.version>
         <querydsl.version>5.0.0</querydsl.version>
     </properties>
 
-    <!-- 의존성 섹션 -->
+    <!-- dependencies -->
     <dependencies>
         <!-- Spring Boot Starter for Data JPA -->
         <dependency>
