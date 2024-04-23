@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);    // 요청에서 jwt 토큰 분리하는 메서드 수행
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) { // 토큰이 텍스트를 포함해야 하며 토큰 유효 메서드 반환값이 true 일 경우 인증 처리
                 Authentication authentication = tokenProvider.getAuthentication(jwt);   // 토큰으로부터 인증 정보 생성
-                SecurityContextHolder.getContext().setAuthentication(authentication);   // 인증 정보를 시큐리티 컨텍스트에 설정, 컨텐스트에 등록된 인증은 추후 인증 처리
+                SecurityContextHolder.getContext().setAuthentication(authentication);   // 인증 정보를 시큐리티 컨텍스트에 설정하여 인증 처리
             }
         } catch (Exception ex) {
             SecurityContextHolder.clearContext();   // 예외 발생 시 컨텍스트 클리어
