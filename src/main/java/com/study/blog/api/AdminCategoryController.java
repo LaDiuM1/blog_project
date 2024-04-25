@@ -12,13 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/categories")
+@RequestMapping("/api/admin/categories")
 @RequiredArgsConstructor
 public class AdminCategoryController {
 

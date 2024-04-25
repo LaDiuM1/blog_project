@@ -25,7 +25,7 @@ class AdminCommentControllerTest {
 
     @Test
     void getCommentList_invalidStatusParam_fail() throws Exception {
-        mockMvc.perform(get("/admin/comments")
+        mockMvc.perform(get("/api/admin/comments")
                         .param("searchContent", "test")
                         .param("searchStatus", "NotBoolean")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -34,7 +34,7 @@ class AdminCommentControllerTest {
 
     @Test
     void getCommentList_invalidParams_fail() throws Exception {
-        mockMvc.perform(get("/admin/comments")
+        mockMvc.perform(get("/api/admin/comments")
                         .param("searchContent", "test")
                         .param("searchStatus", "true")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -43,15 +43,15 @@ class AdminCommentControllerTest {
 
     @Test
     void getCommentList_noParams_success() throws Exception {
-        mockMvc.perform(get("/admin/comments")
+        mockMvc.perform(get("/api/admin/comments")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
 
     @Test
-    void updateCommentStatus_idParam_success() throws Exception {
-        mockMvc.perform(put("/admin/comments/status/" + 1)
+    void switchCommentStatus_idParam_success() throws Exception {
+        mockMvc.perform(put("/api/admin/comments/status/" + 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

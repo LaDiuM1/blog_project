@@ -21,7 +21,7 @@ public class User extends BaseTime{
 
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String name;
@@ -44,5 +44,9 @@ public class User extends BaseTime{
     public void updatePasswordAndName(String password, String name) {
         this.password = password;
         this.name = name;
+    }
+
+    public void switchStatus(){
+        this.status = !this.status;
     }
 }

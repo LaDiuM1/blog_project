@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/comments")
+@RequestMapping("/api/admin/comments")
 @RequiredArgsConstructor
 public class AdminCommentController {
 
@@ -29,7 +29,7 @@ public class AdminCommentController {
     }
 
     @PutMapping("/status/{commentId}")
-    public ResponseEntity<Void> updateCommentStatus(@PathVariable("commentId") Long commentId) {
+    public ResponseEntity<Void> switchCommentStatus(@PathVariable("commentId") Long commentId) {
         commentService.switchCommentStatus(commentId);
 
         return ResponseEntity.ok().build();

@@ -2,7 +2,6 @@ package com.study.blog.domain.admin.request;
 
 import lombok.Getter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -16,4 +15,8 @@ public class UpdateAdminRequest {
     @NotBlank(message = "관리자명을 입력해 주세요.")
     private String adminName;
 
+    public UpdateAdminRequest(String password, String adminName) {
+        this.password = password;
+        this.adminName = adminName;
+    }
 }

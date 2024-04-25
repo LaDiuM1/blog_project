@@ -1,9 +1,9 @@
 package com.study.blog.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.post.request.CreatePostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
+import com.study.blog.domain.post.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @WebMvcTest(AdminPostController.class)
@@ -37,6 +34,7 @@ class AdminPostControllerTest {
     private PostService postService;
     @Autowired
     ObjectMapper objectMapper;
+
     private Validator validator;
 
     @BeforeEach // 메서드 실행 전 validator 객체 초기화
@@ -48,14 +46,14 @@ class AdminPostControllerTest {
     @Test
     @DisplayName("특정 포스트 호출 검증, 정상 파라미터 -> isOk")
     void getPost_validParam_success() throws Exception {
-        mockMvc.perform(get("/admin/posts/" + 1))
+        mockMvc.perform(get("/api/admin/posts/" + 1))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("게시글 리스트 검색 검증, 정상 파라미터 -> isOk")
     void searchPostList_validParam_success() throws Exception {
-        mockMvc.perform(get("/admin/posts")
+        mockMvc.perform(get("/api/admin/posts")
                 .param("searchCategoryId", "1")
                 .param("searchKeyword", "test2")
                 .param("searchStatus", "true"))
@@ -65,7 +63,7 @@ class AdminPostControllerTest {
     @Test
     @DisplayName("게시글 리스트 검색 검증, 파라미터 없음 -> isOk")
     void searchPostList_noParams_success() throws Exception {
-        mockMvc.perform(get("/admin/posts"))
+        mockMvc.perform(get("/api/admin/posts"))
                 .andExpect(status().isOk());
     }
     @Test

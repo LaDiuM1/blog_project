@@ -1,11 +1,10 @@
 package com.study.blog.api;
 
-import com.study.blog.domain.admin.request.SearchAdminRequest;
 import com.study.blog.domain.admin.request.CreateAdminRequest;
+import com.study.blog.domain.admin.request.SearchAdminRequest;
 import com.study.blog.domain.admin.request.UpdateAdminRequest;
 import com.study.blog.domain.admin.response.AdminListResponse;
 import com.study.blog.domain.admin.service.AdminService;
-import com.study.blog.domain.post.response.PostListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admins")
+@RequestMapping("/api/admins")
 @RequiredArgsConstructor
 public class AdminController {
 
@@ -51,6 +50,13 @@ public class AdminController {
             @RequestBody @Valid UpdateAdminRequest updateAdminRequest) {
 
         adminService.updateAdmin(adminId, updateAdminRequest);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/status/{adminId}")
+    public ResponseEntity<Void> switchAdminStatus(@PathVariable("adminId") Long adminId) {
+        adminService.switchAdminStatus(adminId);
 
         return ResponseEntity.ok().build();
     }

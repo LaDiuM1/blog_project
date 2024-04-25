@@ -14,23 +14,34 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class UpdateAdmin {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
-    public void updateAdmin(Long adminId, UpdateAdminRequest request) {
-        Optional<User> optionalUpdateUser = userRepository.findById(adminId);
+    private User checkExistingAdmin(Long adminId){
+        Optional<User> optionalUser = userRepository.findById(adminId);
 
-        if(optionalUpdateUser.isEmpty()){
+        if(optionalUser.isEmpty()){
             throw new EntityNotFoundException();
-        }else if(optionalUpdateUser.get().getRole() != Role.ADMIN){
+        }else if(optionalUser.get().getRole() != Role.ADMIN){
             throw new EntityNotFoundException("해당 계정은 관리자가 아닙니다.");
         }
 
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-
-        optionalUpdateUser.get().updatePasswordAndName(encodedPassword, request.getAdminName());
+        return optionalUser.get();
     }
 
+    public void updateAdmin(Long adminId, UpdateAdminRequest request) {
+        User admin = checkExistingAdmin(adminId);
+
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        admin.updatePasswordAndName(encodedPassword, request.getAdminName());
+    }
+
+    public void switchAdmin(Long adminId) {
+        User admin = checkExistingAdmin(adminId);
+        admin.switchStatus();
+
+    }
 }

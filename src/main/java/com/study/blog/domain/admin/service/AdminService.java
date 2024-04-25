@@ -7,7 +7,6 @@ import com.study.blog.domain.admin.response.AdminListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,11 +20,15 @@ public class AdminService {
         return createAdmin.registerAdmin(createAdminRequest);
     }
 
+    public Page<AdminListResponse> searchAdminList(SearchAdminRequest request, Pageable pageable) {
+        return readAdmin.searchAdminList(request, pageable);
+    }
+
     public void updateAdmin(Long adminId, UpdateAdminRequest updateAdminRequest) {
         updateAdmin.updateAdmin(adminId, updateAdminRequest);
     }
 
-    public Page<AdminListResponse> searchAdminList(SearchAdminRequest request, Pageable pageable) {
-        return readAdmin.searchAdminList(request, pageable);
+    public void switchAdminStatus(Long adminId) {
+        updateAdmin.switchAdmin(adminId);
     }
 }

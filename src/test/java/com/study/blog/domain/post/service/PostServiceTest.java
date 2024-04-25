@@ -164,14 +164,14 @@ class PostServiceTest {
         postService.updatePost(requestPostId, request);
 
         // then
-        Post updatedPost = postRepository.findById(requestPostId).get();
+        Post verifyPost = postRepository.findById(requestPostId).get();
 
-        assertThat(updatedPost.getTitle()).isEqualTo(request.getTitle());
-        assertThat(updatedPost.getContent()).isEqualTo(request.getContent());
-        assertThat(updatedPost.getCategory().getId()).isEqualTo(request.getCategoryId());
-        assertThat(updatedPost.getTags().size()).isNotZero();
+        assertThat(verifyPost.getTitle()).isEqualTo(request.getTitle());
+        assertThat(verifyPost.getContent()).isEqualTo(request.getContent());
+        assertThat(verifyPost.getCategory().getId()).isEqualTo(request.getCategoryId());
+        assertThat(verifyPost.getTags().size()).isNotZero();
         updateTagSet.forEach(tagName ->
-            assertThat(updatedPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet()).contains(tagName)).isTrue()
+            assertThat(verifyPost.getTags().stream().map(Tag::getName).collect(Collectors.toSet()).contains(tagName)).isTrue()
         );
     }
     @Test

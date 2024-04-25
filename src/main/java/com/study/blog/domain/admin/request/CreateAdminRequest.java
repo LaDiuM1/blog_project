@@ -20,4 +20,9 @@ public class CreateAdminRequest {
     @NotBlank(message = "관리자명을 입력해 주세요.")
     private String adminName;
 
+    public CreateAdminRequest(String email, String password, String adminName) {
+        this.email = email;
+        this.password = password;
+        this.adminName = adminName;
+    }
 }

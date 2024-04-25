@@ -1,11 +1,11 @@
 package com.study.blog.api;
 
-import com.study.blog.domain.post.response.PostListResponse;
-import com.study.blog.domain.post.response.PostResponse;
-import com.study.blog.domain.post.service.PostService;
 import com.study.blog.domain.post.request.CreatePostRequest;
 import com.study.blog.domain.post.request.SearchPostRequest;
 import com.study.blog.domain.post.request.UpdatePostRequest;
+import com.study.blog.domain.post.response.PostListResponse;
+import com.study.blog.domain.post.response.PostResponse;
+import com.study.blog.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,11 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/posts")
+@RequestMapping("/api/admin/posts")
 @RequiredArgsConstructor
 public class AdminPostController {
 
