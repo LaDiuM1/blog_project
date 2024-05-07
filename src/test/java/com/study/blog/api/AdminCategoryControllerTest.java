@@ -1,8 +1,9 @@
 package com.study.blog.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.blog.domain.category.request.CreateCategoryRequest;
-import com.study.blog.domain.category.service.CategoryService;
+import com.study.blog.presentation.controller.request.CreateCategoryRequest;
+import com.study.blog.business.category.CategoryService;
+import com.study.blog.presentation.controller.AdminCategoryController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
 

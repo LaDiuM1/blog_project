@@ -1,6 +1,7 @@
 package com.study.blog.api;
 
-import com.study.blog.domain.tag.service.TagService;
+import com.study.blog.business.tag.TagService;
+import com.study.blog.presentation.controller.AdminTagController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
