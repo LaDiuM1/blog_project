@@ -1,8 +1,7 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.presentation.controller.response.CategoryListResponse;
-import com.study.blog.presentation.controller.response.CategoryResponse;
+import com.study.blog.business.category.dto.CategoryDto;
+import com.study.blog.business.category.dto.CategoryListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +13,11 @@ public class ReadCategory {
 
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryListResponse> getCategoryList() {
+    public List<CategoryListDto> getCategoryList() {
         return categoryRepository.getCategoryList();
     }
 
-    public CategoryResponse getCategory(Long id){
+    public CategoryDto getCategory(Long id){
         return categoryRepository.findByIdOrThrow(id).toResponse();
     }
 

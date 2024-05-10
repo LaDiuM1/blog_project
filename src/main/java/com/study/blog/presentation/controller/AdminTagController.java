@@ -1,7 +1,7 @@
 package com.study.blog.presentation.controller;
 
 
-import com.study.blog.presentation.controller.response.SearchTagResponse;
+import com.study.blog.business.tag.SearchTagDto;
 import com.study.blog.business.tag.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +20,11 @@ public class AdminTagController {
     private final TagService tagService;
 
     @GetMapping
-    public ResponseEntity<List<SearchTagResponse>> searchTag(@Valid String searchTagKeyword) {
+    public ResponseEntity<List<SearchTagDto>> searchTag(@Valid String searchTagKeyword) {
 
-        List<SearchTagResponse> searchTagResponseList = tagService.searchTag(searchTagKeyword);
+        List<SearchTagDto> searchTagDtoList = tagService.searchTag(searchTagKeyword);
 
-        return ResponseEntity.ok(searchTagResponseList);
+        return ResponseEntity.ok(searchTagDtoList);
     }
 
 

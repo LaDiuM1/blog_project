@@ -10,7 +10,7 @@ import com.study.blog.business.comment.repository.QComment;
 import com.study.blog.business.post.Post;
 import com.study.blog.business.post.repository.QPost;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
-import com.study.blog.presentation.controller.response.PostListResponse;
+import com.study.blog.business.post.PostListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,13 +66,13 @@ public class PostRepositoryImpl implements PostRepositoryCustom{
         return builder;
     }
 
-    public Page<PostListResponse> searchPostList(SearchPostRequest request, Pageable pageable) {
+    public Page<PostListDto> searchPostList(SearchPostRequest request, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 
         BooleanBuilder builder = searchPostBooleanBuilder(post, request);
 
-        List<PostListResponse> fetch = query.select(Projections.constructor(PostListResponse.class,
+        List<PostListDto> fetch = query.select(Projections.constructor(PostListDto.class,
                         post.id,
                         post.title,
                         post.content,

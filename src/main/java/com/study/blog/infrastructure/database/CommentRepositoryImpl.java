@@ -8,7 +8,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.business.comment.repository.QComment;
 import com.study.blog.presentation.controller.request.CommentListRequest;
-import com.study.blog.presentation.controller.response.CommentListResponse;
+import com.study.blog.business.comment.CommentListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +39,13 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom {
         return builder;
     }
 
-    public Page<CommentListResponse> searchCommentList(CommentListRequest request, Pageable pageable) {
+    public Page<CommentListDto> searchCommentList(CommentListRequest request, Pageable pageable) {
         QComment comment = QComment.comment;
         QComment commentSub = new QComment("commentSub");
 
         BooleanBuilder builder = getCommentListBooleanBuilder(comment, request.getSearchContent(), request.getSearchStatus());
 
-        List<CommentListResponse> fetch = query.select(Projections.constructor(CommentListResponse.class,
+        List<CommentListDto> fetch = query.select(Projections.constructor(CommentListDto.class,
                         comment.id,
                         comment.parentCommentId,
                         comment.commentContent,

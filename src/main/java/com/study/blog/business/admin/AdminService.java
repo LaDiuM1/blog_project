@@ -1,9 +1,8 @@
-package com.study.blog.business.admin.service;
+package com.study.blog.business.admin;
 
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
-import com.study.blog.presentation.controller.response.AdminListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,7 @@ public class AdminService {
         return createAdmin.registerAdmin(createAdminRequest);
     }
 
-    public Page<AdminListResponse> searchAdminList(SearchAdminRequest request, Pageable pageable) {
+    public Page<AdminListDto> searchAdminList(SearchAdminRequest request, Pageable pageable) {
         return readAdmin.searchAdminList(request, pageable);
     }
 

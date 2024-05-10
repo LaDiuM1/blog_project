@@ -1,9 +1,8 @@
 package com.study.blog.business.post;
 
-import com.study.blog.presentation.controller.response.PostListResponse;
 import com.study.blog.business.tag.Tag;
 import com.study.blog.business.tag.TagRepository;
-import com.study.blog.presentation.controller.response.TagResponse;
+import com.study.blog.business.tag.TagDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,13 +35,13 @@ class UpdatePostTag {
         post.updateTags(tags);
     }
 
-    void matchPostAndTags(List<PostListResponse> postList){
-        Set<Long> postIds = postList.stream().map(PostListResponse::getId).collect(Collectors.toSet());
+    void matchPostAndTags(List<PostListDto> postList){
+        Set<Long> postIds = postList.stream().map(PostListDto::getId).collect(Collectors.toSet());
 
-        Map<Long, List<TagResponse>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);
+        Map<Long, List<TagDto>> postTagsMap = tagRepository.getPostIdAndTagMap(postIds);
 
         postList.forEach(postResponse -> {
-            List<TagResponse> tags = postTagsMap.getOrDefault(postResponse.getId(), Collections.emptyList());
+            List<TagDto> tags = postTagsMap.getOrDefault(postResponse.getId(), Collections.emptyList());
             postResponse.setTags(tags);
         });
     }

@@ -1,4 +1,4 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.category.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class CategoryResponse {
+public class CategoryDto {
 
     private long id;
     private String name;
@@ -21,7 +21,7 @@ public class CategoryResponse {
     protected LocalDateTime updateDate;
 
 
-    public CategoryResponse(long id, String name, String description, boolean status, int sequence, LocalDateTime createDate, LocalDateTime updateDate) {
+    public CategoryDto(long id, String name, String description, boolean status, int sequence, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.name = name;
         this.description = description;

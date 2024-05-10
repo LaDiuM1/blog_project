@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.business.common.QUser;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
-import com.study.blog.presentation.controller.response.AdminListResponse;
+import com.study.blog.business.admin.AdminListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,11 +42,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return builder;
     }
 
-    public Page<AdminListResponse> searchAdminList(SearchAdminRequest request, Pageable pageable) {
+    public Page<AdminListDto> searchAdminList(SearchAdminRequest request, Pageable pageable) {
         QUser user = QUser.user;
         BooleanBuilder builder = searchAdminBooleanBuilder(user, request);
 
-        List<AdminListResponse> fetch = query.select(Projections.constructor(AdminListResponse.class,
+        List<AdminListDto> fetch = query.select(Projections.constructor(AdminListDto.class,
                         user.id,
                         user.email,
                         user.name,

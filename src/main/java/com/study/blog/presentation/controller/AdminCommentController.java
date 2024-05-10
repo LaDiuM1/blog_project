@@ -1,6 +1,6 @@
 package com.study.blog.presentation.controller;
 
-import com.study.blog.presentation.controller.response.CommentListResponse;
+import com.study.blog.business.comment.CommentListDto;
 import com.study.blog.business.comment.CommentService;
 import com.study.blog.presentation.controller.request.CommentListRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ public class AdminCommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<Page<CommentListResponse>> searchCommentList(
+    public ResponseEntity<Page<CommentListDto>> searchCommentList(
                                                               @RequestParam(required = false) String searchContent,
                                                               @RequestParam(required = false) Boolean searchStatus,
                                                               Pageable pageable) {
         CommentListRequest commentListRequest = new CommentListRequest(searchContent, searchStatus);
 
-        Page<CommentListResponse> postList = commentService.searchCommentList(commentListRequest, pageable);
+        Page<CommentListDto> postList = commentService.searchCommentList(commentListRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }

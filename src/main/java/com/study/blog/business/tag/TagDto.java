@@ -1,11 +1,11 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class TagResponse {
+public class TagDto {
     private Long id;
     private String name;
 }

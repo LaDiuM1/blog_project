@@ -1,6 +1,5 @@
 package com.study.blog.business.comment;
 
-import com.study.blog.presentation.controller.response.CommentListResponse;
 import com.study.blog.presentation.controller.request.CommentListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,7 +12,7 @@ public class CommentService {
     private final ReadComment readComment;
     private final UpdateComment updateComment;
 
-    public Page<CommentListResponse> searchCommentList(CommentListRequest request, Pageable pageable){
+    public Page<CommentListDto> searchCommentList(CommentListRequest request, Pageable pageable){
         return readComment.searchCommentList(request, pageable);
     }
 

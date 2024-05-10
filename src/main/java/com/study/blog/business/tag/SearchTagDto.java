@@ -1,14 +1,14 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.tag;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SearchTagResponse {
+public class SearchTagDto {
     private String name;
 
-    public SearchTagResponse(String name) {
+    public SearchTagDto(String name) {
         this.name = name;
     }
 }

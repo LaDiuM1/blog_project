@@ -1,6 +1,5 @@
 package com.study.blog.business.tag;
 
-import com.study.blog.presentation.controller.response.SearchTagResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ public class TagService {
 
     private final ReadTag readTag;
 
-    public List<SearchTagResponse> searchTag(String searchTagKeyword) {
+    public List<SearchTagDto> searchTag(String searchTagKeyword) {
 
         return readTag.searchTag(searchTagKeyword);
     }

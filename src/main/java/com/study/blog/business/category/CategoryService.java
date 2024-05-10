@@ -1,10 +1,10 @@
 package com.study.blog.business.category;
 
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
+import com.study.blog.business.category.data.CategoryData;
+import com.study.blog.business.category.dto.CategoryDto;
+import com.study.blog.business.category.dto.CategoryListDto;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
-import com.study.blog.presentation.controller.response.CategoryListResponse;
-import com.study.blog.presentation.controller.response.CategoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +19,16 @@ public class CategoryService {
     private final UpdateCategory updateCategory;
     private final DeleteDeleter deleteDeleter;
 
-    public List<CategoryListResponse> getCategoryList() {
+    public List<CategoryListDto> getCategoryList() {
         return readCategory.getCategoryList();
     }
 
-    public CategoryResponse getCategory(Long id){
+    public CategoryDto getCategory(Long id){
         return readCategory.getCategory(id);
     }
 
-    public Long createCategory(CreateCategoryRequest request){
-        return createCategory.createCategory(request);
+    public Long createCategory(CategoryData categoryData){
+        return createCategory.createCategory(categoryData);
     }
 
     public void updateCategoryStatus(Long id){

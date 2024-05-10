@@ -7,7 +7,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.business.category.Category;
 import com.study.blog.business.category.repository.QCategory;
-import com.study.blog.presentation.controller.response.CategoryListResponse;
+import com.study.blog.business.category.dto.CategoryListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,10 +55,10 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
                 .fetchOne();
     }
 
-    public List<CategoryListResponse> getCategoryList() {
+    public List<CategoryListDto> getCategoryList() {
         QCategory category = QCategory.category;
 
-        return query.select(Projections.constructor(CategoryListResponse.class,
+        return query.select(Projections.constructor(CategoryListDto.class,
                         category.id,
                         category.name,
                         category.description,

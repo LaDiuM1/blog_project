@@ -3,8 +3,8 @@ package com.study.blog.presentation.controller;
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
-import com.study.blog.presentation.controller.response.AdminListResponse;
-import com.study.blog.business.admin.service.AdminService;
+import com.study.blog.business.admin.AdminListDto;
+import com.study.blog.business.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,14 +23,14 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping
-    public ResponseEntity<Page<AdminListResponse>> searchPostList(
+    public ResponseEntity<Page<AdminListDto>> searchPostList(
             @RequestParam(required = false) String searchEmail,
             @RequestParam(required = false) String searchName,
             @RequestParam(required = false) Boolean searchStatus,
             Pageable pageable) {
         SearchAdminRequest searchAdminRequest = new SearchAdminRequest(searchEmail, searchName, searchStatus);
 
-        Page<AdminListResponse> searchAdminList = adminService.searchAdminList(searchAdminRequest, pageable);
+        Page<AdminListDto> searchAdminList = adminService.searchAdminList(searchAdminRequest, pageable);
 
         return ResponseEntity.ok(searchAdminList);
     }

@@ -1,11 +1,11 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.comment;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CommentListResponse {
+public class CommentListDto {
 
     private Long id;
     private Long parentCommentId;
@@ -19,7 +19,7 @@ public class CommentListResponse {
 
     private String parentCommentContent;
 
-    public CommentListResponse(Long id, Long parentCommentId, String commentContent, String commentAuthorName, String commentAuthorEmail, boolean status, Long postId, String postTitle, String parentCommentContent) {
+    public CommentListDto(Long id, Long parentCommentId, String commentContent, String commentAuthorName, String commentAuthorEmail, boolean status, Long postId, String postTitle, String parentCommentContent) {
         this.id = id;
         this.parentCommentId = parentCommentId;
         this.commentContent = commentContent;

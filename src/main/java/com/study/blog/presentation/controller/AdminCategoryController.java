@@ -3,11 +3,12 @@ package com.study.blog.presentation.controller;
 import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
-import com.study.blog.presentation.controller.response.CategoryListResponse;
-import com.study.blog.presentation.controller.response.CategoryResponse;
+import com.study.blog.business.category.dto.CategoryListDto;
+import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.CategoryService;
+import com.study.blog.presentation.controller.response.CreatedResponse;
+import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,26 +24,27 @@ public class AdminCategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("categoryId") Long categoryId){
-        CategoryResponse category = categoryService.getCategory(categoryId);
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable("categoryId") Long categoryId){
+        CategoryDto category = categoryService.getCategory(categoryId);
 
-        return ResponseEntity.ok(category);
+//        ResponseEntity<CategoryDto> response = SuccessfulResponse.response(category);
+//        return ResponseEntity.ok(category);
+
+        return SuccessfulResponse.response(category);
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryListResponse>> getCategoryList() {
-        List<CategoryListResponse> categoryList = categoryService.getCategoryList();
+    public ResponseEntity<List<CategoryListDto>> getCategoryList() {
+        List<CategoryListDto> categoryList = categoryService.getCategoryList();
 
-        return ResponseEntity.ok(categoryList);
+        return SuccessfulResponse.response(categoryList);
     }
 
     @PostMapping
     public ResponseEntity<Map<String,Long>> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
-        Long createdCategoryId = categoryService.createCategory(createCategoryRequest);
+        Long createdCategoryId = categoryService.createCategory(createCategoryRequest.toData());
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(Map.of("createdCategoryId", createdCategoryId));
+        return CreatedResponse.response("Category",createdCategoryId);
     }
 
     @PutMapping("/{categoryId}")

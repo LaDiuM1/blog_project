@@ -3,8 +3,8 @@ package com.study.blog.presentation.controller;
 import com.study.blog.presentation.controller.request.CreatePostRequest;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
-import com.study.blog.presentation.controller.response.PostListResponse;
-import com.study.blog.presentation.controller.response.PostResponse;
+import com.study.blog.business.post.PostListDto;
+import com.study.blog.business.post.PostDto;
 import com.study.blog.business.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,15 +24,15 @@ public class AdminPostController {
     private final PostService postService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable("postId") Long postId) {
+    public ResponseEntity<PostDto> getPost(@PathVariable("postId") Long postId) {
 
-        PostResponse post = postService.getPost(postId);
+        PostDto post = postService.getPost(postId);
 
         return ResponseEntity.ok(post);
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostListResponse>> searchPostList(
+    public ResponseEntity<Page<PostListDto>> searchPostList(
                                                               @RequestParam(required = false) Long searchCategoryId,
                                                               @RequestParam(required = false) String searchTitle,
                                                               @RequestParam(required = false) String searchContent,
@@ -40,7 +40,7 @@ public class AdminPostController {
                                                               Pageable pageable) {
         SearchPostRequest searchPostRequest = new SearchPostRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
 
-        Page<PostListResponse> postList = postService.searchPostList(searchPostRequest, pageable);
+        Page<PostListDto> postList = postService.searchPostList(searchPostRequest, pageable);
 
         return ResponseEntity.ok(postList);
     }

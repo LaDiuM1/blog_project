@@ -2,7 +2,7 @@ package com.study.blog.business.tag.repository;
 
 import com.study.blog.business.tag.Tag;
 import com.study.blog.business.tag.TagRepository;
-import com.study.blog.presentation.controller.response.SearchTagResponse;
+import com.study.blog.business.tag.SearchTagDto;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class TagRepositoryImplTest {
         String testKeyword = "검색";
 
         // when
-        List<SearchTagResponse> tagResponseList = tagRepository.searchTag(testKeyword);
+        List<SearchTagDto> tagResponseList = tagRepository.searchTag(testKeyword);
         boolean verifyTagName1 = tagResponseList.stream().anyMatch( tag -> tag.getName().equals("검색1"));
         boolean verifyTagName2 = tagResponseList.stream().anyMatch( tag -> tag.getName().equals("검색2"));
         boolean verifyTagName3 = tagResponseList.stream().anyMatch( tag -> tag.getName().equals("검색3"));

@@ -3,8 +3,6 @@ package com.study.blog.business.post;
 import com.study.blog.presentation.controller.request.CreatePostRequest;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
-import com.study.blog.presentation.controller.response.PostListResponse;
-import com.study.blog.presentation.controller.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,14 +28,14 @@ public class PostService {
         return createdPost.getId();
     }
 
-    public Page<PostListResponse> searchPostList(SearchPostRequest request, Pageable pageable){
-        Page<PostListResponse> postList = readPost.searchPostList(request, pageable);
+    public Page<PostListDto> searchPostList(SearchPostRequest request, Pageable pageable){
+        Page<PostListDto> postList = readPost.searchPostList(request, pageable);
         updatePostTag.matchPostAndTags(postList.getContent());
 
         return postList;
     }
 
-    public PostResponse getPost(Long id){
+    public PostDto getPost(Long id){
         return readPost.getPost(id);
     }
 

@@ -1,6 +1,6 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.post;
 
-import com.study.blog.presentation.controller.response.TagResponse;
+import com.study.blog.business.tag.TagDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class PostListResponse {
+public class PostListDto {
     private Long id;
     private String title;
     private String content;
@@ -17,9 +17,9 @@ public class PostListResponse {
     private String categoryName;
     private Long commentCount;
     @Setter
-    private List<TagResponse> tags;
+    private List<TagDto> tags;
 
-    public PostListResponse(Long id, String title, String content, Boolean status, String categoryName, Long commentCount) {
+    public PostListDto(Long id, String title, String content, Boolean status, String categoryName, Long commentCount) {
         this.id = id;
         this.title = title;
         this.content = content;

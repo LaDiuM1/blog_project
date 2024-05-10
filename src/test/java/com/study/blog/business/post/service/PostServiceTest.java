@@ -5,8 +5,8 @@ import com.study.blog.business.post.PostRepository;
 import com.study.blog.business.post.PostService;
 import com.study.blog.business.tag.Tag;
 import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.presentation.controller.response.PostListResponse;
-import com.study.blog.presentation.controller.response.PostResponse;
+import com.study.blog.business.post.PostListDto;
+import com.study.blog.business.post.PostDto;
 import com.study.blog.presentation.controller.request.CreatePostRequest;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
@@ -109,17 +109,17 @@ class PostServiceTest {
         SearchPostRequest request = new SearchPostRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
 
         // when
-        Page<PostListResponse> searchPostList = postService.searchPostList(request, pageable);
+        Page<PostListDto> searchPostList = postService.searchPostList(request, pageable);
 
         // then
-        List<PostListResponse> verifyPostResponseList = searchPostList.getContent();
+        List<PostListDto> verifyPostResponseList = searchPostList.getContent();
         String verifyCategoryName = categoryRepository.findById(request.getSearchCategoryId()).get().getName();
 
         assertThat(verifyPostResponseList.size()).isNotZero();
         assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getTitle().contains(request.getSearchTitle()))).isTrue();
         assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getContent().contains(request.getSearchContent()))).isTrue();
         assertThat(verifyPostResponseList.stream().anyMatch(post -> post.getCategoryName().contains(verifyCategoryName))).isTrue();
-        assertThat(verifyPostResponseList.stream().anyMatch(PostListResponse::getStatus)).isTrue();
+        assertThat(verifyPostResponseList.stream().anyMatch(PostListDto::getStatus)).isTrue();
     }
 
     @Test
@@ -130,10 +130,10 @@ class PostServiceTest {
         Long id = 1L;
 
         // when
-        PostResponse postResponse = postService.getPost(id);
+        PostDto postDto = postService.getPost(id);
 
         // then
-        assertThat(postResponse.getId()).isEqualTo(id);
+        assertThat(postDto.getId()).isEqualTo(id);
     }
 
     @Test

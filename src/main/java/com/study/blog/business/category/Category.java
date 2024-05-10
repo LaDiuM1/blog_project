@@ -1,7 +1,7 @@
 package com.study.blog.business.category;
 
-import com.study.blog.presentation.controller.response.CategoryResponse;
 import com.study.blog.business.BaseTime;
+import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.post.Post;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicInsert;
@@ -54,8 +54,8 @@ public class Category extends BaseTime {
         this.id = id;
     }
 
-    public CategoryResponse toResponse() {
-        return new CategoryResponse(
+    public CategoryDto toResponse() {
+        return new CategoryDto(
                 this.getId(),
                 this.getName(),
                 this.getDescription(),

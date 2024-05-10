@@ -1,8 +1,6 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.Category;
-import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
+import com.study.blog.business.category.data.CategoryData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +10,12 @@ public class CreateCategory {
 
     private final CategoryRepository categoryRepository;
 
-    public Long createCategory(CreateCategoryRequest request) {
+    public Long createCategory(CategoryData categoryData) {
         int sequenceNumber = categoryRepository.getCreateSequenceNumber();
 
         Category category = new Category(
-                request.getName(),
-                request.getDescription(),
+                categoryData.getName(),
+                categoryData.getDescription(),
                 sequenceNumber
         );
 

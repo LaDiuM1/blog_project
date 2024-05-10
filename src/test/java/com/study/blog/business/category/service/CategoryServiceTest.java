@@ -3,6 +3,7 @@ package com.study.blog.business.category.service;
 import com.study.blog.business.category.Category;
 import com.study.blog.business.category.CategoryRepository;
 import com.study.blog.business.category.CategoryService;
+import com.study.blog.business.category.data.CategoryData;
 import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
@@ -41,15 +42,15 @@ class CategoryServiceTest {
         // given
         String testName = "카테고리 생성 테스트 이름";
         String testDescription = "카테고리 생성 테스트 설명";
-        CreateCategoryRequest request = new CreateCategoryRequest(testName, testDescription);
+        CategoryData categoryData = new CreateCategoryRequest(testName, testDescription).toData();
 
         // when
-        categoryService.createCategory(request);
+        categoryService.createCategory(categoryData);
 
         // then
         Category verifyCreateCategory = categoryRepository.findByIdOrThrow(categoryRepository.count());
-        assertThat(verifyCreateCategory.getName()).isEqualTo(request.getName());
-        assertThat(verifyCreateCategory.getDescription()).isEqualTo(request.getDescription());
+        assertThat(verifyCreateCategory.getName()).isEqualTo(categoryData.getName());
+        assertThat(verifyCreateCategory.getDescription()).isEqualTo(categoryData.getDescription());
     }
 
     @Test

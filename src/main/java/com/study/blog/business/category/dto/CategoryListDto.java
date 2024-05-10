@@ -1,11 +1,11 @@
-package com.study.blog.presentation.controller.response;
+package com.study.blog.business.category.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CategoryListResponse {
+public class CategoryListDto {
 
     private long id;
     private String name;
@@ -13,7 +13,7 @@ public class CategoryListResponse {
     private boolean status;
     private int sequence;
 
-    public CategoryListResponse(
+    public CategoryListDto(
             long id,
             String name,
             String description,

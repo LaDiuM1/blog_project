@@ -1,9 +1,10 @@
 package com.study.blog.business.admin.service;
 
+import com.study.blog.business.admin.AdminListDto;
+import com.study.blog.business.admin.AdminService;
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
-import com.study.blog.presentation.controller.response.AdminListResponse;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.UserRepository;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -73,15 +74,15 @@ class AdminServiceTest {
         SearchAdminRequest request = new SearchAdminRequest(searchEmail, searchAdminName, searchStatus);
 
         // when
-        Page<AdminListResponse> searchAdminList = adminService.searchAdminList(request, pageable);
+        Page<AdminListDto> searchAdminList = adminService.searchAdminList(request, pageable);
 
         // then
-        List<AdminListResponse> verifyAdminResponseList = searchAdminList.getContent();
+        List<AdminListDto> verifyAdminResponseList = searchAdminList.getContent();
 
         AssertionsForClassTypes.assertThat(verifyAdminResponseList.size()).isNotZero();
         AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getEmail().contains(request.getSearchEmail()))).isTrue();
         AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getName().contains(request.getSearchName()))).isTrue();
-        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(AdminListResponse::isStatus)).isEqualTo(request.getSearchStatus());
+        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(AdminListDto::isStatus)).isEqualTo(request.getSearchStatus());
     }
 
     @Test

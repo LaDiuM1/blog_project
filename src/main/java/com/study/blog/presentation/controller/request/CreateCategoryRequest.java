@@ -1,5 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.category.data.CategoryData;
 import lombok.Getter;
 
 import javax.validation.constraints.*;
@@ -18,5 +19,9 @@ public class CreateCategoryRequest {
     public CreateCategoryRequest(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public CategoryData toData(){
+        return new CategoryData(this.name, this.description);
     }
 }
