@@ -1,6 +1,8 @@
 package com.study.blog.business.post;
 
-import com.study.blog.presentation.controller.request.CreatePostRequest;
+import com.study.blog.business.post.data.PostData;
+import com.study.blog.business.post.dto.PostDto;
+import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,9 @@ public class PostService {
     private final UpdatePostTag updatePostTag;
 
     @Transactional
-    public Long createPost(CreatePostRequest request){
-        Post createdPost = createPost.createPost(request);
-        updatePostTag.postAddTags(createdPost, request.getTagNames());
+    public Long createPost(PostData postData){
+        Post createdPost = createPost.createPost(postData);
+        updatePostTag.postAddTags(createdPost, postData.getTagNames());
         return createdPost.getId();
     }
 

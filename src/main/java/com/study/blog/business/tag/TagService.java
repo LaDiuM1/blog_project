@@ -9,11 +9,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagService {
 
-    private final ReadTag readTag;
+    private final TagReader tagReader;
 
     public List<SearchTagDto> searchTag(String searchTagKeyword) {
 
-        return readTag.searchTag(searchTagKeyword);
+        return tagReader.searchTag(searchTagKeyword);
     }
 
 }

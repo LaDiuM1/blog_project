@@ -1,7 +1,5 @@
 package com.study.blog.business.comment;
 
-import com.study.blog.business.comment.Comment;
-import com.study.blog.business.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +8,7 @@ import javax.transaction.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class UpdateComment {
+public class CommentUpdater {
     private final CommentRepository commentRepository;
 
     @Transactional

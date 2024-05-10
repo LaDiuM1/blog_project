@@ -4,9 +4,9 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.business.common.QUser;
-import com.study.blog.presentation.controller.request.SearchAdminRequest;
-import com.study.blog.business.admin.AdminListDto;
+import com.study.blog.business.admin.data.SearchAdminData;
+import com.study.blog.business.user.QUser;
+import com.study.blog.business.admin.dto.AdminListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,11 +23,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    private BooleanBuilder searchAdminBooleanBuilder(QUser user, SearchAdminRequest request){
+    private BooleanBuilder searchAdminBooleanBuilder(QUser user, SearchAdminData data){
         BooleanBuilder builder = new BooleanBuilder();
-        String searchEmail = request.getSearchEmail();
-        String searchName = request.getSearchName();
-        Boolean searchStatus = request.getSearchStatus();
+        String searchEmail = data.getSearchEmail();
+        String searchName = data.getSearchName();
+        Boolean searchStatus = data.getSearchStatus();
 
         if (searchEmail != null && !searchEmail.trim().isEmpty()) {
             builder.and(user.email.containsIgnoreCase(searchEmail));
@@ -42,9 +42,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return builder;
     }
 
-    public Page<AdminListDto> searchAdminList(SearchAdminRequest request, Pageable pageable) {
+    public Page<AdminListDto> searchAdminList(SearchAdminData searchAdminData, Pageable pageable) {
         QUser user = QUser.user;
-        BooleanBuilder builder = searchAdminBooleanBuilder(user, request);
+        BooleanBuilder builder = searchAdminBooleanBuilder(user, searchAdminData);
 
         List<AdminListDto> fetch = query.select(Projections.constructor(AdminListDto.class,
                         user.id,

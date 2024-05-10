@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ReadCategory {
+public class CategoryReader {
 
     private final CategoryRepository categoryRepository;
 

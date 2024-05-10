@@ -3,6 +3,7 @@ package com.study.blog.presentation.controller;
 
 import com.study.blog.business.tag.SearchTagDto;
 import com.study.blog.business.tag.TagService;
+import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class AdminTagController {
 
         List<SearchTagDto> searchTagDtoList = tagService.searchTag(searchTagKeyword);
 
-        return ResponseEntity.ok(searchTagDtoList);
+        return SuccessfulResponse.response(searchTagDtoList);
     }
 
 

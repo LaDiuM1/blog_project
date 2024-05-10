@@ -1,5 +1,7 @@
 package com.study.blog.business.post;
 
+import com.study.blog.business.post.dto.PostDto;
+import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.business.tag.Tag;
 import lombok.RequiredArgsConstructor;

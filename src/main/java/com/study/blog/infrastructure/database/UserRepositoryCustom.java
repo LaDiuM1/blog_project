@@ -1,10 +1,10 @@
 package com.study.blog.infrastructure.database;
 
-import com.study.blog.presentation.controller.request.SearchAdminRequest;
-import com.study.blog.business.admin.AdminListDto;
+import com.study.blog.business.admin.data.SearchAdminData;
+import com.study.blog.business.admin.dto.AdminListDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryCustom {
-    Page<AdminListDto> searchAdminList(SearchAdminRequest request, Pageable pageable);
+    Page<AdminListDto> searchAdminList(SearchAdminData searchAdminData, Pageable pageable);
 }

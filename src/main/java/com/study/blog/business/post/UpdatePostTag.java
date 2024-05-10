@@ -1,5 +1,6 @@
 package com.study.blog.business.post;
 
+import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.business.tag.Tag;
 import com.study.blog.business.tag.TagRepository;
 import com.study.blog.business.tag.TagDto;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreateAdmin {
+public class AdminCreator {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

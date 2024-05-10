@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CreateCategory {
+public class CategoryCreator {
 
     private final CategoryRepository categoryRepository;
 

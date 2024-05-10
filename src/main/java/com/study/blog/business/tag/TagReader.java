@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ReadTag {
+public class TagReader {
 
     private final TagRepository tagRepository;
 

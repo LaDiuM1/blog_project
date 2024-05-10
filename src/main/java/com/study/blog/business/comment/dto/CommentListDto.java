@@ -1,4 +1,4 @@
-package com.study.blog.business.comment;
+package com.study.blog.business.comment.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CommentListDto {
-
     private Long id;
     private Long parentCommentId;
     private String commentContent;

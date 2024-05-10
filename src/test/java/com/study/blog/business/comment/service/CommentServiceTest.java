@@ -2,7 +2,7 @@ package com.study.blog.business.comment.service;
 
 import com.study.blog.business.comment.CommentRepository;
 import com.study.blog.business.comment.CommentService;
-import com.study.blog.business.comment.CommentListDto;
+import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.presentation.controller.request.CommentListRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class CommentServiceTest {
         CommentListRequest request = new CommentListRequest(searchContent, searchStatus);
 
         // when
-        List<CommentListDto> verifyResponse = commentService.searchCommentList(request, pageable).getContent();
+        List<CommentListDto> verifyResponse = commentService.searchCommentList(request.toData(), pageable).getContent();
 
         // then
         assertThat(verifyResponse.size()).isNotZero();

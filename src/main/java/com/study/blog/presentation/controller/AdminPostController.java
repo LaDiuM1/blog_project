@@ -3,13 +3,14 @@ package com.study.blog.presentation.controller;
 import com.study.blog.presentation.controller.request.CreatePostRequest;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
-import com.study.blog.business.post.PostListDto;
-import com.study.blog.business.post.PostDto;
+import com.study.blog.business.post.dto.PostListDto;
+import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.business.post.PostService;
+import com.study.blog.presentation.controller.response.CreatedResponse;
+import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,9 @@ public class AdminPostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> getPost(@PathVariable("postId") Long postId) {
-
         PostDto post = postService.getPost(postId);
 
-        return ResponseEntity.ok(post);
+        return SuccessfulResponse.response(post);
     }
 
     @GetMapping
@@ -42,16 +42,14 @@ public class AdminPostController {
 
         Page<PostListDto> postList = postService.searchPostList(searchPostRequest, pageable);
 
-        return ResponseEntity.ok(postList);
+        return SuccessfulResponse.response(postList);
     }
 
     @PostMapping
     public ResponseEntity<Map<String, Long>> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
-        Long createdPostId = postService.createPost(createPostRequest);
+        Long createdPostId = postService.createPost(createPostRequest.toData());
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(Map.of("createdPostId", createdPostId));
+        return CreatedResponse.response("Post", createdPostId);
     }
 
     @PutMapping("/{postId}")
@@ -66,7 +64,6 @@ public class AdminPostController {
 
     @PutMapping("/{postId}/status")
     public ResponseEntity<Void> updatePostStatus(@PathVariable("postId") Long postId) {
-
         postService.updatePostStatus(postId);
 
         return ResponseEntity.ok().build();
@@ -74,7 +71,6 @@ public class AdminPostController {
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId) {
-
         postService.deletePost(postId);
 
         return ResponseEntity.noContent().build();

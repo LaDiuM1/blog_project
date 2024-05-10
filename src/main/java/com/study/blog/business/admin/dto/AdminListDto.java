@@ -1,4 +1,4 @@
-package com.study.blog.business.admin;
+package com.study.blog.business.admin.dto;
 
 import lombok.Getter;
 

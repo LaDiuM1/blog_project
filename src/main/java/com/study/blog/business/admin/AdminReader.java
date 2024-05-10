@@ -1,6 +1,7 @@
 package com.study.blog.business.admin;
 
-import com.study.blog.presentation.controller.request.SearchAdminRequest;
+import com.study.blog.business.admin.data.SearchAdminData;
+import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ReadAdmin {
+public class AdminReader {
     private final UserRepository userRepository;
 
-    public Page<AdminListDto> searchAdminList(SearchAdminRequest request, Pageable pageable) {
-        return userRepository.searchAdminList(request, pageable);
+    public Page<AdminListDto> searchAdminList(SearchAdminData searchAdminData, Pageable pageable) {
+        return userRepository.searchAdminList(searchAdminData, pageable);
     }
 }

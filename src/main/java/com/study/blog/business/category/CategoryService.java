@@ -14,37 +14,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final CreateCategory createCategory;
-    private final ReadCategory readCategory;
-    private final UpdateCategory updateCategory;
-    private final DeleteDeleter deleteDeleter;
+    private final CategoryCreator categoryCreator;
+    private final CategoryReader categoryReader;
+    private final CategoryUpdater categoryUpdater;
+    private final CategoryDeleter categoryDeleter;
 
     public List<CategoryListDto> getCategoryList() {
-        return readCategory.getCategoryList();
+        return categoryReader.getCategoryList();
     }
 
     public CategoryDto getCategory(Long id){
-        return readCategory.getCategory(id);
+        return categoryReader.getCategory(id);
     }
 
     public Long createCategory(CategoryData categoryData){
-        return createCategory.createCategory(categoryData);
+        return categoryCreator.createCategory(categoryData);
     }
 
     public void updateCategoryStatus(Long id){
-        updateCategory.updateCategoryStatus(id);
+        categoryUpdater.updateCategoryStatus(id);
     }
 
     public void updateCategorySequence(UpdateCategorySequenceRequest request){
-        updateCategory.updateCategorySequence(request);
+        categoryUpdater.updateCategorySequence(request);
     }
 
     public void updateCategory(Long categoryId, UpdateCategoryRequest request){
-        updateCategory.updateCategory(categoryId, request);
+        categoryUpdater.updateCategory(categoryId, request);
     }
 
     public void deleteCategory(Long id){
-        deleteDeleter.deleteCategory(id);
+        categoryDeleter.deleteCategory(id);
     }
 
 }

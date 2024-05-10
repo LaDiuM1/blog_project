@@ -2,9 +2,7 @@ package com.study.blog.business.post;
 
 import com.study.blog.business.category.Category;
 import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.business.post.Post;
-import com.study.blog.business.post.PostRepository;
-import com.study.blog.presentation.controller.request.CreatePostRequest;
+import com.study.blog.business.post.data.PostData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +15,14 @@ public class CreatePost {
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
 
-    public Post createPost(CreatePostRequest request){
-        boolean existingCategoryCheck = categoryRepository.existsById(request.getCategoryId());
+    public Post createPost(PostData postData){
+        boolean existingCategoryCheck = categoryRepository.existsById(postData.getCategoryId());
 
         if(!existingCategoryCheck) { throw new EntityNotFoundException(); }
 
-        Category categoryRef = new Category(request.getCategoryId());
+        Category categoryRef = new Category(postData.getCategoryId());
 
-        Post post = new Post(categoryRef, request.getTitle(), request.getContent());
+        Post post = new Post(categoryRef, postData.getTitle(), postData.getContent());
 
         return postRepository.save(post);
     }

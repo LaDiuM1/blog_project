@@ -15,7 +15,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Transactional
-public class UpdateAdmin {
+public class AdminUpdater {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

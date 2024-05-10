@@ -3,10 +3,11 @@ package com.study.blog.business.post.service;
 import com.study.blog.business.post.Post;
 import com.study.blog.business.post.PostRepository;
 import com.study.blog.business.post.PostService;
+import com.study.blog.business.post.data.PostData;
 import com.study.blog.business.tag.Tag;
 import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.business.post.PostListDto;
-import com.study.blog.business.post.PostDto;
+import com.study.blog.business.post.dto.PostListDto;
+import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.presentation.controller.request.CreatePostRequest;
 import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.presentation.controller.request.UpdatePostRequest;
@@ -61,18 +62,18 @@ class PostServiceTest {
         String tagName2 = "게시글 생성 테스트 태그2";
         HashSet<String> tagSet = new HashSet<>(List.of(tagName1, tagName2));
 
-        CreatePostRequest request = new CreatePostRequest(categoryId, postTitle, postContent, tagSet);
+        PostData postData = new CreatePostRequest(categoryId, postTitle, postContent, tagSet).toData();
 
         // when
-        postService.createPost(request);
+        postService.createPost(postData);
 
         // then
         Post verifyPost = postRepository.findById(postRepository.count()).get();
 
-        assertThat(verifyPost.getTitle()).isEqualTo(request.getTitle());
-        assertThat(verifyPost.getContent()).isEqualTo(request.getContent());
+        assertThat(verifyPost.getTitle()).isEqualTo(postData.getTitle());
+        assertThat(verifyPost.getContent()).isEqualTo(postData.getContent());
         assertThat(verifyPost.isStatus()).isTrue();
-        assertThat(verifyPost.getCategory().getId()).isEqualTo(request.getCategoryId());
+        assertThat(verifyPost.getCategory().getId()).isEqualTo(postData.getCategoryId());
 
         assertThat(verifyPost.getTags().size()).isEqualTo(tagSet.size());
         boolean verifyTagName1 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals(tagName1));
@@ -88,10 +89,10 @@ class PostServiceTest {
     public void createPost_throw() {
         // given
         long notExistingCategoryId = categoryRepository.count()+1;
-        CreatePostRequest request = new CreatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>());
+        PostData postData = new CreatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>()).toData();
 
         // when, then
-        assertThatThrownBy(() -> postService.createPost(request))
+        assertThatThrownBy(() -> postService.createPost(postData))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 

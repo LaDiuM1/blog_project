@@ -1,7 +1,5 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.Category;
-import com.study.blog.business.category.CategoryRepository;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,7 @@ import java.util.LinkedHashSet;
 
 @Component
 @RequiredArgsConstructor
-public class UpdateCategory {
+public class CategoryUpdater {
 
     private final CategoryRepository categoryRepository;
 

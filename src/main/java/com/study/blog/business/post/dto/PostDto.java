@@ -1,4 +1,4 @@
-package com.study.blog.business.post;
+package com.study.blog.business.post.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

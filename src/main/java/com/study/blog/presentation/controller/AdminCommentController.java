@@ -1,8 +1,9 @@
 package com.study.blog.presentation.controller;
 
-import com.study.blog.business.comment.CommentListDto;
+import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.CommentService;
 import com.study.blog.presentation.controller.request.CommentListRequest;
+import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +24,9 @@ public class AdminCommentController {
                                                               Pageable pageable) {
         CommentListRequest commentListRequest = new CommentListRequest(searchContent, searchStatus);
 
-        Page<CommentListDto> postList = commentService.searchCommentList(commentListRequest, pageable);
+        Page<CommentListDto> postList = commentService.searchCommentList(commentListRequest.toData(), pageable);
 
-        return ResponseEntity.ok(postList);
+        return SuccessfulResponse.response(postList);
     }
 
     @PutMapping("/status/{commentId}")

@@ -1,6 +1,6 @@
 package com.study.blog.business.admin.service;
 
-import com.study.blog.business.admin.AdminListDto;
+import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.admin.AdminService;
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
@@ -74,7 +74,7 @@ class AdminServiceTest {
         SearchAdminRequest request = new SearchAdminRequest(searchEmail, searchAdminName, searchStatus);
 
         // when
-        Page<AdminListDto> searchAdminList = adminService.searchAdminList(request, pageable);
+        Page<AdminListDto> searchAdminList = adminService.searchAdminList(request.toData(), pageable);
 
         // then
         List<AdminListDto> verifyAdminResponseList = searchAdminList.getContent();
