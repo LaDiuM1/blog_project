@@ -1,4 +1,4 @@
-package com.study.blog.api;
+package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.presentation.controller.request.CreatePostRequest;

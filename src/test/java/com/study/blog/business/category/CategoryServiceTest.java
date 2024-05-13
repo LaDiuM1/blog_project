@@ -1,4 +1,4 @@
-package com.study.blog.business.category.service;
+package com.study.blog.business.category;
 
 import com.study.blog.business.category.Category;
 import com.study.blog.business.category.CategoryRepository;

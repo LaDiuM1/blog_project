@@ -18,7 +18,6 @@ import java.util.List;
 @DynamicUpdate
 @Getter
 public class Category extends BaseTime {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

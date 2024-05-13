@@ -1,4 +1,4 @@
-package com.study.blog.business.comment.service;
+package com.study.blog.business.comment;
 
 import com.study.blog.business.comment.CommentRepository;
 import com.study.blog.business.comment.CommentService;

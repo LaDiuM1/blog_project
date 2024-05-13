@@ -17,10 +17,8 @@ import java.util.List;
 @Table(name = "tags")
 @DynamicInsert
 @DynamicUpdate
-@Getter
-@Setter
 @NoArgsConstructor
-@Accessors(chain = true)
+@Getter
 public class Tag extends BaseTime {
 
     @Id

@@ -18,7 +18,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {

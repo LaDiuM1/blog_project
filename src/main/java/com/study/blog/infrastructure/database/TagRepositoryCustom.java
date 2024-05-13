@@ -1,7 +1,7 @@
 package com.study.blog.infrastructure.database;
 
-import com.study.blog.business.tag.TagDto;
-import com.study.blog.business.tag.SearchTagDto;
+import com.study.blog.business.tag.dto.TagDto;
+import com.study.blog.business.tag.dto.SearchTagDto;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.study.blog.business.comment.repository;
+package com.study.blog.infrastructure.database;
 
 import com.study.blog.business.comment.CommentRepository;
 import com.study.blog.presentation.controller.request.CommentListRequest;

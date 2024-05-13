@@ -1,4 +1,4 @@
-package com.study.blog.business.admin.service;
+package com.study.blog.business.admin;
 
 import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.admin.AdminService;

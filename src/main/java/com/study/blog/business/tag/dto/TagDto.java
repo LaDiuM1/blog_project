@@ -1,4 +1,4 @@
-package com.study.blog.business.tag;
+package com.study.blog.business.tag.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

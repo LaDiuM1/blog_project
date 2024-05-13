@@ -1,7 +1,7 @@
 package com.study.blog.presentation.controller;
 
 
-import com.study.blog.business.tag.SearchTagDto;
+import com.study.blog.business.tag.dto.SearchTagDto;
 import com.study.blog.business.tag.TagService;
 import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;

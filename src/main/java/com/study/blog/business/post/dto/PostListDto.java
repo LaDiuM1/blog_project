@@ -1,6 +1,6 @@
 package com.study.blog.business.post.dto;
 
-import com.study.blog.business.tag.TagDto;
+import com.study.blog.business.tag.dto.TagDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

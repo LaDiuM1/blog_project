@@ -1,4 +1,4 @@
-package com.study.blog.api;
+package com.study.blog.presentation.controller;
 
 import com.study.blog.business.comment.CommentService;
 import com.study.blog.presentation.controller.AdminCommentController;

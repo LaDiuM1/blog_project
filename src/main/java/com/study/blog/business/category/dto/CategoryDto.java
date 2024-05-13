@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class CategoryDto {
-
     private long id;
     private String name;
     private String description;
@@ -19,7 +18,6 @@ public class CategoryDto {
     protected LocalDateTime createDate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime updateDate;
-
 
     public CategoryDto(long id, String name, String description, boolean status, int sequence, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;

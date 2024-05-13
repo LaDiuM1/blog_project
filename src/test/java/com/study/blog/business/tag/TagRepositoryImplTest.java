@@ -1,8 +1,6 @@
-package com.study.blog.business.tag.repository;
+package com.study.blog.business.tag;
 
-import com.study.blog.business.tag.Tag;
-import com.study.blog.business.tag.TagRepository;
-import com.study.blog.business.tag.SearchTagDto;
+import com.study.blog.business.tag.dto.SearchTagDto;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

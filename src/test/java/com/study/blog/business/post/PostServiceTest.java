@@ -1,4 +1,4 @@
-package com.study.blog.business.post.service;
+package com.study.blog.business.post;
 
 import com.study.blog.business.post.Post;
 import com.study.blog.business.post.PostRepository;

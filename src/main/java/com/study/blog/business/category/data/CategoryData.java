@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class CategoryData {
-
     private String name;
     private String description;
 

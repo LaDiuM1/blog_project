@@ -1,4 +1,4 @@
-package com.study.blog.api;
+package com.study.blog.presentation.controller;
 
 import com.study.blog.business.tag.TagService;
 import com.study.blog.presentation.controller.AdminTagController;
