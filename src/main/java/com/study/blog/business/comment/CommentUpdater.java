@@ -1,5 +1,6 @@
 package com.study.blog.business.comment;
 
+import com.study.blog.business.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

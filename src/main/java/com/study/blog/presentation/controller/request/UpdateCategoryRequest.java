@@ -1,10 +1,9 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.category.data.UpdateCategoryData;
 import lombok.Getter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -18,8 +17,10 @@ public class UpdateCategoryRequest {
     @Size(max = 255, message = "카테고리 설명은 255글자 이내로 입력해 주세요.")
     private String description;
 
-    public UpdateCategoryRequest(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public UpdateCategoryData toData() {
+        return new UpdateCategoryData(
+                this.name,
+                this.description
+        );
     }
 }

@@ -1,11 +1,11 @@
 package com.study.blog.presentation.controller;
 
+import com.study.blog.business.category.CategoryService;
+import com.study.blog.business.category.dto.CategoryDto;
+import com.study.blog.business.category.dto.CategoryListDto;
 import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
-import com.study.blog.business.category.dto.CategoryListDto;
-import com.study.blog.business.category.dto.CategoryDto;
-import com.study.blog.business.category.CategoryService;
 import com.study.blog.presentation.controller.response.CreatedResponse;
 import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +26,6 @@ public class AdminCategoryController {
     @GetMapping("/{categoryId}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable("categoryId") Long categoryId){
         CategoryDto category = categoryService.getCategory(categoryId);
-
-//        ResponseEntity<CategoryDto> response = SuccessfulResponse.response(category);
-//        return ResponseEntity.ok(category);
 
         return SuccessfulResponse.response(category);
     }
@@ -52,7 +49,7 @@ public class AdminCategoryController {
             @PathVariable Long categoryId,
             @RequestBody @Valid UpdateCategoryRequest request
     ) {
-        categoryService.updateCategory(categoryId, request);
+        categoryService.updateCategory(request.toData());
 
         return ResponseEntity.ok().build();
     }

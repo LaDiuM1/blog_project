@@ -3,7 +3,8 @@ package com.study.blog.presentation.controller.request;
 import com.study.blog.business.category.data.CategoryData;
 import lombok.Getter;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 public class CreateCategoryRequest {

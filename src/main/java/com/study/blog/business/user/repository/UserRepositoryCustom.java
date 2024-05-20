@@ -1,4 +1,4 @@
-package com.study.blog.infrastructure.database;
+package com.study.blog.business.user.repository;
 
 import com.study.blog.business.admin.data.SearchAdminData;
 import com.study.blog.business.admin.dto.AdminListDto;

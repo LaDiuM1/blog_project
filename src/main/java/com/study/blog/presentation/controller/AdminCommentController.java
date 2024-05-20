@@ -1,7 +1,7 @@
 package com.study.blog.presentation.controller;
 
-import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.CommentService;
+import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.presentation.controller.request.CommentListRequest;
 import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;

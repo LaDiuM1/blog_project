@@ -1,5 +1,6 @@
 package com.study.blog.business.category;
 
+import com.study.blog.business.category.repository.CategoryRepository;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
 import lombok.RequiredArgsConstructor;

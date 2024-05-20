@@ -1,7 +1,6 @@
 package com.study.blog.business.admin.data;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class SearchAdminData {

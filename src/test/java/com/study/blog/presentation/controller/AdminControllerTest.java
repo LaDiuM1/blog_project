@@ -1,10 +1,9 @@
 package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.blog.business.admin.AdminService;
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
-import com.study.blog.business.admin.AdminService;
-import com.study.blog.presentation.controller.AdminController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,6 +2,7 @@ package com.study.blog.business.comment;
 
 import com.study.blog.business.comment.data.SearchCommentData;
 import com.study.blog.business.comment.dto.CommentListDto;
+import com.study.blog.business.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

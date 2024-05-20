@@ -1,4 +1,4 @@
-package com.study.blog.business.user;
+package com.study.blog.business.user.data;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,6 +1,6 @@
-package com.study.blog.business.tag;
+package com.study.blog.business.tag.repository;
 
-import com.study.blog.infrastructure.database.TagRepositoryCustom;
+import com.study.blog.business.tag.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.study.blog.business.admin;
 
-import com.study.blog.business.user.Role;
 import com.study.blog.business.user.User;
-import com.study.blog.business.user.UserRepository;
+import com.study.blog.business.user.data.Role;
+import com.study.blog.business.user.repository.UserRepository;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

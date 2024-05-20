@@ -1,12 +1,11 @@
 package com.study.blog.business.admin;
 
 import com.study.blog.business.admin.dto.AdminListDto;
-import com.study.blog.business.admin.AdminService;
+import com.study.blog.business.user.User;
+import com.study.blog.business.user.repository.UserRepository;
 import com.study.blog.presentation.controller.request.CreateAdminRequest;
 import com.study.blog.presentation.controller.request.SearchAdminRequest;
 import com.study.blog.presentation.controller.request.UpdateAdminRequest;
-import com.study.blog.business.user.User;
-import com.study.blog.business.user.UserRepository;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

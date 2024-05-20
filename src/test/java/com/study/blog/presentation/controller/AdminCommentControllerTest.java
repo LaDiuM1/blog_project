@@ -1,7 +1,6 @@
 package com.study.blog.presentation.controller;
 
 import com.study.blog.business.comment.CommentService;
-import com.study.blog.presentation.controller.AdminCommentController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

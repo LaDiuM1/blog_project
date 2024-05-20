@@ -1,5 +1,6 @@
 package com.study.blog.business.category;
 
+import com.study.blog.business.category.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

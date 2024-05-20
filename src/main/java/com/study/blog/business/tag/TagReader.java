@@ -1,6 +1,7 @@
 package com.study.blog.business.tag;
 
 import com.study.blog.business.tag.dto.SearchTagDto;
+import com.study.blog.business.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

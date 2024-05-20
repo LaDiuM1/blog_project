@@ -2,6 +2,7 @@ package com.study.blog.business.category;
 
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.dto.CategoryListDto;
+import com.study.blog.business.category.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,9 @@
 package com.study.blog.business.post;
 
 import com.study.blog.business.category.Category;
-import com.study.blog.business.category.CategoryRepository;
+import com.study.blog.business.category.repository.CategoryRepository;
 import com.study.blog.business.post.data.PostData;
+import com.study.blog.business.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

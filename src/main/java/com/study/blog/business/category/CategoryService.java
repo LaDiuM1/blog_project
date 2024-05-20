@@ -1,9 +1,9 @@
 package com.study.blog.business.category;
 
 import com.study.blog.business.category.data.CategoryData;
+import com.study.blog.business.category.data.UpdateCategoryData;
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.dto.CategoryListDto;
-import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,8 +39,8 @@ public class CategoryService {
         categoryUpdater.updateCategorySequence(request);
     }
 
-    public void updateCategory(Long categoryId, UpdateCategoryRequest request){
-        categoryUpdater.updateCategory(categoryId, request);
+    public void updateCategory(Long categoryId, UpdateCategoryData updateCategoryData){
+        categoryUpdater.updateCategory(categoryId, updateCategoryData);
     }
 
     public void deleteCategory(Long id){

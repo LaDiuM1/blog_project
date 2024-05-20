@@ -1,7 +1,7 @@
-package com.study.blog.infrastructure.database;
+package com.study.blog.business.tag.repository;
 
-import com.study.blog.business.tag.dto.TagDto;
 import com.study.blog.business.tag.dto.SearchTagDto;
+import com.study.blog.business.tag.dto.TagDto;
 
 import java.util.List;
 import java.util.Map;

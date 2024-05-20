@@ -1,6 +1,7 @@
 package com.study.blog.business.user;
 
 import com.study.blog.business.BaseTime;
+import com.study.blog.business.user.data.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;

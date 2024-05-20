@@ -1,9 +1,8 @@
 package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import com.study.blog.business.category.CategoryService;
-import com.study.blog.presentation.controller.AdminCategoryController;
+import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

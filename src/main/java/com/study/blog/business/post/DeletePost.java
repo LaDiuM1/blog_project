@@ -1,6 +1,6 @@
 package com.study.blog.business.post;
 
-import com.study.blog.business.post.PostRepository;
+import com.study.blog.business.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

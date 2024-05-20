@@ -9,8 +9,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.business.comment.QComment;
 import com.study.blog.business.post.Post;
 import com.study.blog.business.post.QPost;
-import com.study.blog.presentation.controller.request.SearchPostRequest;
 import com.study.blog.business.post.dto.PostListDto;
+import com.study.blog.business.post.repository.PostRepositoryCustom;
+import com.study.blog.presentation.controller.request.SearchPostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom{
+public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private final JPAQueryFactory query;
 

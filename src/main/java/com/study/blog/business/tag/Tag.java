@@ -4,8 +4,6 @@ import com.study.blog.business.BaseTime;
 import com.study.blog.business.post.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 

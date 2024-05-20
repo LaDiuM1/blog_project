@@ -1,5 +1,6 @@
 package com.study.blog.business.user;
 
+import com.study.blog.business.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

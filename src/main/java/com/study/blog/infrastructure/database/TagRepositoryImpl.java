@@ -7,6 +7,7 @@ import com.study.blog.business.post.QPost;
 import com.study.blog.business.tag.QTag;
 import com.study.blog.business.tag.dto.SearchTagDto;
 import com.study.blog.business.tag.dto.TagDto;
+import com.study.blog.business.tag.repository.TagRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class TagRepositoryImpl implements TagRepositoryCustom{
+public class TagRepositoryImpl implements TagRepositoryCustom {
 
     private final JPAQueryFactory query;
 

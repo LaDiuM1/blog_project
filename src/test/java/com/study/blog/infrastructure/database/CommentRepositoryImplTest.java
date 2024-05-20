@@ -1,8 +1,8 @@
 package com.study.blog.infrastructure.database;
 
-import com.study.blog.business.comment.CommentRepository;
-import com.study.blog.presentation.controller.request.CommentListRequest;
 import com.study.blog.business.comment.dto.CommentListDto;
+import com.study.blog.business.comment.repository.CommentRepository;
+import com.study.blog.presentation.controller.request.CommentListRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

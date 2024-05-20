@@ -1,8 +1,8 @@
 package com.study.blog.business.post;
 
+import com.study.blog.business.BaseTime;
 import com.study.blog.business.category.Category;
 import com.study.blog.business.comment.Comment;
-import com.study.blog.business.BaseTime;
 import com.study.blog.business.tag.Tag;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicInsert;

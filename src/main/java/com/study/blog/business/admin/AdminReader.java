@@ -2,7 +2,7 @@ package com.study.blog.business.admin;
 
 import com.study.blog.business.admin.data.SearchAdminData;
 import com.study.blog.business.admin.dto.AdminListDto;
-import com.study.blog.business.user.UserRepository;
+import com.study.blog.business.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

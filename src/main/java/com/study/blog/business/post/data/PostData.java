@@ -1,13 +1,7 @@
 package com.study.blog.business.post.data;
 
-import com.study.blog.presentation.controller.request.validate.TagNamesValid;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 
 @Getter

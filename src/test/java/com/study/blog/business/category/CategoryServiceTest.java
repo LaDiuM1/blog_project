@@ -1,9 +1,7 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.Category;
-import com.study.blog.business.category.CategoryRepository;
-import com.study.blog.business.category.CategoryService;
 import com.study.blog.business.category.data.CategoryData;
+import com.study.blog.business.category.repository.CategoryRepository;
 import com.study.blog.presentation.controller.request.CreateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
 import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
@@ -17,10 +15,14 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.AssertionsForClassTypes.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")

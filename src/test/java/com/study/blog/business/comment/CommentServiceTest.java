@@ -1,8 +1,7 @@
 package com.study.blog.business.comment;
 
-import com.study.blog.business.comment.CommentRepository;
-import com.study.blog.business.comment.CommentService;
 import com.study.blog.business.comment.dto.CommentListDto;
+import com.study.blog.business.comment.repository.CommentRepository;
 import com.study.blog.presentation.controller.request.CommentListRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-test.properties")

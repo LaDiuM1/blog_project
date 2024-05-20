@@ -1,4 +1,4 @@
-package com.study.blog.infrastructure.database;
+package com.study.blog.business.comment.repository;
 
 import com.study.blog.business.comment.data.SearchCommentData;
 import com.study.blog.business.comment.dto.CommentListDto;
