@@ -11,7 +11,7 @@ import com.study.blog.business.post.Post;
 import com.study.blog.business.post.QPost;
 import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.business.post.repository.PostRepositoryCustom;
-import com.study.blog.presentation.controller.request.SearchPostRequest;
+import com.study.blog.presentation.controller.request.PostSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +41,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return post;
     }
 
-    private BooleanBuilder searchPostBooleanBuilder(QPost post, SearchPostRequest request){
+    private BooleanBuilder searchPostBooleanBuilder(QPost post, PostSearchRequest request){
         BooleanBuilder builder = new BooleanBuilder();
         Long searchCategoryId = request.getSearchCategoryId();
         String searchTitle = request.getSearchTitle();
@@ -67,7 +67,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return builder;
     }
 
-    public Page<PostListDto> searchPostList(SearchPostRequest request, Pageable pageable) {
+    public Page<PostListDto> searchPostList(PostSearchRequest request, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 

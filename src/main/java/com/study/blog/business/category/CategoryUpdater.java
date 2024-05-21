@@ -1,8 +1,8 @@
 package com.study.blog.business.category;
 
+import com.study.blog.business.category.data.CategoryUpdateData;
 import com.study.blog.business.category.repository.CategoryRepository;
-import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
-import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class CategoryUpdater {
         category.switchStatus();
     }
 
-    public void updateCategorySequence(UpdateCategorySequenceRequest request){
+    public void updateCategorySequence(CategoryUpdateSequenceRequest request){
         LinkedHashSet<Long> idSet = request.getIdSet();
 
         boolean updateValid = categoryRepository.updateCategoryValid(idSet);
@@ -33,11 +33,11 @@ public class CategoryUpdater {
     }
 
     @Transactional
-    public void updateCategory(Long categoryId, UpdateCategoryRequest request){
+    public void updateCategory(Long categoryId, CategoryUpdateData categoryUpdateData){
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        category.updateCategory(request.getName(), request.getDescription());
+        category.updateCategory(categoryUpdateData.getName(), categoryUpdateData.getDescription());
     }
 
 }

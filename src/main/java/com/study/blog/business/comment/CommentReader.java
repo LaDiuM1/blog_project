@@ -1,6 +1,6 @@
 package com.study.blog.business.comment;
 
-import com.study.blog.business.comment.data.SearchCommentData;
+import com.study.blog.business.comment.data.CommentSearchData;
 import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CommentReader {
+
     private final CommentRepository commentRepository;
 
-    public Page<CommentListDto> searchCommentList(SearchCommentData searchCommentData, Pageable pageable){
-        return commentRepository.searchCommentList(searchCommentData, pageable);
+    public Page<CommentListDto> searchCommentList(CommentSearchData commentSearchData, Pageable pageable){
+        return commentRepository.searchCommentList(commentSearchData, pageable);
     }
 
 }

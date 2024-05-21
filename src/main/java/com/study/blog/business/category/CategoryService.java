@@ -1,10 +1,10 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.data.CategoryData;
-import com.study.blog.business.category.data.UpdateCategoryData;
+import com.study.blog.business.category.data.CategoryCreateData;
+import com.study.blog.business.category.data.CategoryUpdateData;
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.dto.CategoryListDto;
-import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +27,20 @@ public class CategoryService {
         return categoryReader.getCategory(id);
     }
 
-    public Long createCategory(CategoryData categoryData){
-        return categoryCreator.createCategory(categoryData);
+    public Long createCategory(CategoryCreateData categoryCreateData){
+        return categoryCreator.createCategory(categoryCreateData);
     }
 
     public void updateCategoryStatus(Long id){
         categoryUpdater.updateCategoryStatus(id);
     }
 
-    public void updateCategorySequence(UpdateCategorySequenceRequest request){
+    public void updateCategorySequence(CategoryUpdateSequenceRequest request){
         categoryUpdater.updateCategorySequence(request);
     }
 
-    public void updateCategory(Long categoryId, UpdateCategoryData updateCategoryData){
-        categoryUpdater.updateCategory(categoryId, updateCategoryData);
+    public void updateCategory(Long categoryId, CategoryUpdateData categoryUpdateData){
+        categoryUpdater.updateCategory(categoryId, categoryUpdateData);
     }
 
     public void deleteCategory(Long id){

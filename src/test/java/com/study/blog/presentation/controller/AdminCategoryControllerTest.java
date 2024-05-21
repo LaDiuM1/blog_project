@@ -2,7 +2,7 @@ package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.business.category.CategoryService;
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
+import com.study.blog.presentation.controller.request.CategoryCreateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,11 @@ class AdminCategoryControllerTest {
     @DisplayName("카테고리 생성 요청 컨트롤러 검증")
     void createCategory_validRequest_success() throws Exception {
 
-        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest(
+        CategoryCreateRequest categoryCreateRequest = new CategoryCreateRequest(
                 "테스트 이름",
                 "테스트 설명");
 
-        String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
+        String jsonRequest = objectMapper.writeValueAsString(categoryCreateRequest);
 
         mockMvc.perform(post("/api/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -51,11 +51,11 @@ class AdminCategoryControllerTest {
     void createCategory_invalidRequest_fail() throws Exception {
         String nameLongerThan100Chars = "a".repeat(101);
 
-        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest(
+        CategoryCreateRequest categoryCreateRequest = new CategoryCreateRequest(
                 nameLongerThan100Chars,
                 "테스트 설명");
 
-        String jsonRequest = objectMapper.writeValueAsString(createCategoryRequest);
+        String jsonRequest = objectMapper.writeValueAsString(categoryCreateRequest);
 
         mockMvc.perform(post("/api/admin/categories")
                         .contentType(MediaType.APPLICATION_JSON)

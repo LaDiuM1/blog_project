@@ -2,8 +2,8 @@ package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.business.post.PostService;
-import com.study.blog.presentation.controller.request.CreatePostRequest;
-import com.study.blog.presentation.controller.request.UpdatePostRequest;
+import com.study.blog.presentation.controller.request.PostCreateRequest;
+import com.study.blog.presentation.controller.request.PostUpdateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,8 +68,8 @@ class AdminPostControllerTest {
     }
     @Test
     @DisplayName("게시글 생성 검증, null값 유효성 검증 확인")
-    void createPost_nullParams_validate() throws Exception {
-        CreatePostRequest request = new CreatePostRequest(
+    void createPost_nullParams_validate() {
+        PostCreateRequest request = new PostCreateRequest(
                 null, null, null, new HashSet<>(List.of("")));
 
         var violations = validator.validate(request);
@@ -84,7 +84,7 @@ class AdminPostControllerTest {
     @DisplayName("게시글 생성 검증, 유효성 범위 초과 확인")
     void createPost_outOfRange_invalid() {
         String rangeOverTitle = "a".repeat(101);
-        CreatePostRequest request = new CreatePostRequest(
+        PostCreateRequest request = new PostCreateRequest(
                 0L, rangeOverTitle, "test", new HashSet<>(List.of("test")));
 
         var violations = validator.validate(request);
@@ -96,7 +96,7 @@ class AdminPostControllerTest {
     @Test
     @DisplayName("게시글 업데이트 검증, null값 유효성 검증 확인")
     void updatePost_nullParams_validate() {
-        UpdatePostRequest request = new UpdatePostRequest(
+        PostUpdateRequest request = new PostUpdateRequest(
                 null, null, null, new HashSet<>(List.of("")));
 
         var violations = validator.validate(request);

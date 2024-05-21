@@ -18,6 +18,7 @@ import java.util.List;
 @DynamicUpdate
 @Getter
 public class Category extends BaseTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,7 +31,7 @@ public class Category extends BaseTime {
     @Column(nullable = false)
     private int sequence;
 
-    @OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
+    @OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Post> posts = new ArrayList<>();
 
     @PreRemove

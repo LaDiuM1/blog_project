@@ -12,7 +12,6 @@ public class TagNameSetValidator implements ConstraintValidator<TagNamesValid, S
         }
         for (String tagName : tagNameSet) {
             if (tagName == null || tagName.trim().isEmpty()) {
-                // 공백으로만 이루어진 경우 유효성 검사 실패
                 return false;
             }
         }

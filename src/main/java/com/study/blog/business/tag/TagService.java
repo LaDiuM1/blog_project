@@ -13,7 +13,6 @@ public class TagService {
     private final TagReader tagReader;
 
     public List<SearchTagDto> searchTag(String searchTagKeyword) {
-
         return tagReader.searchTag(searchTagKeyword);
     }
 

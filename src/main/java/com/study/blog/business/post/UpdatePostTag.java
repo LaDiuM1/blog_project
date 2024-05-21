@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 class UpdatePostTag {
+
     private final TagRepository tagRepository;
 
     void postAddTags(Post post, Set<String> tagNames){

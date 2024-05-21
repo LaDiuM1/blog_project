@@ -20,6 +20,7 @@ import java.util.Set;
 @DynamicUpdate
 @Getter
 public class Post extends BaseTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +36,7 @@ public class Post extends BaseTime {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)

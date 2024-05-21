@@ -14,7 +14,6 @@ public class TagReader {
     private final TagRepository tagRepository;
 
     public List<SearchTagDto> searchTag(String searchTagKeyword) {
-
         return tagRepository.searchTag(searchTagKeyword);
     }
 

@@ -1,10 +1,10 @@
 package com.study.blog.business.post;
 
-import com.study.blog.business.post.data.PostData;
+import com.study.blog.business.post.data.PostSearchData;
 import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.business.post.dto.PostListDto;
-import com.study.blog.presentation.controller.request.SearchPostRequest;
-import com.study.blog.presentation.controller.request.UpdatePostRequest;
+import com.study.blog.presentation.controller.request.PostSearchRequest;
+import com.study.blog.presentation.controller.request.PostUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,13 +24,13 @@ public class PostService {
     private final UpdatePostTag updatePostTag;
 
     @Transactional
-    public Long createPost(PostData postData){
-        Post createdPost = createPost.createPost(postData);
-        updatePostTag.postAddTags(createdPost, postData.getTagNames());
+    public Long createPost(PostSearchData postSearchData){
+        Post createdPost = createPost.createPost(postSearchData);
+        updatePostTag.postAddTags(createdPost, postSearchData.getTagNames());
         return createdPost.getId();
     }
 
-    public Page<PostListDto> searchPostList(SearchPostRequest request, Pageable pageable){
+    public Page<PostListDto> searchPostList(PostSearchRequest request, Pageable pageable){
         Page<PostListDto> postList = readPost.searchPostList(request, pageable);
         updatePostTag.matchPostAndTags(postList.getContent());
 
@@ -42,7 +42,7 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long postId, UpdatePostRequest request){
+    public void updatePost(Long postId, PostUpdateRequest request){
         Post post = updatePost.updatePost(postId, request);
         updatePostTag.postAddTags(post, request.getTagNames());
     }

@@ -3,7 +3,7 @@ package com.study.blog.business.post;
 import com.study.blog.business.category.Category;
 import com.study.blog.business.category.repository.CategoryRepository;
 import com.study.blog.business.post.repository.PostRepository;
-import com.study.blog.presentation.controller.request.UpdatePostRequest;
+import com.study.blog.presentation.controller.request.PostUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class UpdatePost {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public Post updatePost(Long postId, UpdatePostRequest request){
+    public Post updatePost(Long postId, PostUpdateRequest request){
             Post post = postRepository.findById(postId).orElseThrow(EntityNotFoundException::new);
             Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(EntityNotFoundException::new);
 

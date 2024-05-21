@@ -3,7 +3,7 @@ package com.study.blog.business.admin;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.data.Role;
 import com.study.blog.business.user.repository.UserRepository;
-import com.study.blog.presentation.controller.request.CreateAdminRequest;
+import com.study.blog.presentation.controller.request.AdminCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -11,10 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AdminCreator {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long registerAdmin(CreateAdminRequest request) {
+    public Long registerAdmin(AdminCreateRequest request) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         return userRepository.save(

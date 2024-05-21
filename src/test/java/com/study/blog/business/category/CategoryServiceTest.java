@@ -1,10 +1,10 @@
 package com.study.blog.business.category;
 
-import com.study.blog.business.category.data.CategoryData;
+import com.study.blog.business.category.data.CategoryCreateData;
 import com.study.blog.business.category.repository.CategoryRepository;
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
-import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
-import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
+import com.study.blog.presentation.controller.request.CategoryCreateRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +44,15 @@ class CategoryServiceTest {
         // given
         String testName = "카테고리 생성 테스트 이름";
         String testDescription = "카테고리 생성 테스트 설명";
-        CategoryData categoryData = new CreateCategoryRequest(testName, testDescription).toData();
+        CategoryCreateData categoryCreateData = new CategoryCreateRequest(testName, testDescription).toData();
 
         // when
-        categoryService.createCategory(categoryData);
+        categoryService.createCategory(categoryCreateData);
 
         // then
         Category verifyCreateCategory = categoryRepository.findByIdOrThrow(categoryRepository.count());
-        assertThat(verifyCreateCategory.getName()).isEqualTo(categoryData.getName());
-        assertThat(verifyCreateCategory.getDescription()).isEqualTo(categoryData.getDescription());
+        assertThat(verifyCreateCategory.getName()).isEqualTo(categoryCreateData.getName());
+        assertThat(verifyCreateCategory.getDescription()).isEqualTo(categoryCreateData.getDescription());
     }
 
     @Test
@@ -92,7 +92,7 @@ class CategoryServiceTest {
                 .stream()
                 .map(sequenceAndIdMap::get).collect(Collectors.toCollection(LinkedHashSet::new));
 
-        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(updateSequenceIdSet);
+        CategoryUpdateSequenceRequest request = new CategoryUpdateSequenceRequest(updateSequenceIdSet);
 
         // when
         categoryService.updateCategorySequence(request);
@@ -117,7 +117,7 @@ class CategoryServiceTest {
         int verifyCount = unmatchedCategorySet.size();
 
         unmatchedCategorySet.remove(unmatchedCategorySet.iterator().next()); // 첫번째 요소 제거
-        UpdateCategorySequenceRequest request = new UpdateCategorySequenceRequest(unmatchedCategorySet);
+        CategoryUpdateSequenceRequest request = new CategoryUpdateSequenceRequest(unmatchedCategorySet);
 
         // when, then
         assertThat(request.getIdSet().size()).isNotZero();
@@ -136,10 +136,10 @@ class CategoryServiceTest {
         Category beforeUpdateCategory = categoryRepository.findById(updateCategoryId).get();
         String updateCategoryName = beforeUpdateCategory.getName()+flag;
         String updateCategoryDescription = beforeUpdateCategory.getDescription()+flag;
-        UpdateCategoryRequest request = new UpdateCategoryRequest(updateCategoryName, updateCategoryDescription);
+        CategoryUpdateRequest request = new CategoryUpdateRequest(updateCategoryName, updateCategoryDescription);
 
         // when
-        categoryService.updateCategory(updateCategoryId, request);
+        categoryService.updateCategory(updateCategoryId, request.toData());
 
         // then
         Category afterUpdateCategory = categoryRepository.findById(updateCategoryId).get();
@@ -152,9 +152,9 @@ class CategoryServiceTest {
     public void updateCategory_notExistingId_throw() {
         // given
         long notExistingCategoryId = categoryRepository.count()+1;
-        UpdateCategoryRequest request = new UpdateCategoryRequest(new String(), new String());
+        CategoryUpdateRequest request = new CategoryUpdateRequest(new String(), new String());
         // when, then
-        assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, request))
+        assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, request.toData()))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 

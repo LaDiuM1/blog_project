@@ -1,14 +1,14 @@
 package com.study.blog.business.post;
 
 import com.study.blog.business.category.repository.CategoryRepository;
-import com.study.blog.business.post.data.PostData;
+import com.study.blog.business.post.data.PostSearchData;
 import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.business.post.repository.PostRepository;
 import com.study.blog.business.tag.Tag;
-import com.study.blog.presentation.controller.request.CreatePostRequest;
-import com.study.blog.presentation.controller.request.SearchPostRequest;
-import com.study.blog.presentation.controller.request.UpdatePostRequest;
+import com.study.blog.presentation.controller.request.PostCreateRequest;
+import com.study.blog.presentation.controller.request.PostSearchRequest;
+import com.study.blog.presentation.controller.request.PostUpdateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,18 +60,18 @@ class PostServiceTest {
         String tagName2 = "게시글 생성 테스트 태그2";
         HashSet<String> tagSet = new HashSet<>(List.of(tagName1, tagName2));
 
-        PostData postData = new CreatePostRequest(categoryId, postTitle, postContent, tagSet).toData();
+        PostSearchData postSearchData = new PostCreateRequest(categoryId, postTitle, postContent, tagSet).toData();
 
         // when
-        postService.createPost(postData);
+        postService.createPost(postSearchData);
 
         // then
         Post verifyPost = postRepository.findById(postRepository.count()).get();
 
-        assertThat(verifyPost.getTitle()).isEqualTo(postData.getTitle());
-        assertThat(verifyPost.getContent()).isEqualTo(postData.getContent());
+        assertThat(verifyPost.getTitle()).isEqualTo(postSearchData.getTitle());
+        assertThat(verifyPost.getContent()).isEqualTo(postSearchData.getContent());
         assertThat(verifyPost.isStatus()).isTrue();
-        assertThat(verifyPost.getCategory().getId()).isEqualTo(postData.getCategoryId());
+        assertThat(verifyPost.getCategory().getId()).isEqualTo(postSearchData.getCategoryId());
 
         assertThat(verifyPost.getTags().size()).isEqualTo(tagSet.size());
         boolean verifyTagName1 = verifyPost.getTags().stream().anyMatch(tag -> tag.getName().equals(tagName1));
@@ -87,10 +87,10 @@ class PostServiceTest {
     public void createPost_throw() {
         // given
         long notExistingCategoryId = categoryRepository.count()+1;
-        PostData postData = new CreatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>()).toData();
+        PostSearchData postSearchData = new PostCreateRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>()).toData();
 
         // when, then
-        assertThatThrownBy(() -> postService.createPost(postData))
+        assertThatThrownBy(() -> postService.createPost(postSearchData))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
@@ -105,7 +105,7 @@ class PostServiceTest {
         boolean searchStatus = true;
 
         Pageable pageable = PageRequest.of(0, 10);
-        SearchPostRequest request = new SearchPostRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
+        PostSearchRequest request = new PostSearchRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
 
         // when
         Page<PostListDto> searchPostList = postService.searchPostList(request, pageable);
@@ -158,7 +158,7 @@ class PostServiceTest {
         String updateContent = "변경 후 내용";
         HashSet<String> updateTagSet = new HashSet<>(Set.of("변경 태그1", "변경 태그2", "변경 태그3"));
 
-        UpdatePostRequest request = new UpdatePostRequest(updateCategoryId, updateTitle, updateContent, updateTagSet);
+        PostUpdateRequest request = new PostUpdateRequest(updateCategoryId, updateTitle, updateContent, updateTagSet);
 
         // when
         postService.updatePost(requestPostId, request);
@@ -181,7 +181,7 @@ class PostServiceTest {
         long notExistingPostId = postRepository.count()+1;
         long existingCategoryId = 1L;
 
-        UpdatePostRequest request = new UpdatePostRequest(existingCategoryId, new String(), new String(), new HashSet<String>());
+        PostUpdateRequest request = new PostUpdateRequest(existingCategoryId, new String(), new String(), new HashSet<String>());
 
         // when, then
         assertThatThrownBy(() -> postService.updatePost(notExistingPostId, request))
@@ -195,7 +195,7 @@ class PostServiceTest {
         long existingPostId = 1L;
         long notExistingCategoryId = postRepository.count()+1;
 
-        UpdatePostRequest request = new UpdatePostRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>());
+        PostUpdateRequest request = new PostUpdateRequest(notExistingCategoryId, new String(), new String(), new HashSet<String>());
 
         // when, then
         assertThatThrownBy(() -> postService.updatePost(existingPostId, request))

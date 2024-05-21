@@ -2,7 +2,7 @@ package com.study.blog.business.comment;
 
 import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.repository.CommentRepository;
-import com.study.blog.presentation.controller.request.CommentListRequest;
+import com.study.blog.presentation.controller.request.CommentSearchRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ class CommentServiceTest {
         String searchContent = "테스트";
         boolean searchStatus = true;
 
-        CommentListRequest request = new CommentListRequest(searchContent, searchStatus);
+        CommentSearchRequest request = new CommentSearchRequest(searchContent, searchStatus);
 
         // when
         List<CommentListDto> verifyResponse = commentService.searchCommentList(request.toData(), pageable).getContent();

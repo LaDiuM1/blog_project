@@ -3,9 +3,9 @@ package com.study.blog.business.admin;
 import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.repository.UserRepository;
-import com.study.blog.presentation.controller.request.CreateAdminRequest;
-import com.study.blog.presentation.controller.request.SearchAdminRequest;
-import com.study.blog.presentation.controller.request.UpdateAdminRequest;
+import com.study.blog.presentation.controller.request.AdminCreateRequest;
+import com.study.blog.presentation.controller.request.AdminSearchRequest;
+import com.study.blog.presentation.controller.request.AdminUpdateRequest;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ class AdminServiceTest {
         String createEmail = "생성 테스트 이메일@email.com";
         String createPassword = "생성 테스트 비밀번호";
         String createAdminName = "생성 테스트 이름";
-        CreateAdminRequest request = new CreateAdminRequest(createEmail, createPassword, createAdminName);
+        AdminCreateRequest request = new AdminCreateRequest(createEmail, createPassword, createAdminName);
 
         // when
         Long createdAdminId = adminService.registerAdmin(request);
@@ -70,7 +70,7 @@ class AdminServiceTest {
         boolean searchStatus = true;
 
         Pageable pageable = PageRequest.of(0, 10);
-        SearchAdminRequest request = new SearchAdminRequest(searchEmail, searchAdminName, searchStatus);
+        AdminSearchRequest request = new AdminSearchRequest(searchEmail, searchAdminName, searchStatus);
 
         // when
         Page<AdminListDto> searchAdminList = adminService.searchAdminList(request.toData(), pageable);
@@ -92,7 +92,7 @@ class AdminServiceTest {
         String updatePassword = "변경 후 비밀번호";
         String updateName = "변경 후 이름";
 
-        UpdateAdminRequest request = new UpdateAdminRequest(updatePassword, updateName);
+        AdminUpdateRequest request = new AdminUpdateRequest(updatePassword, updateName);
 
         // when
         adminService.updateAdmin(requestAdminId, request);

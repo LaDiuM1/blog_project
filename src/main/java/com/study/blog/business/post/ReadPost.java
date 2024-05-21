@@ -4,7 +4,7 @@ import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.business.post.repository.PostRepository;
 import com.study.blog.business.tag.Tag;
-import com.study.blog.presentation.controller.request.SearchPostRequest;
+import com.study.blog.presentation.controller.request.PostSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +20,7 @@ public class ReadPost {
 
     private final PostRepository postRepository;
 
-    public Page<PostListDto> searchPostList(SearchPostRequest request, Pageable pageable){
+    public Page<PostListDto> searchPostList(PostSearchRequest request, Pageable pageable){
         return postRepository.searchPostList(request, pageable);
     }
 

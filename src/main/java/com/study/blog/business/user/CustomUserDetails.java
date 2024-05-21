@@ -1,13 +1,15 @@
 package com.study.blog.business.user;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
 public class CustomUserDetails implements UserDetails{
-    private User user;
+    private final User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
@@ -48,7 +50,4 @@ public class CustomUserDetails implements UserDetails{
         return user.isStatus(); // 계정 활성화 여부 반환
     }
 
-    public User getUser() {
-        return user;
-    }
 }

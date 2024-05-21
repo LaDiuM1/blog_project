@@ -22,9 +22,7 @@ public class Tag extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts = new ArrayList<>();
 

@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class LoginRequest {
+public class UserLoginRequest {
 
     @NotBlank(message = "이메일을 입력해 주세요.")
     @Email(message = "이메일 형식이 아닙니다.")

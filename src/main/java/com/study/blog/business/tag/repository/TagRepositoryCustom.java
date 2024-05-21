@@ -9,6 +9,5 @@ import java.util.Set;
 
 public interface TagRepositoryCustom {
     List<SearchTagDto> searchTag(String name);
-
     Map<Long, List<TagDto>> getPostIdAndTagMap(Set<Long> postIds);
 }

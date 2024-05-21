@@ -4,7 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.business.admin.data.SearchAdminData;
+import com.study.blog.business.admin.data.AdminSearchData;
 import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.user.QUser;
 import com.study.blog.business.user.repository.UserRepositoryCustom;
@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    private BooleanBuilder searchAdminBooleanBuilder(QUser user, SearchAdminData data){
+    private BooleanBuilder searchAdminBooleanBuilder(QUser user, AdminSearchData data){
         BooleanBuilder builder = new BooleanBuilder();
         String searchEmail = data.getSearchEmail();
         String searchName = data.getSearchName();
@@ -43,9 +43,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return builder;
     }
 
-    public Page<AdminListDto> searchAdminList(SearchAdminData searchAdminData, Pageable pageable) {
+    public Page<AdminListDto> searchAdminList(AdminSearchData adminSearchData, Pageable pageable) {
         QUser user = QUser.user;
-        BooleanBuilder builder = searchAdminBooleanBuilder(user, searchAdminData);
+        BooleanBuilder builder = searchAdminBooleanBuilder(user, adminSearchData);
 
         List<AdminListDto> fetch = query.select(Projections.constructor(AdminListDto.class,
                         user.id,

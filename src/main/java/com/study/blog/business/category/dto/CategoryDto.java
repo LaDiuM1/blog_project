@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class CategoryDto {
+
     private long id;
     private String name;
     private String description;

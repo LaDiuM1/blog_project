@@ -1,6 +1,6 @@
 package com.study.blog.presentation.controller;
 
-import com.study.blog.presentation.controller.request.LoginRequest;
+import com.study.blog.presentation.controller.request.UserLoginRequest;
 import com.study.blog.presentation.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,10 +17,10 @@ public class AuthenticationController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/api/auth")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public String login(@RequestBody UserLoginRequest userLoginRequest) {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(), loginRequest.getPassword()));
+                            userLoginRequest.getEmail(), userLoginRequest.getPassword()));
 
             return jwtTokenProvider.createToken(authentication);
     }

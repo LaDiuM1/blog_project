@@ -2,8 +2,8 @@ package com.study.blog.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.blog.business.admin.AdminService;
-import com.study.blog.presentation.controller.request.CreateAdminRequest;
-import com.study.blog.presentation.controller.request.UpdateAdminRequest;
+import com.study.blog.presentation.controller.request.AdminCreateRequest;
+import com.study.blog.presentation.controller.request.AdminUpdateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,9 +73,9 @@ class AdminControllerTest {
     @Test
     @DisplayName("관리자 등록 컨트롤러, 정상 파라미터 -> isCreated")
     void registerAdmin_validParam_success() throws Exception {
-        CreateAdminRequest createAdminRequest = new CreateAdminRequest("test@email", "testName", "testPassword");
+        AdminCreateRequest adminCreateRequest = new AdminCreateRequest("test@email", "testName", "testPassword");
 
-        String jsonData = mapper.writeValueAsString(createAdminRequest);
+        String jsonData = mapper.writeValueAsString(adminCreateRequest);
 
         mockMvc.perform(post("/api/admins")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,10 +85,10 @@ class AdminControllerTest {
 
     @Test
     @DisplayName("관리자 등록 컨트롤러, @Valid 메시지 검증")
-    void registerAdmin_verifyParam_success() throws Exception {
-        CreateAdminRequest createAdminRequest = new CreateAdminRequest("test", "12345", null);
+    void registerAdmin_verifyParam_success() {
+        AdminCreateRequest adminCreateRequest = new AdminCreateRequest("test", "12345", null);
 
-        var violations = validator.validate(createAdminRequest);
+        var violations = validator.validate(adminCreateRequest);
 
         assertThat(violations).anyMatch(v -> v.getMessage().contains("이메일 형식이 아닙니다."));
         assertThat(violations).anyMatch(v -> v.getMessage().contains("비밀번호는 최소 6자리 이상이어야 합니다."));
@@ -99,9 +99,9 @@ class AdminControllerTest {
     @DisplayName("관리자 업데이트 컨트롤러, 정상 파라미터 -> isOk")
     void updateAdmin_validParam_success() throws Exception {
         long updateAdminId = 1L;
-        UpdateAdminRequest updateAdminRequest = new UpdateAdminRequest("123456", "testName");
+        AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest("123456", "testName");
 
-        String jsonData = mapper.writeValueAsString(updateAdminRequest);
+        String jsonData = mapper.writeValueAsString(adminUpdateRequest);
 
         mockMvc.perform(put("/api/admins/" + updateAdminId)
         .contentType(MediaType.APPLICATION_JSON)
@@ -111,10 +111,10 @@ class AdminControllerTest {
 
     @Test
     @DisplayName("관리자 업데이트 컨트롤러, @Valid 메시지 검증")
-    void updateAdmin_verifyParam_success() throws Exception {
-        UpdateAdminRequest updateAdminRequest = new UpdateAdminRequest("12345", null);
+    void updateAdmin_verifyParam_success() {
+        AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest("12345", null);
 
-        var violations = validator.validate(updateAdminRequest);
+        var violations = validator.validate(adminUpdateRequest);
 
         assertThat(violations).anyMatch(v -> v.getMessage().contains("비밀번호는 최소 6자리 이상이어야 합니다."));
         assertThat(violations).anyMatch(v -> v.getMessage().contains("관리자명을 입력해 주세요."));

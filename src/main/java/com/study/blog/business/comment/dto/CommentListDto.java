@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CommentListDto {
+
     private Long id;
     private Long parentCommentId;
     private String commentContent;

@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class PostListDto {
+
     private Long id;
     private String title;
     private String content;

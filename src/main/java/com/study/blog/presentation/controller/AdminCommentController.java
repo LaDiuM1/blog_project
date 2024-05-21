@@ -2,7 +2,7 @@ package com.study.blog.presentation.controller;
 
 import com.study.blog.business.comment.CommentService;
 import com.study.blog.business.comment.dto.CommentListDto;
-import com.study.blog.presentation.controller.request.CommentListRequest;
+import com.study.blog.presentation.controller.request.CommentSearchRequest;
 import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,13 +18,12 @@ public class AdminCommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<Page<CommentListDto>> searchCommentList(
-                                                              @RequestParam(required = false) String searchContent,
-                                                              @RequestParam(required = false) Boolean searchStatus,
-                                                              Pageable pageable) {
-        CommentListRequest commentListRequest = new CommentListRequest(searchContent, searchStatus);
+    public ResponseEntity<Page<CommentListDto>> searchCommentList(@RequestParam(required = false) String searchContent,
+                                                                  @RequestParam(required = false) Boolean searchStatus,
+                                                                  Pageable pageable) {
+        CommentSearchRequest commentSearchRequest = new CommentSearchRequest(searchContent, searchStatus);
 
-        Page<CommentListDto> postList = commentService.searchCommentList(commentListRequest.toData(), pageable);
+        Page<CommentListDto> postList = commentService.searchCommentList(commentSearchRequest.toData(), pageable);
 
         return SuccessfulResponse.response(postList);
     }

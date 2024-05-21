@@ -3,9 +3,9 @@ package com.study.blog.presentation.controller;
 import com.study.blog.business.category.CategoryService;
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.dto.CategoryListDto;
-import com.study.blog.presentation.controller.request.CreateCategoryRequest;
-import com.study.blog.presentation.controller.request.UpdateCategoryRequest;
-import com.study.blog.presentation.controller.request.UpdateCategorySequenceRequest;
+import com.study.blog.presentation.controller.request.CategoryCreateRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateRequest;
+import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import com.study.blog.presentation.controller.response.CreatedResponse;
 import com.study.blog.presentation.controller.response.SuccessfulResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,18 +38,16 @@ public class AdminCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String,Long>> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
-        Long createdCategoryId = categoryService.createCategory(createCategoryRequest.toData());
+    public ResponseEntity<Map<String,Long>> createCategory(@RequestBody @Valid CategoryCreateRequest categoryCreateRequest) {
+        Long createdCategoryId = categoryService.createCategory(categoryCreateRequest.toData());
 
         return CreatedResponse.response("Category",createdCategoryId);
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Void> updateCategory(
-            @PathVariable Long categoryId,
-            @RequestBody @Valid UpdateCategoryRequest request
-    ) {
-        categoryService.updateCategory(request.toData());
+    public ResponseEntity<Void> updateCategory(@PathVariable Long categoryId,
+                                               @RequestBody @Valid CategoryUpdateRequest request) {
+        categoryService.updateCategory(categoryId, request.toData());
 
         return ResponseEntity.ok().build();
     }
@@ -63,7 +61,7 @@ public class AdminCategoryController {
 
 
     @PutMapping("/sequence")
-    public ResponseEntity<Void> updateCategorySequence(@RequestBody @Valid UpdateCategorySequenceRequest request) {
+    public ResponseEntity<Void> updateCategorySequence(@RequestBody @Valid CategoryUpdateSequenceRequest request) {
         categoryService.updateCategorySequence(request);
 
         return ResponseEntity.ok().build();
