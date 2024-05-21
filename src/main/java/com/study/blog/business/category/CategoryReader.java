@@ -6,6 +6,7 @@ import com.study.blog.business.category.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Component
@@ -17,9 +18,8 @@ public class CategoryReader {
     public List<CategoryListDto> getCategoryList() {
         return categoryRepository.getCategoryList();
     }
-
     public CategoryDto getCategory(Long categoryId){
-        return categoryRepository.findByIdOrThrow(categoryId).toDto();
+        return categoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new).toDto();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.study.blog.presentation.security;
+package com.study.blog.security.jwt;
 
 import com.study.blog.business.user.CustomUserDetails;
 import com.study.blog.support.exception.JwtAuthenticationException;

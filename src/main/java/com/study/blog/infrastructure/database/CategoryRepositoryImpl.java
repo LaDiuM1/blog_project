@@ -5,7 +5,6 @@ import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.study.blog.business.category.Category;
 import com.study.blog.business.category.QCategory;
 import com.study.blog.business.category.dto.CategoryListDto;
 import com.study.blog.business.category.repository.CategoryRepositoryCustom;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -25,18 +23,6 @@ import java.util.Set;
 public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
 
     private final JPAQueryFactory query;
-
-    public Category findByIdOrThrow(Long id) throws EntityNotFoundException {
-        QCategory qCategory = QCategory.category;
-
-        Category category = query.selectFrom(qCategory)
-                .where(qCategory.id.eq(id))
-                .fetchOne();
-
-        if (category == null) { throw new EntityNotFoundException(); }
-
-        return category;
-    }
 
     private NumberExpression<Integer> sequenceCaseBuilder(QCategory category, Set<Long> idSet){
         CaseBuilder caseBuilder = new CaseBuilder();

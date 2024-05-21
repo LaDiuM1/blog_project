@@ -52,7 +52,7 @@ class CategoryServiceTest {
         categoryService.createCategory(categoryCreateData);
 
         // then
-        Category verifyCreateCategory = categoryRepository.findByIdOrThrow(categoryRepository.count());
+        Category verifyCreateCategory = categoryRepository.findById(categoryRepository.count()).get();
         assertThat(verifyCreateCategory.getName()).isEqualTo(categoryCreateData.getName());
         assertThat(verifyCreateCategory.getDescription()).isEqualTo(categoryCreateData.getDescription());
     }

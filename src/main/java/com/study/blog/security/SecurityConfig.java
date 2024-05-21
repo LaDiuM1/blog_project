@@ -1,7 +1,7 @@
-package com.study.blog.support.config;
+package com.study.blog.security;
 
-import com.study.blog.presentation.security.JwtAuthenticationFilter;
-import com.study.blog.presentation.security.JwtTokenProvider;
+import com.study.blog.security.jwt.JwtAuthenticationFilter;
+import com.study.blog.security.jwt.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

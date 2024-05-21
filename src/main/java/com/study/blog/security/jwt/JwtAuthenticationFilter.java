@@ -1,4 +1,4 @@
-package com.study.blog.presentation.security;
+package com.study.blog.security.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,11 +20,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = getJwtFromRequest(request);    // 요청에서 jwt 토큰 분리하는 메서드 수행
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) { // 토큰이 텍스트를 포함해야 하며 토큰 유효 메서드 반환값이 true 일 경우 인증 처리

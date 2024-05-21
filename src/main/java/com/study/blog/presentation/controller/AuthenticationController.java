@@ -1,7 +1,7 @@
 package com.study.blog.presentation.controller;
 
 import com.study.blog.presentation.controller.request.UserLoginRequest;
-import com.study.blog.presentation.security.JwtTokenProvider;
+import com.study.blog.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
