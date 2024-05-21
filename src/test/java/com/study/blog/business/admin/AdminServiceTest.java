@@ -1,5 +1,7 @@
 package com.study.blog.business.admin;
 
+import com.study.blog.business.admin.data.AdminSearchData;
+import com.study.blog.business.admin.data.AdminUpdateData;
 import com.study.blog.business.admin.dto.AdminListDto;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.repository.UserRepository;
@@ -50,7 +52,7 @@ class AdminServiceTest {
         AdminCreateRequest request = new AdminCreateRequest(createEmail, createPassword, createAdminName);
 
         // when
-        Long createdAdminId = adminService.registerAdmin(request);
+        Long createdAdminId = adminService.registerAdmin(request.toData());
 
         // then
         User verifyAdmin = userRepository.findById(createdAdminId).get();
@@ -70,18 +72,18 @@ class AdminServiceTest {
         boolean searchStatus = true;
 
         Pageable pageable = PageRequest.of(0, 10);
-        AdminSearchRequest request = new AdminSearchRequest(searchEmail, searchAdminName, searchStatus);
+        AdminSearchData searchData = new AdminSearchRequest(searchEmail, searchAdminName, searchStatus).toData();
 
         // when
-        Page<AdminListDto> searchAdminList = adminService.searchAdminList(request.toData(), pageable);
+        Page<AdminListDto> searchAdminList = adminService.searchAdminList(searchData, pageable);
 
         // then
         List<AdminListDto> verifyAdminResponseList = searchAdminList.getContent();
 
         AssertionsForClassTypes.assertThat(verifyAdminResponseList.size()).isNotZero();
-        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getEmail().contains(request.getSearchEmail()))).isTrue();
-        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getName().contains(request.getSearchName()))).isTrue();
-        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(AdminListDto::isStatus)).isEqualTo(request.getSearchStatus());
+        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getEmail().contains(searchData.getSearchEmail()))).isTrue();
+        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(user -> user.getName().contains(searchData.getSearchName()))).isTrue();
+        AssertionsForClassTypes.assertThat(verifyAdminResponseList.stream().anyMatch(AdminListDto::isStatus)).isEqualTo(searchData.getSearchStatus());
     }
 
     @Test
@@ -92,16 +94,16 @@ class AdminServiceTest {
         String updatePassword = "변경 후 비밀번호";
         String updateName = "변경 후 이름";
 
-        AdminUpdateRequest request = new AdminUpdateRequest(updatePassword, updateName);
+        AdminUpdateData updateData = new AdminUpdateRequest(updatePassword, updateName).toData();
 
         // when
-        adminService.updateAdmin(requestAdminId, request);
+        adminService.updateAdmin(requestAdminId, updateData);
 
         // then
         User verifyAdmin = userRepository.findById(requestAdminId).get();
         assertThat(verifyAdmin).isNotNull();
-        assertThat(passwordEncoder.matches(request.getPassword(), verifyAdmin.getPassword())).isTrue();
-        assertThat(verifyAdmin.getName()).isEqualTo(request.getAdminName());
+        assertThat(passwordEncoder.matches(updateData.getPassword(), verifyAdmin.getPassword())).isTrue();
+        assertThat(verifyAdmin.getName()).isEqualTo(updateData.getAdminName());
     }
 
     @Test

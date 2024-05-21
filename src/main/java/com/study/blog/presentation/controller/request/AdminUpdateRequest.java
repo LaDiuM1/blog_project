@@ -1,5 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.admin.data.AdminUpdateData;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -18,5 +19,9 @@ public class AdminUpdateRequest {
     public AdminUpdateRequest(String password, String adminName) {
         this.password = password;
         this.adminName = adminName;
+    }
+
+    public AdminUpdateData toData() {
+        return new AdminUpdateData(this.password, this.adminName);
     }
 }

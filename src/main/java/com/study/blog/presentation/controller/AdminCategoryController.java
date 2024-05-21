@@ -62,7 +62,7 @@ public class AdminCategoryController {
 
     @PutMapping("/sequence")
     public ResponseEntity<Void> updateCategorySequence(@RequestBody @Valid CategoryUpdateSequenceRequest request) {
-        categoryService.updateCategorySequence(request);
+        categoryService.updateCategorySequence(request.toData());
 
         return ResponseEntity.ok().build();
     }

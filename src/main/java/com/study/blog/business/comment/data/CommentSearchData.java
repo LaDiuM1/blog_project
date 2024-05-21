@@ -12,6 +12,4 @@ public class CommentSearchData {
         this.searchContent = searchContent;
         this.searchStatus = searchStatus;
     }
-
-
 }

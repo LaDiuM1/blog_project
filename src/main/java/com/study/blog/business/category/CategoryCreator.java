@@ -11,12 +11,12 @@ public class CategoryCreator {
 
     private final CategoryRepository categoryRepository;
 
-    public Long createCategory(CategoryCreateData categoryCreateData) {
+    public Long createCategory(CategoryCreateData createData) {
         int sequenceNumber = categoryRepository.getCreateSequenceNumber();
 
         Category category = new Category(
-                categoryCreateData.getName(),
-                categoryCreateData.getDescription(),
+                createData.getName(),
+                createData.getDescription(),
                 sequenceNumber
         );
 

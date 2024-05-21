@@ -1,5 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.admin.data.AdminCreateData;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -24,5 +25,9 @@ public class AdminCreateRequest {
         this.email = email;
         this.password = password;
         this.adminName = adminName;
+    }
+
+    public AdminCreateData toData(){
+        return new AdminCreateData(this.email, this.password, this.adminName);
     }
 }

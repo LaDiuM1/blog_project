@@ -12,11 +12,11 @@ public class CategoryDeleter {
 
     private final CategoryRepository categoryRepository;
 
-    public void deleteCategory(Long id){
-        boolean existingCategoryCheck = categoryRepository.existsById(id);
+    public void deleteCategory(Long categoryId){
+        boolean existingCategoryCheck = categoryRepository.existsById(categoryId);
 
         if(!existingCategoryCheck) { throw new EntityNotFoundException(); }
-        categoryRepository.deleteById(id);
+        categoryRepository.deleteById(categoryId);
     }
 
 }

@@ -18,8 +18,8 @@ public class CommentService {
         return commentReader.searchCommentList(commentSearchData, pageable);
     }
 
-    public void switchCommentStatus(Long id){
-        commentUpdater.switchCommentStatus(id);
+    public void switchCommentStatus(Long commentId){
+        commentUpdater.switchCommentStatus(commentId);
     }
 
 }

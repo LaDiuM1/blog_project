@@ -2,20 +2,18 @@ package com.study.blog.business.post.data;
 
 import lombok.Getter;
 
-import java.util.HashSet;
-
 @Getter
 public class PostSearchData {
 
-    private final Long categoryId;
-    private final String title;
-    private final String content;
-    private final HashSet<String> tagNames;
+    private final Long searchCategoryId;
+    private final String searchTitle;
+    private final String searchContent;
+    private final Boolean searchStatus;
 
-    public PostSearchData(Long categoryId, String title, String content, HashSet<String> tagNames) {
-        this.categoryId = categoryId;
-        this.title = title;
-        this.content = content;
-        this.tagNames = tagNames;
+    public PostSearchData(Long searchCategoryId, String searchTitle, String searchContent, Boolean searchStatus) {
+        this.searchCategoryId = searchCategoryId;
+        this.searchTitle = searchTitle;
+        this.searchContent = searchContent;
+        this.searchStatus = searchStatus;
     }
 }

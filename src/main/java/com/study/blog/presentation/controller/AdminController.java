@@ -24,20 +24,16 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping
-    public ResponseEntity<Page<AdminListDto>> searchPostList(@RequestParam(required = false) String searchEmail,
-                                                             @RequestParam(required = false) String searchName,
-                                                             @RequestParam(required = false) Boolean searchStatus,
-                                                             Pageable pageable) {
-        AdminSearchRequest adminSearchRequest = new AdminSearchRequest(searchEmail, searchName, searchStatus);
-
-        Page<AdminListDto> searchAdminList = adminService.searchAdminList(adminSearchRequest.toData(), pageable);
+    public ResponseEntity<Page<AdminListDto>> searchAdminList(@ModelAttribute AdminSearchRequest request,
+                                                              Pageable pageable) {
+        Page<AdminListDto> searchAdminList = adminService.searchAdminList(request.toData(), pageable);
 
         return SuccessfulResponse.response(searchAdminList);
     }
 
     @PostMapping
     public ResponseEntity<Map<String, Long>> registerAdmin(@RequestBody @Valid AdminCreateRequest adminCreateRequest) {
-        Long createdAdminId = adminService.registerAdmin(adminCreateRequest);
+        Long createdAdminId = adminService.registerAdmin(adminCreateRequest.toData());
 
         return CreatedResponse.response("Admin", createdAdminId);
     }
@@ -46,7 +42,7 @@ public class AdminController {
     public ResponseEntity<Void> updateAdmin(@PathVariable("adminId") Long adminId,
                                             @RequestBody @Valid AdminUpdateRequest adminUpdateRequest) {
 
-        adminService.updateAdmin(adminId, adminUpdateRequest);
+        adminService.updateAdmin(adminId, adminUpdateRequest.toData());
 
         return ResponseEntity.ok().build();
     }

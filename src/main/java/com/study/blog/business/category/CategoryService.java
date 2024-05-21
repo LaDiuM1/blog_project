@@ -2,9 +2,9 @@ package com.study.blog.business.category;
 
 import com.study.blog.business.category.data.CategoryCreateData;
 import com.study.blog.business.category.data.CategoryUpdateData;
+import com.study.blog.business.category.data.CategoryUpdateSequenceData;
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.category.dto.CategoryListDto;
-import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,28 +23,28 @@ public class CategoryService {
         return categoryReader.getCategoryList();
     }
 
-    public CategoryDto getCategory(Long id){
-        return categoryReader.getCategory(id);
+    public CategoryDto getCategory(Long categoryId){
+        return categoryReader.getCategory(categoryId);
     }
 
-    public Long createCategory(CategoryCreateData categoryCreateData){
-        return categoryCreator.createCategory(categoryCreateData);
+    public Long createCategory(CategoryCreateData createData){
+        return categoryCreator.createCategory(createData);
     }
 
-    public void updateCategoryStatus(Long id){
-        categoryUpdater.updateCategoryStatus(id);
+    public void updateCategoryStatus(Long categoryId){
+        categoryUpdater.updateCategoryStatus(categoryId);
     }
 
-    public void updateCategorySequence(CategoryUpdateSequenceRequest request){
-        categoryUpdater.updateCategorySequence(request);
+    public void updateCategorySequence(CategoryUpdateSequenceData updateSequenceData){
+        categoryUpdater.updateCategorySequence(updateSequenceData);
     }
 
-    public void updateCategory(Long categoryId, CategoryUpdateData categoryUpdateData){
-        categoryUpdater.updateCategory(categoryId, categoryUpdateData);
+    public void updateCategory(Long categoryId, CategoryUpdateData updateData){
+        categoryUpdater.updateCategory(categoryId, updateData);
     }
 
-    public void deleteCategory(Long id){
-        categoryDeleter.deleteCategory(id);
+    public void deleteCategory(Long categoryId){
+        categoryDeleter.deleteCategory(categoryId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.category.data.CategoryUpdateSequenceData;
 import lombok.Getter;
 
 import java.util.LinkedHashSet;
@@ -11,5 +12,9 @@ public class CategoryUpdateSequenceRequest {
 
     public CategoryUpdateSequenceRequest(LinkedHashSet<Long> idSet) {
         this.idSet = idSet;
+    }
+
+    public CategoryUpdateSequenceData toData() {
+        return new CategoryUpdateSequenceData(this.idSet);
     }
 }

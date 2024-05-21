@@ -7,11 +7,10 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.blog.business.comment.QComment;
-import com.study.blog.business.post.Post;
 import com.study.blog.business.post.QPost;
+import com.study.blog.business.post.data.PostSearchData;
 import com.study.blog.business.post.dto.PostListDto;
 import com.study.blog.business.post.repository.PostRepositoryCustom;
-import com.study.blog.presentation.controller.request.PostSearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Repository
@@ -29,24 +27,12 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    public Post findByIdOrThrow(Long id) {
-        QPost qPost = QPost.post;
-
-        Post post = query.selectFrom(qPost)
-                .where(qPost.id.eq(id))
-                .fetchOne();
-
-        if (post == null) { throw new EntityNotFoundException(); }
-
-        return post;
-    }
-
-    private BooleanBuilder searchPostBooleanBuilder(QPost post, PostSearchRequest request){
+    private BooleanBuilder searchPostBooleanBuilder(QPost post, PostSearchData searchData){
         BooleanBuilder builder = new BooleanBuilder();
-        Long searchCategoryId = request.getSearchCategoryId();
-        String searchTitle = request.getSearchTitle();
-        String searchContent = request.getSearchContent();
-        Boolean searchStatus = request.getSearchStatus();
+        Long searchCategoryId = searchData.getSearchCategoryId();
+        String searchTitle = searchData.getSearchTitle();
+        String searchContent = searchData.getSearchContent();
+        Boolean searchStatus = searchData.getSearchStatus();
 
         if (searchCategoryId != null) {
             builder.and(post.category.id.eq(searchCategoryId));
@@ -67,11 +53,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return builder;
     }
 
-    public Page<PostListDto> searchPostList(PostSearchRequest request, Pageable pageable) {
+    public Page<PostListDto> searchPostList(PostSearchData searchData, Pageable pageable) {
         QPost post = QPost.post;
         QComment comment = QComment.comment;
 
-        BooleanBuilder builder = searchPostBooleanBuilder(post, request);
+        BooleanBuilder builder = searchPostBooleanBuilder(post, searchData);
 
         List<PostListDto> fetch = query.select(Projections.constructor(PostListDto.class,
                         post.id,

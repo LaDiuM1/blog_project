@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class AdminReader {
     private final UserRepository userRepository;
 
-    public Page<AdminListDto> searchAdminList(AdminSearchData adminSearchData, Pageable pageable) {
-        return userRepository.searchAdminList(adminSearchData, pageable);
+    public Page<AdminListDto> searchAdminList(AdminSearchData searchData, Pageable pageable) {
+        return userRepository.searchAdminList(searchData, pageable);
     }
 }

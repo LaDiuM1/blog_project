@@ -1,9 +1,9 @@
 package com.study.blog.business.admin;
 
+import com.study.blog.business.admin.data.AdminUpdateData;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.data.Role;
 import com.study.blog.business.user.repository.UserRepository;
-import com.study.blog.presentation.controller.request.AdminUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -32,12 +32,12 @@ public class AdminUpdater {
         return optionalUser.get();
     }
 
-    public void updateAdmin(Long adminId, AdminUpdateRequest request) {
+    public void updateAdmin(Long adminId, AdminUpdateData adminUpdateData) {
         User admin = checkExistingAdmin(adminId);
 
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        String encodedPassword = passwordEncoder.encode(adminUpdateData.getPassword());
 
-        admin.updatePasswordAndName(encodedPassword, request.getAdminName());
+        admin.updatePasswordAndName(encodedPassword, adminUpdateData.getAdminName());
     }
 
     public void switchAdmin(Long adminId) {

@@ -24,11 +24,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory query;
 
-    private BooleanBuilder searchAdminBooleanBuilder(QUser user, AdminSearchData data){
+    private BooleanBuilder searchAdminBooleanBuilder(QUser user, AdminSearchData searchData){
         BooleanBuilder builder = new BooleanBuilder();
-        String searchEmail = data.getSearchEmail();
-        String searchName = data.getSearchName();
-        Boolean searchStatus = data.getSearchStatus();
+        String searchEmail = searchData.getSearchEmail();
+        String searchName = searchData.getSearchName();
+        Boolean searchStatus = searchData.getSearchStatus();
 
         if (searchEmail != null && !searchEmail.trim().isEmpty()) {
             builder.and(user.email.containsIgnoreCase(searchEmail));
@@ -43,9 +43,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return builder;
     }
 
-    public Page<AdminListDto> searchAdminList(AdminSearchData adminSearchData, Pageable pageable) {
+    public Page<AdminListDto> searchAdminList(AdminSearchData searchData, Pageable pageable) {
         QUser user = QUser.user;
-        BooleanBuilder builder = searchAdminBooleanBuilder(user, adminSearchData);
+        BooleanBuilder builder = searchAdminBooleanBuilder(user, searchData);
 
         List<AdminListDto> fetch = query.select(Projections.constructor(AdminListDto.class,
                         user.id,

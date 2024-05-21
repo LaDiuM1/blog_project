@@ -13,8 +13,8 @@ public class CommentUpdater {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public void switchCommentStatus(Long id){
-        Comment comment = commentRepository.findById(id)
+    public void switchCommentStatus(Long commentId){
+        Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(EntityNotFoundException::new);
 
         comment.switchStatus();

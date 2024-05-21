@@ -1,8 +1,8 @@
 package com.study.blog.business.category;
 
 import com.study.blog.business.category.data.CategoryUpdateData;
+import com.study.blog.business.category.data.CategoryUpdateSequenceData;
 import com.study.blog.business.category.repository.CategoryRepository;
-import com.study.blog.presentation.controller.request.CategoryUpdateSequenceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +17,14 @@ public class CategoryUpdater {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void updateCategoryStatus(Long id){
-        Category category = categoryRepository.findById(id)
+    public void updateCategoryStatus(Long categoryId){
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(EntityNotFoundException::new);
         category.switchStatus();
     }
 
-    public void updateCategorySequence(CategoryUpdateSequenceRequest request){
-        LinkedHashSet<Long> idSet = request.getIdSet();
+    public void updateCategorySequence(CategoryUpdateSequenceData updateSequenceData){
+        LinkedHashSet<Long> idSet = updateSequenceData.getIdSet();
 
         boolean updateValid = categoryRepository.updateCategoryValid(idSet);
         if(updateValid){ throw new IllegalStateException(); }
@@ -33,11 +33,11 @@ public class CategoryUpdater {
     }
 
     @Transactional
-    public void updateCategory(Long categoryId, CategoryUpdateData categoryUpdateData){
+    public void updateCategory(Long categoryId, CategoryUpdateData updateData){
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        category.updateCategory(categoryUpdateData.getName(), categoryUpdateData.getDescription());
+        category.updateCategory(updateData.getName(), updateData.getDescription());
     }
 
 }

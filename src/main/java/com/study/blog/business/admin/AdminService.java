@@ -1,9 +1,9 @@
 package com.study.blog.business.admin;
 
+import com.study.blog.business.admin.data.AdminCreateData;
 import com.study.blog.business.admin.data.AdminSearchData;
+import com.study.blog.business.admin.data.AdminUpdateData;
 import com.study.blog.business.admin.dto.AdminListDto;
-import com.study.blog.presentation.controller.request.AdminCreateRequest;
-import com.study.blog.presentation.controller.request.AdminUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +17,16 @@ public class AdminService {
     private final AdminUpdater updateAdmin;
     private final AdminReader adminReader;
 
-    public Long registerAdmin(AdminCreateRequest adminCreateRequest) {
-        return adminCreator.registerAdmin(adminCreateRequest);
+    public Long registerAdmin(AdminCreateData createData) {
+        return adminCreator.registerAdmin(createData);
     }
 
-    public Page<AdminListDto> searchAdminList(AdminSearchData adminSearchData, Pageable pageable) {
-        return adminReader.searchAdminList(adminSearchData, pageable);
+    public Page<AdminListDto> searchAdminList(AdminSearchData searchData, Pageable pageable) {
+        return adminReader.searchAdminList(searchData, pageable);
     }
 
-    public void updateAdmin(Long adminId, AdminUpdateRequest adminUpdateRequest) {
-        updateAdmin.updateAdmin(adminId, adminUpdateRequest);
+    public void updateAdmin(Long adminId, AdminUpdateData updateData) {
+        updateAdmin.updateAdmin(adminId, updateData);
     }
 
     public void switchAdminStatus(Long adminId) {

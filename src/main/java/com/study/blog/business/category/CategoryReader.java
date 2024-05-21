@@ -18,8 +18,8 @@ public class CategoryReader {
         return categoryRepository.getCategoryList();
     }
 
-    public CategoryDto getCategory(Long id){
-        return categoryRepository.findByIdOrThrow(id).toResponse();
+    public CategoryDto getCategory(Long categoryId){
+        return categoryRepository.findByIdOrThrow(categoryId).toDto();
     }
 
 }

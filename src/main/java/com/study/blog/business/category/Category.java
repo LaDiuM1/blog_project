@@ -54,7 +54,7 @@ public class Category extends BaseTime {
         this.id = id;
     }
 
-    public CategoryDto toResponse() {
+    public CategoryDto toDto() {
         return new CategoryDto(
                 this.getId(),
                 this.getName(),

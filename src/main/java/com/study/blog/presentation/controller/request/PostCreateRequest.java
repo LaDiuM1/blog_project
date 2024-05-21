@@ -1,6 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
-import com.study.blog.business.post.data.PostSearchData;
+import com.study.blog.business.post.data.PostCreateData;
 import com.study.blog.presentation.controller.request.validate.TagNamesValid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,8 +29,8 @@ public class PostCreateRequest {
     @TagNamesValid(message = "태그는 공백으로만 이루어질 수 없습니다.")
     private HashSet<String> tagNames;
 
-    public PostSearchData toData(){
-        return new PostSearchData(
+    public PostCreateData toData(){
+        return new PostCreateData(
                 this.categoryId,
                 this.title,
                 this.content,

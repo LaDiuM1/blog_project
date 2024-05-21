@@ -32,14 +32,9 @@ public class AdminPostController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostListDto>> searchPostList(@RequestParam(required = false) Long searchCategoryId,
-                                                            @RequestParam(required = false) String searchTitle,
-                                                            @RequestParam(required = false) String searchContent,
-                                                            @RequestParam(required = false) Boolean searchStatus,
+    public ResponseEntity<Page<PostListDto>> searchPostList(@ModelAttribute PostSearchRequest request,
                                                             Pageable pageable) {
-        PostSearchRequest postSearchRequest = new PostSearchRequest(searchCategoryId, searchTitle, searchContent, searchStatus);
-
-        Page<PostListDto> postList = postService.searchPostList(postSearchRequest, pageable);
+        Page<PostListDto> postList = postService.searchPostList(request.toData(), pageable);
 
         return SuccessfulResponse.response(postList);
     }
@@ -55,7 +50,7 @@ public class AdminPostController {
     public ResponseEntity<Void> updatePost(@PathVariable("postId") Long postId,
                                            @RequestBody @Valid PostUpdateRequest postUpdateRequest) {
 
-        postService.updatePost(postId, postUpdateRequest);
+        postService.updatePost(postId, postUpdateRequest.toData());
 
         return ResponseEntity.ok().build();
     }

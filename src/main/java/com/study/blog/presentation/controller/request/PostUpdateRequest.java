@@ -1,5 +1,6 @@
 package com.study.blog.presentation.controller.request;
 
+import com.study.blog.business.post.data.PostUpdateData;
 import com.study.blog.presentation.controller.request.validate.TagNamesValid;
 import lombok.Getter;
 
@@ -30,5 +31,13 @@ public class PostUpdateRequest {
         this.title = title;
         this.content = content;
         this.tagNames = tagNames;
+    }
+
+    public PostUpdateData toData() {
+        return new PostUpdateData(
+                this.categoryId,
+                this.title,
+                this.content,
+                this.tagNames);
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryCustom {
-    Page<AdminListDto> searchAdminList(AdminSearchData adminSearchData, Pageable pageable);
+    Page<AdminListDto> searchAdminList(AdminSearchData searchData, Pageable pageable);
 }

@@ -18,12 +18,9 @@ public class AdminCommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<Page<CommentListDto>> searchCommentList(@RequestParam(required = false) String searchContent,
-                                                                  @RequestParam(required = false) Boolean searchStatus,
+    public ResponseEntity<Page<CommentListDto>> searchCommentList(@ModelAttribute CommentSearchRequest request,
                                                                   Pageable pageable) {
-        CommentSearchRequest commentSearchRequest = new CommentSearchRequest(searchContent, searchStatus);
-
-        Page<CommentListDto> postList = commentService.searchCommentList(commentSearchRequest.toData(), pageable);
+        Page<CommentListDto> postList = commentService.searchCommentList(request.toData(), pageable);
 
         return SuccessfulResponse.response(postList);
     }
