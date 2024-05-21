@@ -1,6 +1,8 @@
 package com.study.blog.business.category;
 
 import com.study.blog.business.category.data.CategoryCreateData;
+import com.study.blog.business.category.data.CategoryUpdateData;
+import com.study.blog.business.category.data.CategoryUpdateSequenceData;
 import com.study.blog.business.category.repository.CategoryRepository;
 import com.study.blog.presentation.controller.request.CategoryCreateRequest;
 import com.study.blog.presentation.controller.request.CategoryUpdateRequest;
@@ -92,10 +94,10 @@ class CategoryServiceTest {
                 .stream()
                 .map(sequenceAndIdMap::get).collect(Collectors.toCollection(LinkedHashSet::new));
 
-        CategoryUpdateSequenceRequest request = new CategoryUpdateSequenceRequest(updateSequenceIdSet);
+        CategoryUpdateSequenceData updateSequenceData = new CategoryUpdateSequenceRequest(updateSequenceIdSet).toData();
 
         // when
-        categoryService.updateCategorySequence(request);
+        categoryService.updateCategorySequence(updateSequenceData);
 
         List<Category> categoryList = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "sequence"));
 
@@ -117,13 +119,13 @@ class CategoryServiceTest {
         int verifyCount = unmatchedCategorySet.size();
 
         unmatchedCategorySet.remove(unmatchedCategorySet.iterator().next()); // 첫번째 요소 제거
-        CategoryUpdateSequenceRequest request = new CategoryUpdateSequenceRequest(unmatchedCategorySet);
+        CategoryUpdateSequenceData updateSequenceData = new CategoryUpdateSequenceRequest(unmatchedCategorySet).toData();
 
         // when, then
-        assertThat(request.getIdSet().size()).isNotZero();
-        assertThat(request.getIdSet().size()).isNotEqualTo(verifyCount);
+        assertThat(updateSequenceData.getIdSet().size()).isNotZero();
+        assertThat(updateSequenceData.getIdSet().size()).isNotEqualTo(verifyCount);
         assertThatThrownBy(() ->
-            categoryService.updateCategorySequence(request)
+            categoryService.updateCategorySequence(updateSequenceData)
         ).isInstanceOf(IllegalStateException.class);
     }
 
@@ -136,10 +138,10 @@ class CategoryServiceTest {
         Category beforeUpdateCategory = categoryRepository.findById(updateCategoryId).get();
         String updateCategoryName = beforeUpdateCategory.getName()+flag;
         String updateCategoryDescription = beforeUpdateCategory.getDescription()+flag;
-        CategoryUpdateRequest request = new CategoryUpdateRequest(updateCategoryName, updateCategoryDescription);
+        CategoryUpdateData updateData = new CategoryUpdateRequest(updateCategoryName, updateCategoryDescription).toData();
 
         // when
-        categoryService.updateCategory(updateCategoryId, request.toData());
+        categoryService.updateCategory(updateCategoryId, updateData);
 
         // then
         Category afterUpdateCategory = categoryRepository.findById(updateCategoryId).get();
@@ -152,9 +154,9 @@ class CategoryServiceTest {
     public void updateCategory_notExistingId_throw() {
         // given
         long notExistingCategoryId = categoryRepository.count()+1;
-        CategoryUpdateRequest request = new CategoryUpdateRequest(new String(), new String());
+        CategoryUpdateData updateData = new CategoryUpdateRequest("", "").toData();
         // when, then
-        assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, request.toData()))
+        assertThatThrownBy(() -> categoryService.updateCategory(notExistingCategoryId, updateData))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 

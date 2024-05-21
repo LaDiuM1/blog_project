@@ -1,5 +1,6 @@
 package com.study.blog.business.comment;
 
+import com.study.blog.business.comment.data.CommentSearchData;
 import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.repository.CommentRepository;
 import com.study.blog.presentation.controller.request.CommentSearchRequest;
@@ -26,9 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         @Sql(value = "/sql/test-truncate-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
 class CommentServiceTest {
+
     @Autowired
     private CommentRepository commentRepository;
-
     @Autowired
     private CommentService commentService;
 
@@ -40,16 +41,16 @@ class CommentServiceTest {
         String searchContent = "테스트";
         boolean searchStatus = true;
 
-        CommentSearchRequest request = new CommentSearchRequest(searchContent, searchStatus);
+        CommentSearchData searchData = new CommentSearchRequest(searchContent, searchStatus).toData();
 
         // when
-        List<CommentListDto> verifyResponse = commentService.searchCommentList(request.toData(), pageable).getContent();
+        List<CommentListDto> verifyResponse = commentService.searchCommentList(searchData, pageable).getContent();
 
         // then
         assertThat(verifyResponse.size()).isNotZero();
         verifyResponse.forEach(verifyComment -> {
-            assertThat(verifyComment.getCommentContent()).contains(request.getSearchContent());
-            assertThat(verifyComment.isStatus()).isEqualTo(request.getSearchStatus());
+            assertThat(verifyComment.getCommentContent()).contains(searchData.getSearchContent());
+            assertThat(verifyComment.isStatus()).isEqualTo(searchData.getSearchStatus());
         });
     }
 

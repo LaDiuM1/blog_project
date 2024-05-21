@@ -1,5 +1,6 @@
 package com.study.blog.infrastructure.database;
 
+import com.study.blog.business.comment.data.CommentSearchData;
 import com.study.blog.business.comment.dto.CommentListDto;
 import com.study.blog.business.comment.repository.CommentRepository;
 import com.study.blog.presentation.controller.request.CommentSearchRequest;
@@ -34,10 +35,10 @@ class CommentRepositoryImplTest {
         String searchContent = "테스트";
         Boolean searchStatus = true;
 
-        CommentSearchRequest request = new CommentSearchRequest(searchContent, searchStatus);
+        CommentSearchData searchData = new CommentSearchRequest(searchContent, searchStatus).toData();
 
         // when
-        Page<CommentListDto> searchCommentList = commentRepository.searchCommentList(request.toData(), pageable);
+        Page<CommentListDto> searchCommentList = commentRepository.searchCommentList(searchData, pageable);
 
         // then
         searchCommentList.getContent().forEach( comment -> {
@@ -53,10 +54,10 @@ class CommentRepositoryImplTest {
         Pageable pageable = PageRequest.of(0, 10);
         int commentCount = (int) commentRepository.count();
 
-        CommentSearchRequest request = new CommentSearchRequest(null, null);
+        CommentSearchData searchData = new CommentSearchRequest(null, null).toData();
 
         // when
-        Page<CommentListDto> searchCommentList = commentRepository.searchCommentList(request.toData(), pageable);
+        Page<CommentListDto> searchCommentList = commentRepository.searchCommentList(searchData, pageable);
 
         // then
         assertThat(searchCommentList.getContent().size()).isEqualTo(commentCount);

@@ -1,5 +1,6 @@
-package com.study.blog.business.tag;
+package com.study.blog.infrastructure.database;
 
+import com.study.blog.business.tag.Tag;
 import com.study.blog.business.tag.dto.SearchTagDto;
 import com.study.blog.business.tag.repository.TagRepository;
 import org.assertj.core.api.AssertionsForClassTypes;
