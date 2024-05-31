@@ -40,7 +40,7 @@ class CategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(categoryCreateRequest);
 
-        mockMvc.perform(post("/api/admin/categories")
+        mockMvc.perform(post("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isCreated());
@@ -57,7 +57,7 @@ class CategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(categoryCreateRequest);
 
-        mockMvc.perform(post("/api/admin/categories")
+        mockMvc.perform(post("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -71,7 +71,7 @@ class CategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(post("/api/admin/categories")
+        mockMvc.perform(post("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -86,7 +86,7 @@ class CategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/api/admin/categories/" + 1)
+        mockMvc.perform(put("/api/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk());
@@ -101,7 +101,7 @@ class CategoryControllerTest {
 
         String jsonRequest = objectMapper.writeValueAsString(requestBody);
 
-        mockMvc.perform(put("/api/admin/categories/" + 1)
+        mockMvc.perform(put("/api/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest());
@@ -110,7 +110,7 @@ class CategoryControllerTest {
     @Test
     @DisplayName("카테고리 삭제 검증")
     void deleteCategory_validRequest_success() throws Exception {
-        mockMvc.perform(delete("/api/admin/categories/" + 1)
+        mockMvc.perform(delete("/api/categories/" + 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

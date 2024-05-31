@@ -1,20 +1,25 @@
 package com.study.blog.support.exception;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
-    RESOURCE_NOT_FOUND("ERR001", "리소스를 찾을 수 없습니다."),
-    INTERNAL_SERVER_ERROR("ERR002", "내부 서버 오류입니다."),
-    INVALID_REQUEST("ERR003", "잘못된 요청입니다."),
-    UNAUTHORIZED("ERR004", "잘못된 접근입니다.");
+    RESOURCE_NOT_FOUND("ERR001", "Resource not found", HttpStatus.NOT_FOUND),
+    INTERNAL_SERVER_ERROR("ERR002", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_REQUEST("ERR003", "Invalid request", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED("ERR004", "Unauthorized access", HttpStatus.UNAUTHORIZED),
+    DATABASE_ACCESS_ERROR("ERR005", "DB access error", HttpStatus.BAD_REQUEST),
+    DATABASE_CONFLICT_ERROR("ERR006", "DB Conflict error", HttpStatus.BAD_REQUEST);
 
     private final String code;
-    private final String message;
+    private final String description;
+    private final HttpStatus status;
 
-    ErrorCode(String code, String message) {
+    ErrorCode(String code, String description, HttpStatus status) {
         this.code = code;
-        this.message = message;
+        this.description = description;
+        this.status = status;
     }
 
 }

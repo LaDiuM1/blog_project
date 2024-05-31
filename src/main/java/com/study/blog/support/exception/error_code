@@ -1,0 +1,17 @@
+ERR001: RESOURCE_NOT_FOUND
+설명: 요청한 자원을 찾을 수 없음
+
+ERR002: INTERNAL_SERVER_ERROR
+설명: 서버 내부 오류
+
+ERR003: INVALID_REQUEST
+설명: 잘못된 요청
+
+ERR004: UNAUTHORIZED
+설명: 접근 권한 오류
+
+ERR005: DATABASE_ERROR
+설명: 데이터베이스 접근 오류
+
+ERR006: CONFLICT
+설명: 데이터 충돌 오류
