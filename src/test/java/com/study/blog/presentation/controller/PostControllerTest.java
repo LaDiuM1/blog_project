@@ -24,9 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(AdminPostController.class)
+@WebMvcTest(PostController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class AdminPostControllerTest {
+class PostControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

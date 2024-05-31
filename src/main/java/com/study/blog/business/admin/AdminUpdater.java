@@ -1,6 +1,8 @@
 package com.study.blog.business.admin;
 
 import com.study.blog.business.admin.data.AdminUpdateData;
+import com.study.blog.business.admin.exception.AdminAccessDeniedException;
+import com.study.blog.business.admin.exception.AdminNotFoundException;
 import com.study.blog.business.user.User;
 import com.study.blog.business.user.data.Role;
 import com.study.blog.business.user.repository.UserRepository;
@@ -24,9 +26,9 @@ public class AdminUpdater {
         Optional<User> optionalUser = userRepository.findById(adminId);
 
         if(optionalUser.isEmpty()){
-            throw new EntityNotFoundException();
+            throw new AdminNotFoundException();
         }else if(optionalUser.get().getRole() != Role.ADMIN){
-            throw new EntityNotFoundException("해당 계정은 관리자가 아닙니다.");
+            throw new AdminAccessDeniedException();
         }
 
         return optionalUser.get();

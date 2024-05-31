@@ -13,9 +13,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AdminCommentController.class)
+@WebMvcTest(CommentController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class AdminCommentControllerTest {
+class CommentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

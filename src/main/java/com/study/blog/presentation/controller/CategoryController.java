@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/admin/categories")
 @RequiredArgsConstructor
-public class AdminCategoryController {
+public class CategoryController {
 
     private final CategoryService categoryService;
 

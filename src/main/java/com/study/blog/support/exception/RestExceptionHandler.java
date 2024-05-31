@@ -1,5 +1,6 @@
 package com.study.blog.support.exception;
 
+import com.study.blog.presentation.controller.response.ErrorResponse;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,15 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
+        ErrorResponse response = new ErrorResponse(ErrorCode.RESOURCE_NOT_FOUND, ex.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new LinkedHashMap<>();
 

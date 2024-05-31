@@ -18,9 +18,9 @@ import java.util.Map;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AdminCategoryController.class)
+@WebMvcTest(CategoryController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class AdminCategoryControllerTest {
+class CategoryControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

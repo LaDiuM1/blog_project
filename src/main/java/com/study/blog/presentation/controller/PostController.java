@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/admin/posts")
 @RequiredArgsConstructor
-public class AdminPostController {
+public class PostController {
 
     private final PostService postService;
 
