@@ -18,6 +18,7 @@ public class CategoryService {
     private final CategoryReader categoryReader;
     private final CategoryUpdater categoryUpdater;
     private final CategoryDeleter categoryDeleter;
+    protected static final String CATEGORY_LIST_KEY = "categoryList";
 
     public List<CategoryListDto> getCategoryList() {
         return categoryReader.getCategoryList();
