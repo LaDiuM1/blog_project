@@ -1,8 +1,10 @@
 package com.study.blog.business.post.data;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class PostSearchData {
 
     private final Long searchCategoryId;
