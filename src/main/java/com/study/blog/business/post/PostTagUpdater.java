@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-class UpdatePostTag {
+class PostTagUpdater {
 
     private final TagRepository tagRepository;
 

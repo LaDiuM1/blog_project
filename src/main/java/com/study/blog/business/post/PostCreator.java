@@ -11,7 +11,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Component
 @RequiredArgsConstructor
-public class CreatePost {
+public class PostCreator {
 
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;

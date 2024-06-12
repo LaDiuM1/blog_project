@@ -46,14 +46,14 @@ class PostControllerTest {
     @Test
     @DisplayName("특정 포스트 호출 검증, 정상 파라미터 -> isOk")
     void getPost_validParam_success() throws Exception {
-        mockMvc.perform(get("/api/admin/posts/" + 1))
+        mockMvc.perform(get("/api/posts/" + 1))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("게시글 리스트 검색 검증, 정상 파라미터 -> isOk")
     void searchPostList_validParam_success() throws Exception {
-        mockMvc.perform(get("/api/admin/posts")
+        mockMvc.perform(get("/api/posts")
                 .param("searchCategoryId", "1")
                 .param("searchKeyword", "test2")
                 .param("searchStatus", "true"))
@@ -63,7 +63,7 @@ class PostControllerTest {
     @Test
     @DisplayName("게시글 리스트 검색 검증, 파라미터 없음 -> isOk")
     void searchPostList_noParams_success() throws Exception {
-        mockMvc.perform(get("/api/admin/posts"))
+        mockMvc.perform(get("/api/posts"))
                 .andExpect(status().isOk());
     }
     @Test

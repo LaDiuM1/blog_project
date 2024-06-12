@@ -24,7 +24,7 @@ class TagControllerTest {
     @Test
     @DisplayName("태그 검색, 정상 파라미터 -> isOk")
     public void searchTag() throws Exception {
-        mockMvc.perform(get("/api/admin/tags")
+        mockMvc.perform(get("/api/tags")
                 .param("keyword", "태그1"))
                 .andExpect(status().isOk());
     }
