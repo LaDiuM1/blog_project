@@ -104,6 +104,11 @@
             <version>8.0.23</version>
         </dependency>
 
+        <!-- LocalDateTime Serializer -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
 
         <!-- TEST -->
 

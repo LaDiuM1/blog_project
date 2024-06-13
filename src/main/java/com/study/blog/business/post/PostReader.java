@@ -26,7 +26,7 @@ public class PostReader {
         return postRepository.searchPostList(searchData, pageable);
     }
 
-    @Cacheable(value = "posts", key = "#postId")
+//    @Cacheable(value = "posts", key = "#postId")
     public PostDto getPost(Long postId){
         Post post = postRepository.findById(postId).orElseThrow(EntityNotFoundException::new);
         String title = post.getTitle();

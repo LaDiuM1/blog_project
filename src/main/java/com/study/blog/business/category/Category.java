@@ -1,5 +1,6 @@
 package com.study.blog.business.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.study.blog.business.BaseTime;
 import com.study.blog.business.category.dto.CategoryDto;
 import com.study.blog.business.post.Post;
@@ -32,6 +33,7 @@ public class Category extends BaseTime {
     private int sequence;
 
     @OneToMany(mappedBy = "category", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
     @PreRemove
