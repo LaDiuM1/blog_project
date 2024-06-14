@@ -7,6 +7,7 @@ import com.study.blog.business.post.dto.PostDto;
 import com.study.blog.business.post.dto.PostListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,12 @@ public class PostService {
 
         return optionalCachedDto.orElseGet(() -> postReader.getPost(postId));
     }
+
+//    @Transactional
+//    @Cacheable(value = "posts", key = "#postId")
+//    public PostDto getPost(Long postId){
+//        return postReader.getPost(postId);
+//    }
 
     @Transactional
     public void updatePost(Long postId, PostUpdateData updateData){
