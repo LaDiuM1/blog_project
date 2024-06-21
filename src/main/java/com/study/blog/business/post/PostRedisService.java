@@ -17,7 +17,7 @@ public class PostRedisService {
 
     private final PostRepository postRepository;
     private final RedisTemplate<String, Object> redisTemplate;
-    private static final Double APPLY_CACHE_RATIO = 0.2;
+    private static final Double APPLY_CACHE_RATIO = 0.4;
     private static final String GET_POST_KEY_PREFIX = "post:get:";
     private static final String VIEW_COUNT_KEY_PREFIX = "post:viewCount:";
 
@@ -36,8 +36,8 @@ public class PostRedisService {
     }
 
     @Transactional
-//    @Scheduled(fixedRate = 10000) // 10초마다 실행 (테스트용)
-//    @Scheduled(cron = "0 0 * * * *") // 매 시간 정각에 설정된 조회수 랭크 비율에 따라 게시물들을 캐시에 적용하는 메서드
+//    @Scheduled(fixedRate = 20000) // 20초마다 실행 (테스트용)
+    @Scheduled(cron = "0 0 * * * *") // 매 시간 정각에 설정된 조회수 랭크 비율에 따라 게시물들을 캐시에 적용하는 메서드
     public void updateTopPostsCache() {
         // 캐시에서 조회수가 카운트된 모든 게시물의 숫자 계산
         long totalPosts = Optional.ofNullable(redisTemplate.opsForZSet().size(VIEW_COUNT_KEY_PREFIX)).orElse(0L);
@@ -79,7 +79,7 @@ public class PostRedisService {
         }
 
         // 조회수 초기화
-//        redisTemplate.delete(VIEW_COUNT_KEY_PREFIX);
+        redisTemplate.delete(VIEW_COUNT_KEY_PREFIX);
 //        redisTemplate.delete(GET_POST_KEY_PREFIX + "*");
         // 캐시된 사이즈 출력 (테스트용)
         System.out.println("cachedSize = " + Optional.ofNullable(redisTemplate.opsForZSet().size(VIEW_COUNT_KEY_PREFIX)).orElse(0L));
